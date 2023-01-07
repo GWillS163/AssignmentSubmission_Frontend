@@ -1,4 +1,8 @@
-# vuebs2
+# AssignmentSubmission_Frontend
+组件内主要有两个页面。
+- 公共页面(单页面)： src/publicPage/
+- 后台管理系统(多页面跳转): src/managePage/
+
 
 This template should help get you started developing with Vue 3 in Vite.
 

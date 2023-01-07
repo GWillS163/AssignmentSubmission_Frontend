@@ -12,8 +12,8 @@ import ManageTest  from "@/managePage/manageTest.vue";
 <!--    <TheWelcome />-->
 <!--    <TestBS/>-->
 <!--  </main>-->
-  <ManageTest/>
-<!--  <PublicIndex/>-->
+<!--  <ManageTest/>-->
+  <PublicIndex/>
 </template>
 
 <style scoped>
