@@ -1,0 +1,42 @@
+
+<template>
+  <div id="wrapper">
+    <NavBarSide/>
+    <div class="d-flex flex-column" id="content-wrapper">
+      <div id="content">
+        <NavBarTop/>
+        <div class="container-fluid">
+
+          <router-view/>
+<!--          <Dashboard/>-->
+<!--          <notice/>-->
+        </div>
+      </div>
+      <Footer/>
+
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#wrapper"><i class="fas fa-angle-up"></i></a>
+  </div>
+
+</template>
+
+<script>
+import { defineComponent } from 'vue';
+import NavBarSide from "@/components/management/navBarSide.vue";
+import NavBarTop from "@/components/management/navBarTop.vue";
+import Dashboard from "@/views/manage/admin/dashboard.vue";
+import Footer from "@/components/management/Footer.vue";
+export default defineComponent({
+  name: 'App',
+  components: {
+    NavBarSide,
+    NavBarTop,
+    Dashboard,
+    Footer
+  }
+})
+</script>
+
+<style scoped>
+
+</style>

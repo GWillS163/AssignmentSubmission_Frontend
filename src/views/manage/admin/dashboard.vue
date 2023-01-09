@@ -1,12 +1,13 @@
+<script setup>
+</script>
+
 <template>
-  <div>
-    <h1>Manage Index</h1>
-  </div>
+dfgfgsdfdsfsdff
 </template>
 
 <script>
 export default {
-  name: "manageIndex.vue"
+  name: "dashboard"
 }
 </script>
 

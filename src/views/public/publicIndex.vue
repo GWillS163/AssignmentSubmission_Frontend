@@ -1,11 +1,11 @@
 <script setup>
-import Header from "@/publicPage/body/Header.vue";
-import Footer from "@/publicPage/body/Footer.vue";
-import Tab1Content from "@/publicPage/tabPart/tab1Content.vue";
-import Tab2Content from "@/publicPage/tabPart/tab2Content.vue";
-import Tab3Content from "@/publicPage/tabPart/tab3Content.vue";
-import Tab4Content from "@/publicPage/tabPart/tab4Content.vue";
-import Tab5Content from "@/publicPage/tabPart/tab5Content.vue";
+import Header from "@/public/body/Header.vue";
+import Footer from "@/public/body/Footer.vue";
+import Tab1Content from "@/public/tabPart/tab1Content.vue";
+import Tab2Content from "@/public/tabPart/tab2Content.vue";
+import Tab3Content from "@/public/tabPart/tab3Content.vue";
+import Tab4Content from "@/public/tabPart/tab4Content.vue";
+import Tab5Content from "@/public/tabPart/tab5Content.vue";
 </script>
 
 <template>
@@ -27,7 +27,7 @@ import Tab5Content from "@/publicPage/tabPart/tab5Content.vue";
               <div class="tab-pane" role="tabpanel" id="tab-2" style="padding: 0;padding-left: 0px;margin-bottom: 156px;padding-right: 0px;margin-right: 0px;margin-left: 0;padding-bottom: 2px;">
                 <tab2-content/>
               </div>
-              <div class="tab-pane" role="tabpanel" id="tab-3" style="padding: 0;padding-left: 0px;margin-bottom: 156px;padding-right: 0px;margin-right: 0px;margin-left: 0;padding-bottom: 2px;">
+              <div class="tab-pane" role="tabpanel" id="tab-3" style="margin-bottom: 156px;margin-right: 0px;margin-left: 0;padding: 0 0px 2px;">
                 <tab3-content/>
               </div>
               <div class="tab-pane" role="tabpanel" id="tab-4">
