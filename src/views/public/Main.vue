@@ -11,7 +11,7 @@ import Tab5Content from "../../components/public/Tab5Content.vue";
 <template>
   <Header/>
   <section class="py-4 py-xl-5  mb-auto "
-           style="margin-left: 74px;margin-right: 78px;padding-top: 22px;margin-top: -21px;padding-bottom: 0px;">
+           style="margin-left: 74px;margin-right: 78px;padding-top: 22px;margin-top: -21px;padding-bottom: 0;">
     <div>
       <ul class="nav nav-tabs" role="tablist"
           style="padding-right: 0px;margin: 0;margin-right: 0px;margin-left: -1px;padding-left: 4px;margin-top: 23px;margin-bottom: 24px;">

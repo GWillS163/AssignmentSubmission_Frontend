@@ -5,11 +5,12 @@
                   </svg></span><span style="font-family: 'Alfa Slab One', serif;font-style: italic;font-size: 27px;color: var(--bs-table-striped-color);text-shadow: 3px 3px 1px var(--bs-gray-400);"><a href="../../../index.html"><strong><span style="color: rgb(55, 141, 252);">Assignment Submission&nbsp;</span></strong></a></span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
           <div class="collapse navbar-collapse" id="navcol-2">
               <ul class="navbar-nav ms-auto">
-                  <li class="nav-item"><a class="nav-link active" href="about.html">项目介绍</a></li>
+                  <li class="nav-item"><a class="nav-link active" href="/about">项目介绍</a></li>
                   <li class="nav-item"><a class="nav-link active" href="#">历史版本</a></li>
                   <li class="nav-item" href="about.html"><a class="nav-link active" href="#">关于</a></li>
                   <li class="nav-item"><a class="nav-link" href="#"><br></a></li>
-              </ul><span class="navbar-text" style="margin-left: 11px;"><a href="https://junqqadmin.bss.design/" target="_top">管理员</a></span><a class="btn btn-primary ms-md-2" role="button" href="https://junqqadmin.bss.design/login.html">登录</a><a href="#"></a>
+              </ul><span class="navbar-text" style="margin-left: 11px;"><a href="/admin/" target="_top">管理员</a></span>
+            <a class="btn btn-primary ms-md-2" role="button" href="/login">登录</a>
           </div>
       </div>
   </nav>

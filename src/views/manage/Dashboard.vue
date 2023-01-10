@@ -1,10 +1,13 @@
+<script setup>
+</script>
+
 <template>
-public Login Page
+dfgfgsdfdsfsdff
 </template>
 
 <script>
 export default {
-  name: "Login"
+  name: "dashboard"
 }
 </script>
 
