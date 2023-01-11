@@ -1,6 +1,6 @@
 <script setup>
-import Header from "../../components/public/Header.vue";
-import Footer from "../../components/public/Footer.vue";
+import Header from "../../components/public/PublicHeader.vue";
+import publicFooter from "../../components/public/PublicFooter.vue";
 import Tab1Content from "../../components/public/Tab1Content.vue";
 import Tab2Content from "../../components/public/Tab2Content.vue";
 import Tab3Content from "../../components/public/Tab3Content.vue";
@@ -49,7 +49,7 @@ import Tab5Content from "../../components/public/Tab5Content.vue";
     </div>
   </section>
 
-  <Footer/>
+  <publicFooter/>
 </template>
 
 <script>

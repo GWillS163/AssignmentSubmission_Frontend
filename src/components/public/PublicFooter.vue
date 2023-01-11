@@ -42,7 +42,7 @@
 import {ref} from "vue";
 
 export default {
-  name: "footer",
+  name: "publicFooter",
   // define ref element
   data() {
     // let subScribeMail = ref('222')
