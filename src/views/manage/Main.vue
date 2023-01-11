@@ -25,7 +25,7 @@ import { defineComponent } from 'vue';
 import NavBarSide from "@/components/management/navBarSide.vue";
 import NavBarTop from "@/components/management/navBarTop.vue";
 import Dashboard from "@/views/manage/admin/dashboard.vue";
-import Footer from "@/components/management/Footer.vue";
+import Footer from "@/components/management/ManageFooter.vue";
 export default defineComponent({
   name: 'App',
   components: {
