@@ -15,12 +15,12 @@ const routes = [
     {
         path: '/register',
         name: 'register',
-        component: () => import ('../views/manage/others/register.vue')
+        component: () => import ('../views/manage/others/Register.vue')
     },
     {
         path: '/forgotPassword',
         name: 'forgotPassword',
-        component: () => import ('../views/manage/others/forgot-password.vue')
+        component: () => import ('../views/manage/others/Forgot-password.vue')
     },
     {
         path: '/admin',
@@ -55,8 +55,7 @@ const routes = [
             {
 
                 path: '/manage/teacher/',
-                redirect: '/manage/teacher/center',
-                component: () => import ('../views/manage/teacher/center.vue'),
+                redirect: '/manage/teacher/center'
             },
             {
                 path: '/manage/teacher/center',
@@ -131,7 +130,7 @@ const routes = [
             {
                 path: '/blank',
                 name: 'blank',
-                component: () => import ('../views/manage/others/blank.vue'),
+                component: () => import ('../views/manage/others/Blank.vue'),
                 children: []
             }
         ]
