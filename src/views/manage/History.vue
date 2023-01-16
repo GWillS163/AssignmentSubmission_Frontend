@@ -34,88 +34,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-              <td>赵玉龙</td>
-              <td>大数据2</td>
-              <td>3.2MB</td>
-              <td>2022-12-16 18:40:58</td>
-              <td>1909</td>
-            </tr>
-            <tr>
-              <td>马策</td>
-              <td>大数据4</td>
-              <td>390KB</td>
-              <td>2022-12-16 18:41:01</td>
-              <td>1910</td>
-            </tr>
-            <tr>
-              <td>李国成</td>
-              <td>Java习题抄写</td>
-              <td>40MB</td>
-              <td>2022-12-16 18:41:04</td>
-              <td>1909</td>
-            </tr>
-            <tr>
-              <td><img class="rounded-circle me-2" height="30" src="../../../backendAssets/img/avatars/avatar4.jpeg"
-                       width="30">Bradley Greer
-              </td>
-              <td>London</td>
-              <td>Cell 3</td>
-              <td>2022-12-16 18:41:10</td>
-              <td>1909</td>
-            </tr>
-            <tr>
-              <td><img class="rounded-circle me-2" height="30" src="../../../backendAssets/img/avatars/avatar5.jpeg"
-                       width="30">Brenden Wagner
-              </td>
-              <td>2022-12-16 18:41:13</td>
-              <td>Cell 3</td>
-              <td>San Francisco</td>
-              <td>28</td>
-            </tr>
-            <tr>
-              <td><img class="rounded-circle me-2" height="30" src="../../../backendAssets/img/avatars/avatar1.jpeg"
-                       width="30">Brielle Williamson
-              </td>
-              <td>Integration Specialist</td>
-              <td>Cell 3</td>
-              <td>New York</td>
-              <td>61</td>
-            </tr>
-            <tr>
-              <td><img class="rounded-circle me-2" height="30" src="../../../backendAssets/img/avatars/avatar2.jpeg"
-                       width="30">Bruno Nash<br></td>
-              <td>Software Engineer</td>
-              <td>Cell 3</td>
-              <td>London</td>
-              <td>38</td>
-            </tr>
-            <tr>
-              <td><img class="rounded-circle me-2" height="30" src="../../../backendAssets/img/avatars/avatar3.jpeg"
-                       width="30">Caesar Vance
-              </td>
-              <td>Pre-Sales Support</td>
-              <td>Cell 3</td>
-              <td>New York</td>
-              <td>21</td>
-            </tr>
-            <tr>
-              <td><img class="rounded-circle me-2" height="30" src="../../../backendAssets/img/avatars/avatar4.jpeg"
-                       width="30">Cara Stevens
-              </td>
-              <td>Sales Assistant</td>
-              <td>Cell 3</td>
-              <td>New York</td>
-              <td>46</td>
-            </tr>
-            <tr>
-              <td><img class="rounded-circle me-2" height="30" src="../../../backendAssets/img/avatars/avatar5.jpeg"
-                       width="30">Cedric Kelly
-              </td>
-              <td>Senior JavaScript Developer</td>
-              <td>Cell 3</td>
-              <td>Edinburgh</td>
-              <td>22</td>
+            <tr v-for="record in records">
+              <td>{{ record.name }}</td>
+              <td>{{ record.assign }}</td>
+              <td>{{ record.size }}</td>
+              <td>{{ record.time }}</td>
+              <td>{{ record.class }}</td>
             </tr>
             </tbody>
             <tfoot>
@@ -131,8 +55,11 @@
         </div>
         <div class="row">
           <div class="col-md-6 align-self-center">
-            <p id="dataTable_info" aria-live="polite" class="dataTables_info" role="status">正在展示 1 - 10 条，共 27
-              页</p>
+            <p id="dataTable_info" aria-live="polite" class="dataTables_info" role="status">
+              <a v-if="records.length === 0">没有记录</a>
+              <a v-else>显示第 {{ (currentPage - 1) * pageSize + 1 }} 至 {{ currentPage * pageSize }} 项结果，
+                共 {{ records.length }} 项</a>
+            </p>
           </div>
           <div class="col-md-6">
             <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
@@ -155,7 +82,36 @@
 
 <script>
 export default {
-  name: "History"
+  name: "History",
+  data () {
+    return {
+      currentPage: 1,
+      pageSize: 10,
+      records:[
+        {
+          name: "赵玉龙",
+          assign: "大数据2",
+          size: "3.2MB",
+          time: "2022-12-16 18:40:58",
+          class: "1909"
+        },
+        {
+          name: "马策",
+          assign: "大数据4",
+          size: "390KB",
+          time: "2022-12-16 18:41:01",
+          class: "1910"
+        },
+        {
+          name: "李国成",
+          assign: "Java习题抄写",
+          size: "40MB",
+          time: "2022-12-16 18:41:04",
+          class: "1909"
+        }
+      ]
+    }
+  }
 }
 </script>
 

@@ -17,6 +17,12 @@ const app = createApp(App)
 // import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
 // app.use(BootstrapVue3)
 
+// use BoostrapVue3
+import 'bootstrap/dist/css/bootstrap.min.css'
+import $ from 'jquery'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import 'bootstrap/dist/js/bootstrap.min.js'
+import 'font-awesome/css/font-awesome.min.css'
 
 app.use(router)
 app.mount('#app')
