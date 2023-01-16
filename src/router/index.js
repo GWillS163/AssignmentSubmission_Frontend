@@ -77,7 +77,7 @@ const routes = [
                 children: []
 
             },{
-                path: '/manage/student/assignment',
+                path: '/manage/student/assign',
                 name: 'manageStudentCanUploads',
                 component: () => import ('../views/manage/student/assigns.vue'),
                 children: []
