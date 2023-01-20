@@ -32,12 +32,17 @@
           <strong>下发对象</strong>(Ctrl多选)<br></label>
         </div>
         <select id="dates-field2" :disabled="!isEditing" class="form-select multiselect-ui form-control"
-                v-model="forClazz"
+                v-model="assign.forClazz"
                 multiple
         >
+<!--          add a  option, that always be selected-->
           <!--                      use v-model forClazz to generate many options-->
-          <option v-for="clazz in assign.forClazz" :value="clazz.name" :selected="clazz.isSelected">{{clazz.name}}</option>
-<!--          <option v-for="clazz in assign.forClazz" :selected="clazz.isSelected">{{clazz.name}}</option>-->
+<!--          <option v-for="clazz in assign.forClazz" :value="clazz.name" :selected="clazz.isSelected">{{clazz.name}}</option>-->
+
+          <option v-for="clazz in ownClazz" :value="clazz.id"
+                  :selected="this.assign.forClazz.includes(clazz.id)"
+          >
+            {{clazz.name}}</option>
 
         </select>
       </div>
@@ -51,13 +56,13 @@
       </div>
     </div>
     <div class="row flex-fill mb-md-2">
-      <div v-for="switchBtn in assign.switches" class="col-4">
+      <div v-for="switchBtn in switches" class="col-4">
         <div class="mb-3"></div>
         <div class="form-check form-switch form-check-reverse text-start pe-xl-0 mb-xl-3">
           <input
               :id="switchBtn.id"
-              :checked="switchBtn.value"
-              v-model="switchBtn.value"
+              :checked="assign[switchBtn.id]"
+              v-model="assign[switchBtn.id]"
               :disabled="!isEditing"
               class="form-check-input pt-xl-0 mt-xl-1 me-xl-3"
               style="width: 49px;height: 24px;" type="checkbox">
@@ -83,12 +88,12 @@
             </a>
           </button>
           <button class="btn btn-outline-info" type="button"
-                  :disabled="isEditing || isAdd"
+                  :disabled="!isEditing && !isAdd"
                   @click="handleReset(assign)">重置
           </button>
           <button  class="btn btn-danger"
                   type="button"
-                   :disabled="isEditing || isAdd"
+                   :disabled="!isEditing || isAdd"
                   @click="handleDelete()">删除
           </button>
         </div>
@@ -160,31 +165,25 @@ export default {
 
       // clear all value to default
       assign.name = "已重置";
-      assign.forClazz =[
-          {
-            name: "1909班",
-            isSelected: true
-          },
-          {
-            name: "1908班",
-            isSelected: true
-          },
-          {
-            name: "1907班",
-            isSelected: false
-          }
-        ];
-      assign.desc = "";
-      assign.formatStr = "";
-      assign.ddl = "";
+      assign.forClazz =[];
+      assign.desc = null;
+      assign.formatStr = null;
+      assign.ddl = null;
       console.log("handleReseed");
     },
-    handleDelete() {
+    handleDelete(message) {
       console.log("删除");
+    //   pop a alter to confirm
+      alert( "确认删除？" + this.assign.name + "warning, 已经收集了的作业，删除后将无法恢复");
+
     },
     // create an auto function that used by life cycle
-    beforeCreate: function () {
-      console.log("beforeCreate");
+    clazzIsSelected: function (clazzId) {
+      const isSelected = this.assign.forClazz.includes(clazzId);
+      const symbol = isSelected ? "√" : "×";
+      console.log("isSelected", symbol, clazzId +"\t" + "In\t" + this.assign.forClazz);
+
+      return isSelected;
     },
 
 
@@ -197,11 +196,37 @@ export default {
 
   data() {
     const isEditing = false | this.isAdd;
-    const forClazz = [];
+    const switches = [
+              {
+                id: "isPermitAny",
+                name: "允许匿名",
+                value: true
+              },
+              {
+                id: "isPermitLate",
+                name: "允许迟交",
+                value: true
+              },
+              {
+                id: "isVarifyName",
+                name: "校验名称",
+                value: true
+              },
+              {
+                id: "isPermitMulti",
+                name: "允许多文件",
+                value: true
+              },
+              {
+                id: "isPermitChange",
+                name: "允许更改",
+                value: true
+              }
+            ];
     return {
       // handleEdit: this.handleEdit,
       isEditing,
-      forClazz,
+      switches
     }
   },
 
@@ -209,6 +234,17 @@ export default {
     isAdd: {
       type: Boolean,
       default: false
+    },
+    ownClazz: {
+      type: Array,
+      default: function () {
+        return [
+          {
+            id: "defaultId",
+            name: "Vue未传入班级信息"
+          }
+        ]
+      }
     },
     assign: {
 
