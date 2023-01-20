@@ -60,7 +60,7 @@ const routes = [
             {
                 path: '/manage/teacher/center',
                 name: 'manageTeacherCenter',
-                component: () => import ('../views/manage/teacher/center.vue'),
+                component: () => import ('../views/manage/teacher/Center.vue'),
                 children: [
 
                 ]
@@ -68,7 +68,7 @@ const routes = [
             {
                 path: '/manage/teacher/assignView',
                 name: 'manageTeacherAssignView',
-                component: () => import ('../views/manage/teacher/assignView.vue'),
+                component: () => import ('../views/manage/teacher/AssignView.vue'),
                 children: []
             },{
                 path: '/manage/teacher/classView',
@@ -77,7 +77,7 @@ const routes = [
                 children: []
 
             },{
-                path: '/manage/student/assign',
+                path: '/manage/student/assigns',
                 name: 'manageStudentCanUploads',
                 component: () => import ('../views/manage/student/assigns.vue'),
                 children: []

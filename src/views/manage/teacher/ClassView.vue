@@ -6,28 +6,30 @@
       </div>
       <div class="col-12 col-sm-6 col-md-6 text-end" style="margin-bottom: 30px;"><a class="btn btn-primary"
                                                                                      role="button"><i
-          class="fa fa-plus"></i>&nbsp;Agregar colaborador</a></div>
+          class="fa fa-plus"></i>&nbsp;新增班级</a></div>
     </div>
-    <div id="TableSorterCard" class="card" style="margin-bottom: 19px;">
-      <div class="card-header py-3">
-        <div class="row table-topper align-items-center">
-          <div class="col-12 col-sm-5 col-md-6 text-start" style="margin: 0px;padding: 5px 15px;">
-            <p class="text-primary m-0 fw-bold">作业列表</p>
-          </div>
-          <div class="col-12 col-sm-7 col-md-6 text-end" style="margin: 0px;padding: 5px 15px;">
-            <button class="btn btn-primary btn-sm reset" style="margin: 2px;" type="button">Borrar Filtros</button>
-            <button id="zoom_in" class="btn btn-warning btn-sm" style="margin: 2px;" type="button"
-                    zoomclick="ChangeZoomLevel(-10);"><i class="fa fa-search-plus"></i></button>
-            <button id="zoom_out" class="btn btn-warning btn-sm" style="margin: 2px;" type="button"
-                    zoomclick="ChangeZoomLevel(-10);"><i class="fa fa-search-minus"></i></button>
-          </div>
-        </div>
-      </div>
-      <div class="row mb-5 mb-lg-4" style="margin-bottom: 90px;">
-        <div class="col-md-8 col-xl-6 text-center mx-auto">
-          <h2>以班级视图查看收集进度</h2>
-        </div>
-      </div>
+<!--    <div id="TableSorterCard" class="card" style="margin-bottom: 19px;">-->
+<!--      <div class="card-header py-3">-->
+<!--        <div class="row table-topper align-items-center">-->
+<!--          <div class="col-12 col-sm-5 col-md-6 text-start" style="margin: 0px;padding: 5px 15px;">-->
+<!--            <p class="text-primary m-0 fw-bold">作业列表</p>-->
+<!--          </div>-->
+<!--          <div class="col-12 col-sm-7 col-md-6 text-end" style="margin: 0px;padding: 5px 15px;">-->
+<!--            <button class="btn btn-primary btn-sm reset" style="margin: 2px;" type="button">Borrar Filtros</button>-->
+<!--            <button id="zoom_in" class="btn btn-warning btn-sm" style="margin: 2px;" type="button"-->
+<!--                    zoomclick="ChangeZoomLevel(-10);"><i class="fa fa-search-plus"></i></button>-->
+<!--            <button id="zoom_out" class="btn btn-warning btn-sm" style="margin: 2px;" type="button"-->
+<!--                    zoomclick="ChangeZoomLevel(-10);"><i class="fa fa-search-minus"></i></button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--    </div>-->
+<!--      <div class="row mb-5 mb-lg-4" style="margin-bottom: 90px;">-->
+<!--        <div class="col-md-8 col-xl-6 text-center mx-auto">-->
+<!--          <h2>以班级视图查看收集进度</h2>-->
+<!--        </div>-->
+<!--      </div>-->
       <div class="text-center text-white-50 bg-primary border rounded border-0 p-3" style="margin-bottom: 33px;">
         <div class="row row-cols-2 row-cols-md-4">
           <div class="col">
@@ -205,7 +207,6 @@
           </div>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
