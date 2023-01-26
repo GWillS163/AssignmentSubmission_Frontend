@@ -3,7 +3,7 @@
 // import './plugins/bootstrap-vue'
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './router/router'
 import './api/mock.js'
 
 
@@ -13,6 +13,8 @@ import './api/mock.js'
 const app = createApp(App)
 
 
+import api from './api/api.js'
+app.config.globalProperties.$api = api
 // use BoostrapVue3
 // import BootstrapVue3 from 'bootstrap-vue-3'
 // // set the theme color of bootstrap

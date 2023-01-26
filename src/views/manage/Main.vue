@@ -8,8 +8,6 @@
         <div class="container-fluid">
 
           <router-view/>
-<!--          <Dashboard/>-->
-<!--          <notice/>-->
         </div>
       </div>
       <Footer/>
