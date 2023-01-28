@@ -14,7 +14,7 @@
         </button>
       </div>
     </div>
-    <div class="card-body" style="padding-top: 0px;">
+    <div class="card-body" style="padding-top: 0;">
       <div class="table-responsive">
         <table class="table table-striped table-hover">
           <thead>
@@ -64,57 +64,14 @@ export default {
       console.log(keyword);
     }
   },
+  props: {
+    tableData: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
-      tableData: [
-        {
-          name: "匿名",
-          fileName: "软件工程-1909-孟骏清-19852331.docx",
-          size: "3.2MB",
-          type: "Windows DesktopV2.1",
-          time: "2022-7-17 17:46:37",
-          status: "已删除"
-        },
-        {
-          name: "匿名",
-          fileName: "软件工程-1909-李三-19852365.docx",
-          size: "21MB",
-          type: "网站",
-          time: "2022-7-17 17:46:37",
-          status: ""
-        },
-        {
-          name: "匿名",
-          fileName: "软件工程-1909-李三-19852365.docx",
-          size: "21MB",
-          type: "网站",
-          time: "2022-7-17 17:46:37",
-          status: ""
-        },
-        {
-          name: "匿名",
-          fileName: "软件工程-1909-李三-19852365.docx",
-          size: "21MB",
-          type: "网站",
-          time: "2022-7-17 17:46:37",
-          status: ""
-        },
-        {
-          name: "匿名",
-          fileName: "软件工程-1909-李三-19852365.docx",
-          size: "21MB",
-          type: "网站",
-          time: "2022-7-17 17:46:37",
-          status: ""
-        },
-        {
-          name: "匿名",
-          fileName: "软件工程-1909-李三-19852365.docx",
-          size: "21MB",
-          type: "网站",
-          time: "2022-7-17 17:46:37",
-          status: ""
-        }]
     };
 }}
 </script>

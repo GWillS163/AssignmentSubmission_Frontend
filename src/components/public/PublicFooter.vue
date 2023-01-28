@@ -5,7 +5,7 @@
               <h2 class="fw-bold mb-2">留下您的邮箱以及时收到通知！</h2>
               <p class="mb-0">邮件将会在您的作业状态有更改时发送。</p>
           </div>
-          <form class="d-flex justify-content-center flex-wrap my-2" method="post">
+          <form class="d-flex justify-content-center flex-wrap my-2">
               <div class="my-2">
                 <input class="form-control" type="email" name="email" placeholder="请输入您的邮箱"
                         v-model="subscribeMail"
@@ -13,7 +13,7 @@
               </div>
 
               <div class="my-2">
-                <button class="btn btn-primary ms-sm-2" type="submit" @click="handleSubscribe">请通知我</button>
+                <button class="btn btn-primary ms-sm-2"  @click="handleSubscribe()">请通知我</button>
               </div>
           </form>
       </div>
@@ -48,7 +48,7 @@ export default {
     // let subScribeMail = ref('222')
     // subScribeMail = '22'
     return {
-      subscribeMail: ref('11')
+      subscribeMail: ref('')
     }
   },
   methods: {

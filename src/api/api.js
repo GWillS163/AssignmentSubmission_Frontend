@@ -1,4 +1,4 @@
-// API 总控
+// API 总控， 替代每个组件内的链接
 
 import request from '@/api/request'
 
@@ -10,13 +10,34 @@ export default {
             mock: true
         })
     },
-    // getTab1PublicAssigns() {
-    //     return request({
-    //         url: '/public/getTab1PublicAssigns',
-    //         method: 'get',
-    //         mock: true
-    //     })
-    // },
+    getTab1PublicAssigns() {
+        return request({
+            url: '/public/getTab1PublicAssigns',
+            method: 'get',
+            mock: true
+        })
+    },
+    getTab2PublicAssigns() {
+        return request({
+            url: '/public/getTab2PublicAssigns',
+            method: 'get',
+            mock: true
+        })
+    },
+    getTab3PublicAssigns() {
+        return request({
+            url: '/public/getTab3PublicAssigns',
+            method: 'get',
+            mock: true
+        })
+    },
+    getTab4PublicAssigns() {
+        return request({
+            url: '/public/getTab4PublicAssigns',
+            method: 'get',
+            mock: true
+        })
+    },
     getTestData(params) {
         return request({
             url: '/dashboard/getTestData',

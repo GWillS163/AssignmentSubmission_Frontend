@@ -66,63 +66,18 @@ export default {
       alert("developing" + url);
     }
     },
-
+  props: {
+    titleBanner: {
+      type: Array,
+      default: () => []
+    },
+    classViews: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
-      titleBanner: [
-        {
-          name: "已交作业",
-          value: "123+"
-        },
-        {
-          name: "未交作业",
-          value: "123+"
-        },
-        {
-          name: "提交率",
-          value: "89%"
-        },
-        {
-          name: "最近DDL",
-          value: "3"
-        }
-      ],
-      classViews: [
-        {
-          className: "1910班",
-          teacher: "KissesJun",
-          detailUrl: "https://www.baidu.com",
-          progressData: [
-            {
-              name: "Java基础",
-              value: "100%",
-              colorClass: "bg-success"
-            },
-            {
-              name: "Java基础2",
-              value: "40%",
-              colorClass: "bg-danger"
-            }
-          ],
-        },
-        {
-          className: "1909班",
-          teacher: "",
-          detailUrl: "https://www.baidu.com",
-          progressData: [
-            {
-              name: "Java基础",
-              value: "90%",
-              colorClass: "bg-info"
-            },
-            {
-              name: "Java基础2",
-              value: "70%",
-              colorClass: "bg-warn"
-            }
-          ],
-        }
-      ]
     };
   },
 }

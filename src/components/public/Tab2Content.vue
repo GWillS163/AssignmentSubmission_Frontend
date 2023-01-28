@@ -48,6 +48,7 @@
               </div>
           </div>
           <div class="d-flex"><img class="rounded-circle flex-shrink-0 me-3 fit-cover" width="50" height="50"
+                                   alt=""
                                    :src="assignView.detailUrl">
               <div>
                   <p class="fw-bold text-primary mb-0">{{ assignView.releaseTeacher }}</p>
@@ -65,50 +66,20 @@
 
 <script>
 export default {
-  name: "tab2Content",
+  name: "tab-2",
+  props: {
+    titleBanner: {
+      type: Array,
+      default: () => [],
+    },
+    assignViews: {
+      type: Array,
+      default: () => [],
+    },
+  },
   // export data:
   data() {
     return {
-      titleBanner: [
-        {
-          name: "已交作业",
-          num: "123+"
-        },
-        {
-          name: "未交作业",
-          num: "123+"
-        },
-        {
-          name: "提交率",
-          num: "45%"
-        },
-        {
-          name: "最近DDL",
-          num: "3"
-        }
-      ],
-      assignViews: [
-        {
-          title: "Week8 大作业",
-          ddl: "2023-2-15",
-          detailData: [
-            {
-              class: "1909",
-              progress: "96%",
-              colorClass: "bg-success"
-            },
-            {
-              class: "1910",
-              progress: "40%",
-              colorClass: "bg-warning"
-            }
-          ],
-          releaseTeacher: "KissesJun",
-          releaseTime: "2022-12-15",
-          releaseImg: "assets/img/assignmentImg.png",
-          detailUrl: "assignment/detail/32933"
-        }
-      ]
     };
   },
 
