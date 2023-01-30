@@ -1,10 +1,9 @@
-<script setup>
-</script>
 
 <template>
   <div class="d-sm-flex justify-content-between align-items-center mb-4">
-    <h3 class="text-dark mb-0">Dashboard</h3><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button"
-                                                href="#">
+    <h3 class="text-dark mb-0">Dashboard</h3>
+    <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button"
+        @click="downloadSubmittedData">
     <i class="fas fa-download fa-sm text-white-50"></i>下载提交数据</a>
   </div>
   <div class="row">
@@ -144,30 +143,42 @@
 </template>
 
 <script>
+import NavBarSide from "@/components/management/navBarSide.vue";
+import NavBarTop from "@/components/management/navBarTop.vue";
 import {getCurrentInstance, onMounted, ref} from "vue";
 import {defineComponent} from "vue";
 
 export default defineComponent({
   name: "dashboard",
+  components: {
+    NavBarSide,
+    NavBarTop
+  },
   setup() {
     const { proxy } = getCurrentInstance();
-    let cardsData = ref([]);
+    // let cardsData = ref([]);
     let titleCards = ref([]);
     let assignProgress = ref([]);
+
+    const downloadSubmittedData = async () => {
+      console.log("downloadSumbittedData");
+    };
     const getDashboardData = async () => {
       const data = await proxy.$api.getDashBoardData();
-      cardsData.value = data["cardsData"];
+      // console.log("data", data);
       titleCards.value = data["titleCards"];
+      assignProgress.value = data["assignProgress"];
 
-      console.log(cardsData.value);
-      console.log(titleCards.value);
+      // console.log(assignProgress.value);
+      // console.log(titleCards.value);
     };
     onMounted(() => {
       getDashboardData();
     });
     return {
       titleCards,
-      assignProgress
+      assignProgress,
+      downloadSubmittedData
     };
   },
 });

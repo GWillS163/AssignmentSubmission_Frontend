@@ -24,7 +24,7 @@ service.interceptors.response.use((res) => {
         return data
     } else {
         // 网络请求错误
-        Message.error(msg || NETWORK_ERROR)
+        // Message.error(msg || NETWORK_ERROR)
         return Promise.reject(msg || NETWORK_ERROR)
     }
 }    )

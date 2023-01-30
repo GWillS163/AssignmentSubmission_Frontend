@@ -5,7 +5,11 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router/router'
 import './api/mock.js'
-
+// import '../src/backendAssets/bootstrap/css/bootstrap.min.css'
+// import '../src/backendAssets/bootstrap/js/bootstrap.min.js'
+// import '../src/main.js'
+// import '../src/assets/bootstrap/js/bootstrap.min.js'
+// import '../src/assets/js/script.min.js'
 
 // import './assets/main.css'
 // import './backendAssets/css/bootstrap.min.css'

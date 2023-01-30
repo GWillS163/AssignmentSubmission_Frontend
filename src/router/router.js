@@ -5,20 +5,15 @@ const routes = [
         name: 'public', children: []},
     {path: '/about', component: () => import ('../views/public/About.vue'),
         name: 'about', children: []},
-    {
-        path: '/login', name: 'login',
+    { path: '/login', name: 'login',
         component: () => import ('../views/manage/others/Login.vue')
     },
-    // {
-    //     path: '/register',
-    //     name: 'register',
-    //     component: () => import ('../views/manage/others/Register.vue')
-    // },
-    // {
-    //     path: '/forgotPassword',
-    //     name: 'forgotPassword',
-    //     component: () => import ('../views/manage/others/Forgot-password.vue')
-    // },
+    { path: '/register', name: 'register',
+        component: () => import ('../views/manage/others/Register.vue')
+    },
+    { path: '/forgotPassword', name: 'forgotPassword',
+        component: () => import ('../views/manage/others/ForgotPassword.vue')
+    },
     // {
     //     path: '/admin',
     //     component: () => import ('../views/manage/test.vue'),

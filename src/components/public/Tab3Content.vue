@@ -4,7 +4,7 @@
       <h2>以班级视图查看收集进度</h2>
     </div>
   </div>
-  <div class="text-center text-white-50 bg-primary border rounded border-0 p-3" style="margin-bottom: 33px;">
+  <div class="text-center text-white-50 bg-primary border rounded border-0 p-3" style="margin-bottom: 40px;">
     <div class="row justify-content-center">
       <div class="col" v-for="title in titleBanner">
         <div class="p-3">
@@ -14,7 +14,18 @@
       </div>
     </div>
   </div>
-  <div class="row gy-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 text-center">
+
+  <div v-if="classViews.length === 0" class="col">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">暂无作业</h4>
+          <p class="card-text">暂无作业</p>
+        </div>
+      </div>
+    </div>
+
+    <div v-else>
+      <div class="row gy-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 text-center">
     <div class="col" v-for="classView in classViews">
       <div>
         <div class="card">
@@ -53,7 +64,7 @@
     </div>
 
   </div>
-
+    </div>
 </template>
 
 <script>

@@ -14,6 +14,16 @@
         </button>
       </div>
     </div>
+
+    <div v-if="tableData.length === 0" class="col">
+      <div class="card-body">
+        <div class="text-center">
+          <h6 class="text-muted mb-4">暂无已交记录</h6>
+        </div>
+      </div>
+    </div>
+    <div v-else>
+
     <div class="card-body" style="padding-top: 0;">
       <div class="table-responsive">
         <table class="table table-striped table-hover">
@@ -39,6 +49,7 @@
           </tbody>
         </table>
       </div>
+    </div>
     </div>
     <div class="card-footer">
       <nav>

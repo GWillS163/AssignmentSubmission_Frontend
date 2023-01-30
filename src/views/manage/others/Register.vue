@@ -4,8 +4,7 @@
         <div class="card-body p-0">
             <div class="row">
                 <div class="col-lg-5 d-none d-lg-flex">
-                    <div class="flex-grow-1 bg-register-image"
-                         style="background-image: url(&quot;../assets/img/dogs/image2.jpeg&quot;);"></div>
+                    <div class="flex-grow-1 bg-register-image" ></div>
                 </div>
                 <div class="col-lg-7">
                     <div class="p-5">
@@ -14,11 +13,11 @@
                         </div>
                         <form class="user">
                             <div class="row mb-3">
-                                <div class="col-sm-6 mb-3 mb-sm-0"><input class="form-control form-control-user"
-                                                                          type="text" id="exampleFirstName"
-                                                                          placeholder="姓名" name="name"></div>
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                  <input class="form-control form-control-user"
+                                         type="text" id="name" placeholder="姓名" name="name"></div>
                                 <div class="col-sm-6"><input class="form-control form-control-user" type="text"
-                                                             id="exampleFirstName" placeholder="ID/学号/工号" name="id">
+                                                             id="id" placeholder="ID/学号/工号" name="id">
                                 </div>
                             </div>
                             <div class="mb-3"><input class="form-control form-control-user" type="email"
@@ -34,9 +33,9 @@
                             </div>
                             <button class="btn btn-primary d-block btn-user w-100" type="submit">注册</button>
                             <hr>
-                            <div class="text-center justify-content-between"><a class="small"
-                                                                                href="forgot-password.html">忘记密码？</a><a
-                                    class="small ms-lg-4" href="login.html">已有账户？请登录</a></div>
+                            <div class="text-center justify-content-between">
+                              <a class="small" href="/forgotPassword">忘记密码？</a>
+                              <a class="small ms-lg-4" href="/login">已有账户？请登录</a></div>
                             <hr>
                         </form>
                         <div class="text-center"></div>
