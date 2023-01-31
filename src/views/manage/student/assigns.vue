@@ -19,10 +19,6 @@
               <a class="nav-link active" data-bs-toggle="tab" href="#tab-2"
                                                         role="tab">公共作业</a>
             </li>
-            <li class="nav-item" role="presentation">
-              <a class="nav-link" data-bs-toggle="tab" href="#tab-3"
-                                                        role="tab">  </a>
-            </li>
           </ul>
           <div class="tab-content">
             <div id="tab-1" class="tab-pane" role="tabpanel">

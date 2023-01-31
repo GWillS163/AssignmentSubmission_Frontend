@@ -8,26 +8,37 @@
     </a>
       <hr class="sidebar-divider my-0">
       <ul id="accordionSidebar" class="navbar-nav text-light">
-        <li class="nav-item">
-          <a class="nav-link" href="/#/manage/dashboard"><i class="fas fa-tachometer-alt"></i>
-            <span>&nbsp;Dashboard</span></a>
-          <a class="nav-link" href="/#/manage/notice"><i
-              class="far fa-comment-dots"></i><span>通知中心</span></a>
-        </li>
+        <li class="nav-item" v-for="part in [{
+                  name: 'Dashboard',
+                  link: '/manage/dashboard',
+                  icon: 'fa-tachometer-alt'
+                  },
+                  {
+                    name: '通知中心',
+                    link: '/manage/notice',
+                    icon: 'fa-bell'
+                  },
+                  {
+                    name:'提交历史',
+                    link:'/manage/history',
+                    icon:'fa-history'
+                  }
 
-        <li class="nav-item"><a class="nav-link" href="/#/manage/history">
-          <i class="fas fa-table"></i><span>&nbsp;提交历史</span></a>
-        </li>
+          ]">
+          <a class="nav-link" :href="part.link"><i class="fas" :class="part.icon"></i>
+            <span>&nbsp;{{part.name}}</span></a>
+          </li>
 
         <li class="nav-item">
-          <div><a aria-controls="collapse-4" aria-expanded="true" class="btn btn-link nav-link"
+          <div>
+            <a aria-controls="collapse-4" aria-expanded="true" class="btn btn-link nav-link"
                   data-bs-toggle="collapse" href="#collapse-4" role="button">&nbsp;<i
               class="fas fa-chart-area"></i><span>教师中心</span></a>
             <div id="collapse-4" class="collapse show">
               <div class="bg-white border rounded py-2 collapse-inner">
-                <a class="collapse-item" href="/#/manage/teacher/center">收集总览</a>
-                <a class="collapse-item" href="/#/manage/teacher/assignView">作业视图</a>
-                <a class="collapse-item" href="/#/manage/teacher/classView">班级视图</a>
+                <a class="collapse-item" href="/manage/teacher/center">收集总览</a>
+                <a class="collapse-item" href="/manage/teacher/assignView">作业视图</a>
+                <a class="collapse-item" href="/manage/teacher/classView">班级视图</a>
               </div>
             </div>
           </div>
@@ -36,8 +47,8 @@
               class="fas fa-chart-area"></i><span>学生中心</span></a>
             <div id="collapse-5" class="collapse show">
               <div class="bg-white border rounded py-2 collapse-inner">
-                <a class="collapse-item" href="/#/manage/student/assigns">可交作业</a>
-                <a class="collapse-item" href="/#/manage/student/files">已交管理</a>
+                <a class="collapse-item" href="/manage/student/assigns">可交作业</a>
+                <a class="collapse-item" href="/manage/student/files">已交管理</a>
               </div>
             </div>
           </div>
@@ -54,8 +65,8 @@
             <div id="collapse-1" class="collapse show">
               <div class="bg-white border rounded py-2 collapse-inner">
                 <h6 class="collapse-header">精细化管理:</h6>
-                <a class="collapse-item" href="/#/manage/assignment/assign">作业管理</a><a
-                  class="collapse-item" href="/#/manage/assignment/file">文件管理</a>
+                <a class="collapse-item" href="/manage/assignment/assign">作业管理</a><a
+                  class="collapse-item" href="/manage/assignment/file">文件管理</a>
               </div>
             </div>
           </div>
@@ -65,13 +76,13 @@
                   data-bs-toggle="collapse" href="#collapse-2" role="button"><i class="fas fa-wrench"></i>&nbsp;<span>信息管理</span></a>
             <div id="collapse-2" class="collapse show">
               <div class="bg-white border rounded py-2 collapse-inner">
-                <a class="collapse-item" href="/#/manage/information/student">学生管理</a>
-                <a class="collapse-item" href="/#/manage/information/teacher">教师管理</a>
-                <a class="collapse-item" href="/#/manage/information/class">班级管理</a>
+                <a class="collapse-item" href="/manage/information/student">学生管理</a>
+                <a class="collapse-item" href="/manage/information/teacher">教师管理</a>
+                <a class="collapse-item" href="/manage/information/class">班级管理</a>
               </div>
             </div>
           </div>
-          <a class="nav-link" href="/#/manage/profile"><i class="fas fa-info-circle"></i>
+          <a class="nav-link" href="/manage/profile"><i class="fas fa-info-circle"></i>
             <span>个人信息</span></a>
         </li>
         <hr class="sidebar-divider">
@@ -83,12 +94,12 @@
                   data-bs-toggle="collapse" href="#collapse-3" role="button"><i class="fas fa-folder"></i>&nbsp;<span>测试页面</span></a>
             <div id="collapse-3" class="collapse show">
               <div class="bg-white border rounded py-2 collapse-inner">
-                <a class="collapse-item" href="/#/forgotPassword">Forgot Password</a>
-                <a class="collapse-item" href="/#/login">login Page</a>
-                <a class="collapse-item" href="/#/register">Register Page</a>
+                <a class="collapse-item" href="/forgotPassword">Forgot Password</a>
+                <a class="collapse-item" href="/login">login Page</a>
+                <a class="collapse-item" href="/register">Register Page</a>
                 <h6 class="collapse-header">OTHER PAGES:</h6>
-                <a class="collapse-item" href="/#/404">404 Page</a><a
-                    class="collapse-item" href="/#/blank">Blank Page</a>
+                <a class="collapse-item" href="/404">404 Page</a><a
+                    class="collapse-item" href="/blank">Blank Page</a>
               </div>
             </div>
           </div>

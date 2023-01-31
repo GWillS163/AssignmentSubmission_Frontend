@@ -26,7 +26,11 @@
                 <h4 class="card-title">{{ assign.title }}<br></h4>
                 <h6 class="text-muted card-subtitle mb-2">DDL: {{ assign.ddl }}</h6>
                 <p class="card-text" style="margin-bottom: -28px;">小组组长按图示打包，交给负责人<br><br>文件不大于20MB。<br>
-                </p><a class="btn btn-primary d-block w-100" href="#" role="button">点击上传</a>
+                </p>
+<!--                add a button that can upload file-->
+                <input type="file" />233
+                <b-button variant="primary" @click="uploadFile(assign.id)">上传文件</b-button>
+                <a class="btn btn-primary d-block w-100" @click="handleUploadFile" role="button" >点击上传</a>
               </div>
             </div>
           </div>
@@ -45,13 +49,34 @@ export default {
     assigns: Array,
   },
   setup() {
-  },
-  // define a data object
-  data() {
-    return {
-      // define a message property
+    const handleUploadFile = () => {
+      console.log("handleUploadFi e");
+      // open file dialog
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'application/zip';
+      input.onchange = e => {
+        const file = e.target.files[0];
+        console.log(file);
     };
-  },
+      const uploadFile = (assignId) => {
+        console.log("uploadFile");
+        // open file dialog
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'application/zip';
+        input.onchange = e => {
+          const file = e.target.files[0];
+          console.log(file);
+        };
+        input.click();
+      };
+    return {
+      handleUploadFile: handleUploadFile,
+      uploadFile
+    }
+  }
+  }
 }
 </script>
 

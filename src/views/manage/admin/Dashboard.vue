@@ -32,7 +32,6 @@
           <h6 class="text-primary fw-bold m-0">作业收集进度</h6>
         </div>
         <div class="card-body">
-
           <div v-for="assign in assignProgress">
             <h4 class="small fw-bold"> {{assign.name }}
               <span class="float-end"> {{ assign.collectStatus }}</span>

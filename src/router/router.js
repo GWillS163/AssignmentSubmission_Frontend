@@ -38,93 +38,93 @@ const routes = [
                 component: () => import ('../views/manage/Notice.vue'),
                 children: []
             },
-    //         {
-    //             path: '/manage/history',
-    //             name: 'manageHistory',
-    //             component: () => import ('../views/manage/History.vue'),
-    //             children: []
-    //         },
-    //         {
-    //
-    //             path: '/manage/teacher/',
-    //             redirect: '/manage/teacher/center'
-    //         },
-    //         {
-    //             path: '/manage/teacher/center',
-    //             name: 'manageTeacherCenter',
-    //             component: () => import ('../views/manage/teacher/Center.vue'),
-    //             children: [
-    //
-    //             ]
-    //         },
-    //         {
-    //             path: '/manage/teacher/assignView',
-    //             name: 'manageTeacherAssignView',
-    //             component: () => import ('../views/manage/teacher/AssignView.vue'),
-    //             children: []
-    //         },{
-    //             path: '/manage/teacher/classView',
-    //             name: 'manageTeacherClassView',
-    //             component: () => import ('../views/manage/teacher/ClassView.vue'),
-    //             children: []
-    //
-    //         },{
-    //             path: '/manage/student/assigns',
-    //             name: 'manageStudentCanUploads',
-    //             component: () => import ('../views/manage/student/assigns.vue'),
-    //             children: []
-    //         },{
-    //             path: '/manage/student/files',
-    //             name: 'manageStudentFiles',
-    //             component: () => import ('../views/manage/student/files.vue'),
-    //             children: []
-    //         },{
-    //             path: '/manage/assignment/assign',
-    //             name: 'manageAssignmentAssign',
-    //             component: () => import ('../views/manage/assignment/assign.vue'),
-    //             children: []
-    //         },{
-    //             path: '/manage/assignment/file',
-    //             name: 'manageAssignmentFile',
-    //             component: () => import ('../views/manage/assignment/file.vue'),
-    //             children: []
-    //         },
-    //         {
-    //             path: '/manage/information/teacher',
-    //             name: 'manageInformationTeacher',
-    //             component: () => import ('../views/manage/information/teacher.vue'),
-    //             children: []
-    //         },
-    //         {
-    //             path: '/manage/information/student',
-    //             name: 'manageInformationStudent',
-    //             component: () => import ('../views/manage/information/student.vue'),
-    //             children: []
-    //         },
-    //         {
-    //             path: '/manage/information/class',
-    //             name: 'manageInformationClass',
-    //             component: () => import ('../views/manage/information/class.vue'),
-    //             children: []
-    //         },
-    //         {
-    //             path: '/manage/profile',
-    //             name: 'manageProfile',
-    //             component: () => import ('../views/manage/Profile.vue'),
-    //             children: []
-    //         },
-    //         {
-    //             path: '/404',
-    //             name: '404',
-    //             component: () => import ('../views/manage/others/404.vue'),
-    //             children: []
-    //         },
-    //         {
-    //             path: '/blank',
-    //             name: 'blank',
-    //             component: () => import ('../views/manage/others/Blank.vue'),
-    //             children: []
-    //         }
+            {
+                path: '/manage/history',
+                name: 'manageHistory',
+                component: () => import ('../views/manage/History.vue'),
+                children: []
+            },
+            {
+
+                path: '/manage/teacher/',
+                redirect: '/manage/teacher/center'
+            },
+            {
+                path: '/manage/teacher/center',
+                name: 'manageTeacherCenter',
+                component: () => import ('../views/manage/teacher/Center.vue'),
+                children: [
+
+                ]
+            },
+            {
+                path: '/manage/teacher/assignView',
+                name: 'manageTeacherAssignView',
+                component: () => import ('../views/manage/teacher/AssignView.vue'),
+                children: []
+            },{
+                path: '/manage/teacher/classView',
+                name: 'manageTeacherClassView',
+                component: () => import ('../views/manage/teacher/ClassView.vue'),
+                children: []
+
+            },{
+                path: '/manage/student/assigns',
+                name: 'manageStudentCanUploads',
+                component: () => import ('../views/manage/student/assigns.vue'),
+                children: []
+            },{
+                path: '/manage/student/files',
+                name: 'manageStudentFiles',
+                component: () => import ('../views/manage/student/files.vue'),
+                children: []
+            },{
+                path: '/manage/assignment/assign',
+                name: 'manageAssignmentAssign',
+                component: () => import ('../views/manage/assignment/assign.vue'),
+                children: []
+            },{
+                path: '/manage/assignment/file',
+                name: 'manageAssignmentFile',
+                component: () => import ('../views/manage/assignment/file.vue'),
+                children: []
+            },
+            {
+                path: '/manage/information/teacher',
+                name: 'manageInformationTeacher',
+                component: () => import ('../views/manage/information/teacher.vue'),
+                children: []
+            },
+            {
+                path: '/manage/information/student',
+                name: 'manageInformationStudent',
+                component: () => import ('../views/manage/information/student.vue'),
+                children: []
+            },
+            {
+                path: '/manage/information/class',
+                name: 'manageInformationClass',
+                component: () => import ('../views/manage/information/class.vue'),
+                children: []
+            },
+            {
+                path: '/manage/profile',
+                name: 'manageProfile',
+                component: () => import ('../views/manage/Profile.vue'),
+                children: []
+            },
+            {
+                path: '/404',
+                name: '404',
+                component: () => import ('../views/manage/others/404.vue'),
+                children: []
+            },
+            {
+                path: '/blank',
+                name: 'blank',
+                component: () => import ('../views/manage/others/Blank.vue'),
+                children: []
+            }
         ]
     },
 ]
