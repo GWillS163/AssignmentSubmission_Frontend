@@ -38,6 +38,27 @@ export default {
             mock: true
         })
     },
+    getMenuPart1() {
+        return request({
+            url: '/menu/getMenuPart1',
+            method: 'get',
+            mock: true
+        })
+    },
+    getMenuDataManage() {
+        return request({
+            url: '/menu/getMenuDataManage',
+            method: 'get',
+            mock: true
+        })
+    },
+    getMenuDebugLink() {
+        return request({
+            url: '/menu/getMenuDebugLink',
+            method: 'get',
+            mock: true
+        })
+    },
     getTestData(params) {
         return request({
             url: '/dashboard/getTestData',
