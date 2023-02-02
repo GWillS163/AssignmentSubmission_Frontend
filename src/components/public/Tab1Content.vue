@@ -29,7 +29,7 @@
                 </p>
 <!--                add a button that can upload file-->
                 <input type="file" />233
-                <b-button variant="primary" @click="uploadFile(assign.id)">上传文件</b-button>
+                <button class="primary" @click="uploadFile(assign.id)">上传文件</button>
                 <a class="btn btn-primary d-block w-100" @click="handleUploadFile" role="button" >点击上传</a>
               </div>
             </div>

@@ -106,7 +106,7 @@ export default defineComponent({
     };
     const getTab4Data = async () => {
       const res = await proxy.$api.getTab4PublicAssigns();
-      console.log("tab4Assigns:", res);
+      // console.log("tab4Assigns:", res);
       // console.log("titleBanner:", res.titleBanner);
       // console.log("assignViews:", res.assignViews);
       tab4submitRecord.value = res.tableData;
