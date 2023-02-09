@@ -59,6 +59,13 @@ export default {
             mock: true
         })
     },
+    getNoticeData() {
+        return request({
+            url: '/manage/notice',
+            method: 'get' ,
+            mock: true
+        })
+    },
     getTestData(params) {
         return request({
             url: '/dashboard/getTestData',

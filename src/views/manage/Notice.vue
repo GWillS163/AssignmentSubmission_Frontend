@@ -40,7 +40,7 @@
             <th>来自</th>
             <th>备注</th>
             <th>内容</th>
-            <th style="width: 151.398px;">时间</th>
+            <th style="width: 152px;">时间</th>
             <th class="text-center">详情</th>
           </tr>
           </thead>
@@ -63,52 +63,19 @@
 <!--&lt;!&ndash;              </svg>&ndash;&gt;-->
 <!--            </td>-->
 <!--          </tr>-->
-          <tr>
-            <td><input type="checkbox"></td>
-            <td class="text-truncate" style="max-width: 200px;">张夜光</td>
-            <td>自动提醒</td>
-            <td class="text-truncate" style="max-width: 200px;">安卓作业即将截止，请注意</td>
-            <td>2022-12-17 20:16:38</td>
+          <tr v-for="notice in noticeData">
+            <td><input type="checkbox" :checked="notice.isChecked"></td>
+            <td class="text-truncate" style="max-width: 200px;">{{ notice.from }}</td>
+            <td>{{ notice.type }}</td>
+            <td class="text-truncate" style="max-width: 200px;">{{  notice.content }}</td>
+            <td>{{ notice.sendTime }}</td>
             <td class="text-center">
-              <svg class="bi bi-eye-fill fs-5 text-primary" fill="currentColor" height="1em" viewBox="0 0 16 16"
-                   width="1em"
-                   xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"></path>
-                <path
-                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
-              </svg>
-            </td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td class="text-truncate" style="max-width: 200px;">KissesJun</td>
-            <td>自动提醒</td>
-            <td class="text-truncate" style="max-width: 200px;">大数据作业即将截止，请注意</td>
-            <td>2022-12-17 20:16:38</td>
-            <td class="text-center">
-              <svg class="bi bi-eye-fill fs-5 text-primary" fill="currentColor" height="1em" viewBox="0 0 16 16"
-                   width="1em"
-                   xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"></path>
-                <path
-                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
-              </svg>
-            </td>
-          </tr>
-          <tr>
-            <td><input type="checkbox"></td>
-            <td class="text-truncate" style="max-width: 200px;">KissesJun</td>
-            <td>自动提醒</td>
-            <td class="text-truncate" style="max-width: 200px;">大数据作业即将截止，请注意</td>
-            <td>2022-12-17 20:16:38</td>
-            <td class="text-center">
-              <svg class="bi bi-eye-fill fs-5 text-primary" fill="currentColor" height="1em" viewBox="0 0 16 16"
-                   width="1em"
-                   xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"></path>
-                <path
-                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
-              </svg>
+              <b-button-group size="sm">
+                <b-button variant="primary" @click="handleDetail(notice)">查看</b-button>
+                <b-button variant="danger" @click="handleDelete(notice)">删除</b-button>
+              </b-button-group>
+              <b-card>22</b-card>
+
             </td>
           </tr>
           </tbody>
@@ -132,8 +99,28 @@
 </template>
 
 <script>
+import {getCurrentInstance, onMounted, ref} from "vue";
+
 export default {
   name: "notice",
+  components: {},
+  data() {
+
+    const {proxy} = getCurrentInstance();
+    const noticeData = ref([]);
+    const getNoticeData = async() => {
+      const res = await proxy.$api.getNoticeData();
+      // console.log("getNoticeData:", res);
+      this.noticeData = res
+    };
+    onMounted(() => {
+          getNoticeData()
+        }
+    );
+    return {
+      noticeData
+    }
+  }
 }
 </script>
 

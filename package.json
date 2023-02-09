@@ -1,5 +1,5 @@
 {
-  "name": "vuebs2",
+  "name": "assignmentsubmission_frontend",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -11,7 +11,7 @@
     "@babel/polyfill": "^7.11.5",
     "@element-plus/icons-vue": "^2.0.10",
     "@popperjs/core": "^2.11.6",
-    "bootstrap": "^5.0.0-beta2",
+    "bootstrap": "^5.2.3",
     "bootstrap-vue": "^2.23.1",
     "bootstrap-vue-3": "^0.5.1",
     "cnpm": "^9.0.1",
@@ -36,5 +36,17 @@
     "vite": "^4.0.0",
     "vue-cli-plugin-bootstrap-vue": "~0.8.2",
     "vue-loader": "^17.0.1"
-  }
+  },
+  "description": "组件内主要有两个页面。 - 公共页面(单页面)： src/publicPage/ - 后台管理系统(多页面跳转): src/managePage/",
+  "main": "vite.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GWillS163/AssignmentSubmission_Frontend.git"
+  },
+  "author": "GWillS163",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GWillS163/AssignmentSubmission_Frontend/issues"
+  },
+  "homepage": "https://github.com/GWillS163/AssignmentSubmission_Frontend#readme"
 }

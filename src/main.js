@@ -1,6 +1,7 @@
 // import '@babel/polyfill'
 // import 'mutationobserver-shim'
 // import './plugins/bootstrap-vue'
+// import bootstrapVue from "bootstrap-vue-3";
 import $ from 'jquery'
 import jquery from 'jquery';
 import { createApp } from 'vue'
@@ -8,20 +9,23 @@ import App from './App.vue'
 import router from './router/router'
 import './api/mock.js'
 
-// Vue.prototype.jquery = $
-console.log("111", )
+// import 'bootstrap'
+import './assets/bootstrap/css/bootstrap.min.css'
+import './assets/bootstrap/js/bootstrap.min.js'
 
-import './assets/main.css'
+// Vue.prototype.jquery = $
+
+// import './assets/main.css'
 // FrontEnd - Part
-import "./assets/css/styles.min.css"
+// import "./assets/css/styles.min.css"
 // import "./assets/bootstrap/css/bootstrap.min.css"  // 前端主要样式，主题
 // import "./assets/bootstrap/js/bootstrap.min.js" // 打开后menu折叠框，无法关闭
-import './assets/js/script.min.js' //  放在这里页面会白屏，只能放在index.html最下面
+// import './assets/js/script.min.js' //  放在这里页面会白屏，只能放在index.html最下面
 
 // BackEnd - Part
-import './backendAssets/js/theme.js'
-import './backendAssets/bootstrap/css/bootstrap.min.css'
-import './backendAssets/bootstrap/js/bootstrap.min.js'  // 打开后menu折叠框，无法关闭
+// import './backendAssets/js/theme.js'
+// import './backendAssets/bootstrap/css/bootstrap.min.css'
+// import './backendAssets/bootstrap/js/bootstrap.min.js'  // 打开后menu折叠框，无法关闭
 
 
 const app = createApp(App)
