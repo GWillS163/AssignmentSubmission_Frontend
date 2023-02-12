@@ -13,9 +13,9 @@ import './api/mock.js'
 // import './assets/js/script.min.js' //  放在这里页面会白屏，只能放在index.html最下面
 
 // BackEnd - Part
-import './backendAssets/js/theme.js'
+// import './backendAssets/js/theme.js'
 import './backendAssets/bootstrap/css/bootstrap.min.css'
-import './backendAssets/bootstrap/js/bootstrap.min.js'  // 打开后menu折叠框，无法关闭
+// import './backendAssets/bootstrap/js/bootstrap.min.js'  // 打开后menu折叠框，无法关闭
 
 
 const app = createApp(App)
@@ -46,8 +46,8 @@ app.mount('#app')
 // 使用 npm install bootstrap，可使用
 import 'font-awesome/css/font-awesome.min.css'
 import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap/dist/js/bootstrap.js"
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+// import "bootstrap/dist/js/bootstrap.js"
+// import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 // npm install bootstrap-vue-3
 import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'

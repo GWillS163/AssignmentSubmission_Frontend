@@ -120,46 +120,6 @@ export default {
       this.isEditing = !this.isEditing;
       console.log(this.isEditing);
       console.log(assign)
-      // assign = {
-      //       isEditing: this.isEditing,
-      //       name: "111",
-      //       id: "new",
-      //       clazz: "1909班,1908班",
-      //       desc: " ",
-      //       formatStr: "111",
-      //       ddl: "",
-      //       forClazz: [
-      //         {
-      //           name: "1909班",
-      //           isSelected: false
-      //         },
-      //         {
-      //           name: "1908班",
-      //           isSelected: false
-      //         },
-      //         {
-      //           name: "1907班",
-      //           isSelected: false
-      //         }
-      //       ],
-      //       switches: [
-      //         {
-      //           id: "isPermitAny",
-      //           name: "允许匿名提交",
-      //           value: true
-      //         },
-      //         {
-      //           id: "isPermitLate",
-      //           name: "允许迟交",
-      //           value: true
-      //         },
-      //         {
-      //           id: "isVarifyName",
-      //           name: "校验名称",
-      //           value: true
-      //         }
-      //       ],
-      //     };
     },
     handleReset(assign) {
 

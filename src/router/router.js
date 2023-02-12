@@ -14,6 +14,8 @@ const routes = [
     { path: '/forgotPassword', name: 'forgotPassword',
         component: () => import ('../views/manage/others/ForgotPassword.vue')
     },
+    // add a route object which is redirect '/' TO '/public'
+    { path: '/', redirect: '/public' },
     // {
     //     path: '/admin',
     //     component: () => import ('../views/manage/test.vue'),

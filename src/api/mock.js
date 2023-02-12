@@ -3,6 +3,7 @@ import dashboard from "@/api/mockData/dashboard";
 import publicPage from "../api/mockData/public";
 import menu from "@/api/mockData/menu.js"
 import notice from "@/api/mockData/notice.js"
+import teacher from "@/api/mockData/teacher.js"
 
 Mock.mock('/dashboard/getDashboardData', dashboard.getDashBoardData())
 Mock.mock('/public/getTab1PublicAssigns', publicPage.getTab1PublicAssigns())
@@ -15,3 +16,6 @@ Mock.mock('/menu/getMenuDataManage', menu.getMenuDataManage())
 Mock.mock('/menu/getMenuDebugLink', menu.getMenuDebugLink())
 
 Mock.mock(/manage\/notice/, notice.getNoticeData())
+
+Mock.mock(/manage\/teacher\/center/, teacher.getOwnClazz())
+Mock.mock(/manage\/teacher\/assign/, teacher.getAssign())

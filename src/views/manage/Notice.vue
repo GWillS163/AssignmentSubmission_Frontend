@@ -109,9 +109,8 @@ export default {
     const {proxy} = getCurrentInstance();
     const noticeData = ref([]);
     const getNoticeData = async() => {
-      const res = await proxy.$api.getNoticeData();
       // console.log("getNoticeData:", res);
-      this.noticeData = res
+      this.noticeData = await proxy.$api.getNoticeData()
     };
     onMounted(() => {
           getNoticeData()

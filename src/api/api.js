@@ -66,6 +66,20 @@ export default {
             mock: true
         })
     },
+    getOwnClazz() {
+        return request({
+            url: '/manage/teacher/center',
+            method: 'get',
+            mock: true
+        })
+    },
+    getAssigns() {
+        return request({
+            url: '/manage/teacher/assign',
+            method: 'get',
+            mock: true
+        })
+    },
     getTestData(params) {
         return request({
             url: '/dashboard/getTestData',
