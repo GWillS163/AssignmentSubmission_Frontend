@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import ClassViewCard from "@/components/management/classViewCard.vue";
+import ClassViewCard from "@/components/management/teacher/classViewCard.vue";
 import {getCurrentInstance, onMounted, ref} from "vue";
 
 export default {

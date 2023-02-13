@@ -19,10 +19,10 @@
 </template>
 
 <script>
-import NavBarSide from "@/components/management/navBarSide.vue";
-import NavBarTop from "@/components/management/navBarTop.vue";
+import NavBarSide from "@/components/management/navBar/navBarSide.vue";
+import NavBarTop from "@/components/management/navBar/navBarTop.vue";
 import Dashboard from "@/views/manage/admin/Dashboard.vue";
-import Footer from "@/components/management/ManageFooter.vue";
+import Footer from "@/components/management/navBar/ManageFooter.vue";
 import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'App',

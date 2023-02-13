@@ -142,8 +142,8 @@
 </template>
 
 <script>
-import NavBarSide from "@/components/management/navBarSide.vue";
-import NavBarTop from "@/components/management/navBarTop.vue";
+import NavBarSide from "@/components/management/navBar/navBarSide.vue";
+import NavBarTop from "@/components/management/navBar/navBarTop.vue";
 import {getCurrentInstance, onMounted, ref} from "vue";
 import {defineComponent} from "vue";
 

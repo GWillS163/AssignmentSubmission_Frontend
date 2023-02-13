@@ -1,5 +1,5 @@
 <script setup>
-import AssignForm from "@/components/management/assignForm.vue";
+import AssignForm from "@/components/management/teacher/assignForm.vue";
 import SubmitTable from "@/components/management/filesTable.vue";</script>
 <template>
 

@@ -17,7 +17,7 @@
           <div class="d-flex">
             <img alt="avatar" class="rounded-circle flex-shrink-0 me-3 fit-cover"
                  height="50"
-                 src="../../../public/favicon.ico" width="50">
+                 src="../../../../public/favicon.ico" width="50">
             <div>
               <p class="fw-bold text-primary mb-0">{{ assignment.releaseTeacher }}</p>
               <p class="text-muted mb-0">{{ assignment.releaseTime }}</p>

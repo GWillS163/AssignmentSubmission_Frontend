@@ -20,7 +20,7 @@
 
 <script>
 // export default {
-import AssignViewCard from "@/components/management/assignViewCard.vue";
+import AssignViewCard from "@/components/management/teacher/assignViewCard.vue";
 import {getCurrentInstance, onMounted, ref} from "vue";
 
 export default {
