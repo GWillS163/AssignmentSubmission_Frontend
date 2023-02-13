@@ -87,6 +87,13 @@ export default {
             mock: true
         })
     },
+    getAssignProgress(assignId) {
+      return request({
+          url: '/assign/' + assignId + '/progress',
+            method: 'get',
+            mock: true
+      })
+    },
     getSubmitsByAssignId(assignId) {
         return request({
             url: '/assign/' + assignId + '/submit',
@@ -96,7 +103,7 @@ export default {
     },
     getAssignsByClass(classId) {
         return request({
-            url: '/class/' + classId + '/assign',
+            url: '/assign/class/' + classId,
             method: 'get',
             mock:true
         })

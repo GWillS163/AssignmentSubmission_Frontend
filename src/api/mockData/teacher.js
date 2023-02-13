@@ -172,7 +172,7 @@ export default {
             ]
         }
     },
-    getSubmitsByAssignId(id) {
+    getClazzSubmitsByAssignId(id) {
         let submits = []
         if (id === 1) {
             submits = [
