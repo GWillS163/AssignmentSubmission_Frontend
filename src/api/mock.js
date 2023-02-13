@@ -4,6 +4,7 @@ import publicPage from "../api/mockData/public";
 import menu from "@/api/mockData/menu.js"
 import notice from "@/api/mockData/notice.js"
 import teacher from "@/api/mockData/teacher.js"
+import assign from "@/api/mockData/assign";
 
 Mock.mock('/dashboard/getDashboardData', dashboard.getDashBoardData())
 Mock.mock('/public/getTab1PublicAssigns', publicPage.getTab1PublicAssigns())
@@ -18,4 +19,12 @@ Mock.mock('/menu/getMenuDebugLink', menu.getMenuDebugLink())
 Mock.mock(/manage\/notice/, notice.getNoticeData())
 
 Mock.mock(/manage\/teacher\/center/, teacher.getOwnClazz())
+
+Mock.mock(/manage\/teacher\/flags/, teacher.getFlags())
 Mock.mock(/manage\/teacher\/assign/, teacher.getAssign())
+// the "assignId" is a variable
+Mock.mock(/assign\/1\/submit/, teacher.getSubmitsByAssignId(1))
+Mock.mock(/assign\/2\/submit/, teacher.getSubmitsByAssignId(2))
+Mock.mock(/class\/1909\/assign/, assign.getAssignsByClass(1909))
+Mock.mock(/teacher\/127\/assign/, assign.getAssignsByTeacher(127))
+

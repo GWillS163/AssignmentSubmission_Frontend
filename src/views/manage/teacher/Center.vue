@@ -24,6 +24,16 @@ import SubmitTable from "@/components/management/filesTable.vue";</script>
       </div>
     </div>
 
+    <div class="text-center text-white-50 bg-primary border rounded border-0 p-3" style="margin-bottom: 41px;">
+      <div class="row row-cols-2 row-cols-md-4">
+        <div class="col" v-for="flag in flags">
+          <div class="p-3">
+            <h4 class="display-5 fw-bold text-white mb-0">{{ flag.value }}</h4>
+            <p class="mb-0">{{flag.name}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <!--    if viewMode is table, show table, if not, show card-->
     <!--    use the if syntax of vue-->
 
@@ -191,7 +201,11 @@ export default {
     const {proxy} = getCurrentInstance();
     const ownClazz = ref([]);
     const assigns = ref([]);
+    const flags = ref([]);
     // const newDataForm = ref([]);
+    const getFlags = async () => {
+      flags.value = await proxy.$api.getFlags();
+    } ;
     const getOwnClazz = async () => {
       ownClazz.value = await proxy.$api.getOwnClazz();
     };
@@ -205,6 +219,7 @@ export default {
     onMounted(() => {
       getOwnClazz();
       getAssigns();
+      getFlags();
     })
 
     const viewMode = "card";
@@ -218,14 +233,16 @@ export default {
         forClazz: [ ],
         isPermitAny: true,
         isPermitLate: true,
-        // isPermitMulti: true,
+        isPermitMulti: true,
         isVarifyName: true,
+        isPermitChange: true,
       }
     return {
       ownClazz,
       viewMode,
       newDataForm,
-      assigns
+      assigns,
+      flags
     };
   }
 }

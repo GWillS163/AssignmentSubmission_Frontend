@@ -1,4 +1,4 @@
-const bootstrapSassAbstractsImports = require('vue-cli-plugin-bootstrap-vue/sassAbstractsImports.js')
+// const bootstrapSassAbstractsImports = require('vue-cli-plugin-bootstrap-vue/sassAbstractsImports.js')
 var webpack = import('webpack');
 // TODO: 安装不料WebPack
 module.exports = {

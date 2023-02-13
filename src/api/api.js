@@ -73,6 +73,13 @@ export default {
             mock: true
         })
     },
+    getFlags() {
+        return request({
+            url: '/manage/teacher/flags',
+            method: 'get',
+            mock: true,
+        })
+    },
     getAssigns() {
         return request({
             url: '/manage/teacher/assign',
@@ -80,12 +87,25 @@ export default {
             mock: true
         })
     },
-    getTestData(params) {
+    getSubmitsByAssignId(assignId) {
         return request({
-            url: '/dashboard/getTestData',
+            url: '/assign/' + assignId + '/submit',
             method: 'get',
-            data: params,
             mock: true
         })
+    },
+    getAssignsByClass(classId) {
+        return request({
+            url: '/class/' + classId + '/assign',
+            method: 'get',
+            mock:true
+        })
+    },
+    getAssignsByTeacher(teacherId) {
+        return request({
+            url: '/teacher/' + teacherId + '/assign/',
+            method: 'get',
+            mock: true
+        });
     }
 }
