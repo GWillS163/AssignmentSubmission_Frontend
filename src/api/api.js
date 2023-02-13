@@ -114,5 +114,12 @@ export default {
             method: 'get',
             mock: true
         });
+    },
+    getFilesByStudentId(studentId) {
+        return request({
+            url: '/file/student/' + studentId,
+            method: 'get',
+            mock: true
+        })
     }
 }

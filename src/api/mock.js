@@ -5,6 +5,7 @@ import menu from "@/api/mockData/menu.js"
 import notice from "@/api/mockData/notice.js"
 import teacher from "@/api/mockData/teacher.js"
 import assign from "@/api/mockData/assign";
+import files from "@/api/mockData/files";
 
 Mock.mock('/dashboard/getDashboardData', dashboard.getDashBoardData())
 Mock.mock('/public/getTab1PublicAssigns', publicPage.getTab1PublicAssigns())
@@ -31,4 +32,6 @@ Mock.mock(/assign\/class\/1909/, assign.getAssignsByClass(1909))
 
 Mock.mock(/teacher\/127\/assign/, assign.getAssignsByTeacher(127))
 
+//file opr
+Mock.mock('/file/student/127', 'get', files.getFilesByStudentId(127))
 
