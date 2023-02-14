@@ -42,8 +42,8 @@
               </tr>
               </thead>
               <tbody class="text-center">
-              <tr v-for="assign in assigns">
-                <td>{{ assign.name }}<br></td>
+                <tr v-if="assigns.length" v-for="assign in assigns">
+                <td>{{ assign.assignName }}<br></td>
                 <td>{{ assign.classes }}<br></td>
                 <td>{{ assign.format }}<br></td>
                 <td class="text-center align-middle" style="max-height: 60px;height: 60px;">
@@ -60,6 +60,9 @@
                   </a>
                 </td>
               </tr>
+                <tr v-else>
+                  <td colspan="6" class="text-center">暂无数据</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -72,27 +75,23 @@
 
 <script>
 import PageSpliter from "@/components/management/PageSpliter.vue";
+import {getCurrentInstance, onMounted} from "vue";
 
 export default {
   name: "assign",
   components: {PageSpliter},
   data() {
     const assigns = [];
+    const {proxy} = getCurrentInstance();
+    const getAssigns = async () => {
+      let res = await proxy.$api.getTeacherAssigns(127);
+      this.assigns = res;
+    }
+    onMounted(() => {
+      getAssigns();
+    })
     return {
-      assigns: [
-        {
-          id:1,
-          name: "第一次作业",
-          classes: "1909,1910",
-          format: "数据结构-&lt;班级&gt;-&lt;姓名&gt;.docx"
-        },
-        {
-          id: 2,
-          name: "第二次作业",
-          classes: "1909,1910",
-          format: "数据结构3-&lt;班级&gt;-&lt;姓名&gt;.docx"
-        }
-      ]
+      assigns
     }
   }
 }

@@ -29,15 +29,15 @@
       <div class="row">
         <div class="col-12">
           <div class="table-responsive">
-            <table class="table table-striped table-hover">
-              <thead>
+            <table id="ipi-table" class="table table-striped table tablesorter ">
+              <thead class="thead-dark">
               <tr>
-                <th></th>
-                <th>作业名称</th>
-                <th>科目</th>
-                <th>截止状态</th>
-                <th>来源</th>
-                <th><strong>提交日期</strong><br></th>
+                <th class="text-center"></th>
+                <th class="text-center">作业名称</th>
+                <th class="text-center">科目</th>
+                <th class="text-center">截止状态</th>
+                <th class="text-center">来源</th>
+                <th class="text-center"> 提交日期 </th>
                 <th class="text-center">操作</th>
               </tr>
               </thead>
@@ -66,21 +66,7 @@
           </div>
         </div>
       </div>
-      <div class="card-body" style="padding-left: 0px;padding-right: 0px;padding-top: 2px;padding-bottom: 0px;">
-        <div class="card-footer">
-          <nav>
-            <ul class="pagination pagination-sm mb-0 justify-content-center">
-              <li class="page-item"><a class="page-link" aria-label="Previous" href="#"><span
-                  aria-hidden="true">«</span></a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span
-                  aria-hidden="true">»</span></a></li>
-            </ul>
-          </nav>
-        </div>
-      </div>
+      <page-spliter/>
     </div>
     <div class="card shadow mb-4"></div>
   </div>
@@ -88,9 +74,11 @@
 
 <script>
 import {getCurrentInstance, onMounted} from "vue";
+import PageSpliter from "@/components/management/PageSpliter.vue";
 
 export default {
   name: "files",
+  components: {PageSpliter},
   data() {
     const files = [];
     const {proxy} = getCurrentInstance();

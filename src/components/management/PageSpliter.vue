@@ -1,6 +1,6 @@
 <template>
-
-  <nav class="d-xl-flex ">
+<!--TODO: 居中-->
+  <nav class="d-xl-flex align-content-center">
     <ul class="pagination">
       <li class="page-item"><a aria-label="Previous" class="page-link" href="#">
         <span

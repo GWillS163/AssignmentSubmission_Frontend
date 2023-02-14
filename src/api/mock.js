@@ -30,8 +30,12 @@ Mock.mock(/assign\/1\/progress/, assign.getAssignProgress(1))
 Mock.mock(/assign\/class\/0/, assign.getAssignsByClass(0))
 Mock.mock(/assign\/class\/1909/, assign.getAssignsByClass(1909))
 
-Mock.mock(/teacher\/127\/assign/, assign.getAssignsByTeacher(127))
+
+// assign Opr
+Mock.mock(/assign\/teacher\/127/, assign.getAssignsByTeacher(127))
 
 //file opr
 Mock.mock('/file/student/127', 'get', files.getFilesByStudentId(127))
 
+Mock.mock('/file/teacher/0', 'get', files.getAllFiles(0))
+Mock.mock('/file/teacher/127', 'get', files.getAllFiles(127))

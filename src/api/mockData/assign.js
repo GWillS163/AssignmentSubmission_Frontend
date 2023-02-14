@@ -62,6 +62,9 @@ export default {
                 {
                     id: 5,
                     assignName: '第五次数据结构 1',
+                  name: "第一次作业",
+                  classes: "1909,1910",
+                  format: "数据结构-&lt;班级&gt;-&lt;姓名&gt;.docx",
                     ddl: '2023-02-12 18:00',
                     releaseTime: '2022-11-13 18:00',
                     releaseTeacher: 'KissesJun',
@@ -73,6 +76,9 @@ export default {
                     ddl: '2023-02-14 18:00',
                     releaseTime: '2022-11-13 18:00',
                     releaseTeacher: 'KissesJun',
+                      name: "第二次作业",
+                      classes: "1909,1910",
+                      format: "数据结构3-&lt;班级&gt;-&lt;姓名&gt;.docx",
 
                 },
                 {
@@ -81,6 +87,9 @@ export default {
                     ddl: '2023-02-19 18:00',
                     releaseTime: '2022-11-13 18:00',
                     releaseTeacher: 'KissesJun',
+                      name: "第二次作业",
+                      classes: "1909,1910",
+                      format: "数据结构3-&lt;班级&gt;-&lt;姓名&gt;.docx",
 
                 },
                 {
@@ -89,6 +98,9 @@ export default {
                     ddl: ' ',
                     releaseTime: '2022-11-13 18:00',
                     releaseTeacher: 'KissesJun',
+                      name: "第二次作业",
+                      classes: "1909,1910",
+                      format: "数据结构3-&lt;班级&gt;-&lt;姓名&gt;.docx",
 
                 }
             ];
@@ -117,5 +129,5 @@ export default {
                 progress: assignProgress
             }
         }
-    }
+    },
 }

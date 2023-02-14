@@ -80,9 +80,9 @@ export default {
             mock: true,
         })
     },
-    getAssigns() {
+    getTeacherAssigns(teacherId) {
         return request({
-            url: '/manage/teacher/assign',
+            url: '/assign/teacher/' + teacherId,
             method: 'get',
             mock: true
         })
@@ -110,7 +110,7 @@ export default {
     },
     getAssignsByTeacher(teacherId) {
         return request({
-            url: '/teacher/' + teacherId + '/assign/',
+            url: '/assign/teacher/' + teacherId ,
             method: 'get',
             mock: true
         });
@@ -118,6 +118,13 @@ export default {
     getFilesByStudentId(studentId) {
         return request({
             url: '/file/student/' + studentId,
+            method: 'get',
+            mock: true
+        })
+    },
+    getAllFiles(teacherId) {
+        return request({
+            url: '/file/teacher/' + teacherId,
             method: 'get',
             mock: true
         })

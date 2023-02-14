@@ -28,5 +28,36 @@ export default {
                 files:filesData
             }
         }
+    },
+
+    getAllFiles(teacherId) {
+        let files = [];
+        if (teacherId===127){
+            files = [
+        {
+          userName: "张三",
+          formatFileName: "张三-20210601-120000",
+          size: "1.2MB",
+          md5: "1234567890",
+          submitTime: "2021-06-01 12:00:00",
+        },
+        {
+          userName: "李四",
+          formatFileName: "李四-20210601-120000",
+          size: "1.2MB",
+          md5: "1234567890",
+          submitTime: "2021-06-01 12:00:00",
+        }
+      ]
+        } else {
+            files = []
+        }
+        return {
+            code: 200,
+            data: {
+                files: files
+            }
+        }
+
     }
 }
