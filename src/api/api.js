@@ -3,6 +3,29 @@
 import request from '@/api/request'
 
 export default {
+    // NavBar Top
+    getUserNavBarDrops() {
+        return request({
+            url: '/user/getUserNavBarDrops',
+            method: 'get',
+            mock: true
+        })
+    },
+    getNavBarNotices() {
+        return request({
+            url: '/user/getNavBarNotices',
+            method: 'get',
+            mock: true
+        })
+    },
+    getAssignStatuses() {
+        return request({
+            url: '/user/getAssignStatuses',
+            method: 'get',
+            mock: true
+        })
+    },
+    // NavBar Left
     getDashBoardData() {
         return request({
             url: '/dashboard/getDashboardData',
