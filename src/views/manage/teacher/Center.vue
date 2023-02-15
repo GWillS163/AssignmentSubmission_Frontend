@@ -1,6 +1,7 @@
 <script setup>
 import AssignForm from "@/components/management/teacher/assignForm.vue";
-import SubmitTable from "@/components/management/filesTable.vue";</script>
+import SubmitTable from "@/components/management/filesTable.vue";
+import PageSpliter from "@/components/management/PageSpliter.vue";</script>
 <template>
 
   <div class="container-fluid">
@@ -116,6 +117,7 @@ import SubmitTable from "@/components/management/filesTable.vue";</script>
 
           </div>
         </div>
+
       </div>
     </div>
     <div v-show="viewMode === 'table'">
@@ -165,20 +167,7 @@ import SubmitTable from "@/components/management/filesTable.vue";</script>
                 </tbody>
               </table>
             </div>
-            <nav class="d-xl-flex">
-              <!--            TODO： 分页部分不会做-->
-              <ul class="pagination justify-content-center">
-                <li class="page-item"><a aria-label="Previous" class="page-link" href="#"><span
-                    aria-hidden="true">«</span></a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a aria-label="Next" class="page-link" href="#"><span
-                    aria-hidden="true">»</span></a></li>
-              </ul>
-            </nav>
+            <page-spliter/>
           </div>
         </div>
       </div>

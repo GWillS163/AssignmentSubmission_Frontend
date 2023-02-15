@@ -7,8 +7,9 @@
       </div>
       <div class="card-body">
         <div class="row">
-          <div class="col-md-6 text-nowrap">
-            <div id="dataTable_length" aria-controls="dataTable" class="dataTables_length"><label class="form-label">显示数量&nbsp;<select
+          <div class="col-md-4 text-nowrap">
+            <div id="dataTable_length" aria-controls="dataTable" class="dataTables_length">
+              <label class="form-label">显示数量&nbsp;<select
                 class="d-inline-block form-select form-select-sm">
               <option selected="" value="10">10</option>
               <option value="25">25</option>
@@ -23,7 +24,7 @@
           </div>
         </div>
         <div id="dataTable" aria-describedby="dataTable_info" class="table-responsive table mt-2" role="grid">
-          <table id="dataTable" class="table my-0">
+          <table id="dataTable" class="table my-0 table-striped">
             <thead>
             <tr>
               <th>姓名</th>
@@ -53,36 +54,18 @@
             </tfoot>
           </table>
         </div>
-        <div class="row">
-          <div class="col-md-6 align-self-center">
-            <p id="dataTable_info" aria-live="polite" class="dataTables_info" role="status">
-              <a v-if="records.length === 0">没有记录</a>
-              <a v-else>显示第 {{ (currentPage - 1) * pageSize + 1 }} 至 {{ currentPage * pageSize }} 项结果，
-                共 {{ records.length }} 项</a>
-            </p>
-          </div>
-          <div class="col-md-6">
-            <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-              <ul class="pagination">
-                <li class="page-item disabled"><a aria-label="Previous" class="page-link" href="#"><span
-                    aria-hidden="true">«</span></a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a aria-label="Next" class="page-link" href="#"><span aria-hidden="true">»</span></a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </div>
+        <page-spliter/>
     </div>
+  </div>
   </div>
 </template>
 
 <script>
+import PageSpliter from "@/components/management/PageSpliter.vue";
+
 export default {
   name: "History",
+  components: {PageSpliter},
   data () {
     return {
       currentPage: 1,

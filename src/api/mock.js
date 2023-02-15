@@ -9,6 +9,12 @@ import files from "@/api/mockData/files";
 import classes from "@/api/mockData/classes";
 import students from "@/api/mockData/student";
 import userInfo from "@/api/mockData/userInfo";
+import navBarTop from "@/api/mockData/navBarTop";
+
+// Navbar Top
+Mock.mock('/user/getUserNavBarDrops', navBarTop.getUserNavBarDrops())
+Mock.mock('/user/getNavBarNotices', navBarTop.getNavBarNotices())
+Mock.mock('/user/getAssignStatuses', navBarTop.getAssignStatuses())
 
 Mock.mock('/dashboard/getDashboardData', dashboard.getDashBoardData())
 Mock.mock('/public/getTab1PublicAssigns', publicPage.getTab1PublicAssigns())

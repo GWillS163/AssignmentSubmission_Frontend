@@ -26,25 +26,16 @@
       </tfoot>
     </table>
   </div>
-  <nav class="d-xl-flex justify-content-xl-end">
-    <ul class="pagination">
-      <li class="page-item"><a aria-label="Previous" class="page-link" href="#"><span
-          aria-hidden="true">«</span></a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item"><a class="page-link" href="#">4</a></li>
-      <li class="page-item"><a class="page-link" href="#">5</a></li>
-      <li class="page-item"><a aria-label="Next" class="page-link" href="#"><span
-          aria-hidden="true">»</span></a></li>
-    </ul>
-  </nav>
+  <page-spliter/>
 
 </template>
 
 <script>
+import PageSpliter from "@/components/management/PageSpliter.vue";
+
 export default {
   name: "filesTable",
+  components: {PageSpliter},
   props: {
     files: {
       type: Array,

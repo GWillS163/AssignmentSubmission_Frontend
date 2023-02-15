@@ -21,11 +21,7 @@
                                                                 placeholder="请输入关键字"
                                                                 type="text">
             <button class="btn btn-outline-primary btn-sm" type="button">
-              <svg class="bi bi-search mb-1" fill="currentColor" height="1em" viewBox="0 0 16 16" width="1em"
-                   xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
-              </svg>
+              <i class="fa fa-search"></i>
             </button>
           </div>
         </div>
@@ -74,7 +70,6 @@
                 <b-button variant="primary" @click="handleDetail(notice)">查看</b-button>
                 <b-button variant="danger" @click="handleDelete(notice)">删除</b-button>
               </b-button-group>
-              <b-card>22</b-card>
 
             </td>
           </tr>
@@ -82,28 +77,18 @@
         </table>
       </div>
     </div>
-    <div class="card-footer">
-      <nav>
-        <ul class="pagination pagination-sm mb-0 justify-content-center">
-          <li class="page-item"><a aria-label="Previous" class="page-link" href="#"><span
-              aria-hidden="true">«</span></a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a aria-label="Next" class="page-link" href="#"><span aria-hidden="true">»</span></a>
-          </li>
-        </ul>
-      </nav>
-    </div>
+
+    <page-spliter/>
   </div>
 </template>
 
 <script>
 import {getCurrentInstance, onMounted, ref} from "vue";
+import PageSpliter from "@/components/management/PageSpliter.vue";
 
 export default {
   name: "notice",
-  components: {},
+  components: {PageSpliter},
   data() {
 
     const {proxy} = getCurrentInstance();
