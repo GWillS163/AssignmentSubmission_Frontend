@@ -41,7 +41,7 @@ export default {
                 value: '23+'
             }, {name: '最近DDL', value: '3'}]
         }
-    }, getAssign() {
+    }, getTeacherCenterAssigns() {
         return {
             code: 200, data: [{
                 // name: "第一次作业",

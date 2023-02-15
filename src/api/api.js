@@ -80,9 +80,9 @@ export default {
             mock: true,
         })
     },
-    getTeacherAssigns(teacherId) {
+    getTeacherCenterAssigns(teacherId) {
         return request({
-            url: '/assign/teacher/' + teacherId,
+            url: '/manage/teacher/assign',
             method: 'get',
             mock: true
         })

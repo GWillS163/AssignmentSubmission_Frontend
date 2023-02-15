@@ -25,7 +25,7 @@ Mock.mock(/manage\/notice/, notice.getNoticeData())
 Mock.mock(/manage\/teacher\/center/, teachers.getOwnClazz())
 
 Mock.mock(/manage\/teacher\/flags/, teachers.getFlags())
-Mock.mock(/manage\/teacher\/assign/, teachers.getAssign())
+Mock.mock(/manage\/teacher\/assign/, teachers.getTeacherCenterAssigns())
 // the "assignId" is a variable
 Mock.mock(/assign\/1\/submit/, teachers.getClazzSubmitsByAssignId(1))
 Mock.mock(/assign\/2\/submit/, teachers.getClazzSubmitsByAssignId(2))

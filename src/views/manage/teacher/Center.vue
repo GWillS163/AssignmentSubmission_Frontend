@@ -211,7 +211,7 @@ export default {
     };
     const getAssigns = async () => {
       // console.log(await proxy.$api.getAssigns())
-      assigns.value = await proxy.$api.getTeacherAssigns(127);
+      assigns.value = await proxy.$api.getTeacherCenterAssigns(127);
     };
     // const initNewDataForm = async () => {
     //   newDataForm.value.
