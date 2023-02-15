@@ -3,9 +3,11 @@ import dashboard from "@/api/mockData/dashboard";
 import publicPage from "../api/mockData/public";
 import menu from "@/api/mockData/menu.js"
 import notice from "@/api/mockData/notice.js"
-import teacher from "@/api/mockData/teacher.js"
+import teachers from "@/api/mockData/teacher.js"
 import assign from "@/api/mockData/assign";
 import files from "@/api/mockData/files";
+import classes from "@/api/mockData/classes";
+import students from "@/api/mockData/student";
 
 Mock.mock('/dashboard/getDashboardData', dashboard.getDashBoardData())
 Mock.mock('/public/getTab1PublicAssigns', publicPage.getTab1PublicAssigns())
@@ -19,13 +21,13 @@ Mock.mock('/menu/getMenuDebugLink', menu.getMenuDebugLink())
 
 Mock.mock(/manage\/notice/, notice.getNoticeData())
 
-Mock.mock(/manage\/teacher\/center/, teacher.getOwnClazz())
+Mock.mock(/manage\/teacher\/center/, teachers.getOwnClazz())
 
-Mock.mock(/manage\/teacher\/flags/, teacher.getFlags())
-Mock.mock(/manage\/teacher\/assign/, teacher.getAssign())
+Mock.mock(/manage\/teacher\/flags/, teachers.getFlags())
+Mock.mock(/manage\/teacher\/assign/, teachers.getAssign())
 // the "assignId" is a variable
-Mock.mock(/assign\/1\/submit/, teacher.getClazzSubmitsByAssignId(1))
-Mock.mock(/assign\/2\/submit/, teacher.getClazzSubmitsByAssignId(2))
+Mock.mock(/assign\/1\/submit/, teachers.getClazzSubmitsByAssignId(1))
+Mock.mock(/assign\/2\/submit/, teachers.getClazzSubmitsByAssignId(2))
 Mock.mock(/assign\/1\/progress/, assign.getAssignProgress(1))
 Mock.mock(/assign\/class\/0/, assign.getAssignsByClass(0))
 Mock.mock(/assign\/class\/1909/, assign.getAssignsByClass(1909))
@@ -39,3 +41,7 @@ Mock.mock('/file/student/127', 'get', files.getFilesByStudentId(127))
 
 Mock.mock('/file/teacher/0', 'get', files.getAllFiles(0))
 Mock.mock('/file/teacher/127', 'get', files.getAllFiles(127))
+
+Mock.mock('/class/teacher/127', 'get', classes.getClassesByTeacherId(127))
+Mock.mock('/teacher/all', 'get', teachers.getAllTeachers())
+Mock.mock('/student/teacher/127', 'get', students.getStudentsByTeacherId(127))

@@ -128,5 +128,26 @@ export default {
             method: 'get',
             mock: true
         })
-    }
+    },
+    getClassesByTeacherId(teacherId) {
+        return request({
+            url: '/class/teacher/' + teacherId,
+            method: 'get',
+            mock: true,
+        })
+    },
+    getAllTeachers() {
+        return request({
+            url: '/teacher/all',
+            method: 'get',
+            mock: true
+        })
+    },
+    getStudentsByTeacherId(teacherId) {
+        return request({
+            url: '/student/teacher/' + teacherId,
+            method: 'get',
+            mock: true
+        })
+    },
 }
