@@ -2,7 +2,7 @@
 
   <div class="progress flex-fill align-self-center my-auto mt-xxl-0 mb-xxl-0"
 
-       style="margin-bottom: 36px;">
+       style="margin-bottom: 36px; height:1px">
     <div aria-valuemax="100" aria-valuemin="0"
          class="progress-bar"
          :aria-valuenow="progress"

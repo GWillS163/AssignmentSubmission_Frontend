@@ -150,4 +150,40 @@ export default {
             mock: true
         })
     },
+    // 获取个人信息页面的数据
+    getInfoCard() {
+      return request({
+            url: '/user/infoCard',
+            method: 'get',
+            mock: true
+      })
+    },
+    getBasicInfo() {
+        return request({
+            url: '/user/basicInfo',
+            method: 'get',
+            mock: true
+        })
+    },
+    getOptionalInfo() {
+        return request({
+            url: '/user/optionalInfo',
+            method: 'get',
+            mock: true
+        })
+    },
+    getSettings() {
+        return request({
+            url: '/user/settings',
+            method: 'get',
+            mock: true
+        })
+    },
+    getMessage() {
+        return request({
+            url: '/user/message',
+            method: 'get',
+            mock: true
+        })
+    }
 }

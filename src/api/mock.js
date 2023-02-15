@@ -8,6 +8,7 @@ import assign from "@/api/mockData/assign";
 import files from "@/api/mockData/files";
 import classes from "@/api/mockData/classes";
 import students from "@/api/mockData/student";
+import userInfo from "@/api/mockData/userInfo";
 
 Mock.mock('/dashboard/getDashboardData', dashboard.getDashBoardData())
 Mock.mock('/public/getTab1PublicAssigns', publicPage.getTab1PublicAssigns())
@@ -45,3 +46,10 @@ Mock.mock('/file/teacher/127', 'get', files.getAllFiles(127))
 Mock.mock('/class/teacher/127', 'get', classes.getClassesByTeacherId(127))
 Mock.mock('/teacher/all', 'get', teachers.getAllTeachers())
 Mock.mock('/student/teacher/127', 'get', students.getStudentsByTeacherId(127))
+
+// basic Info
+Mock.mock('/user/infoCard', 'get', userInfo.getInfoCard())
+Mock.mock('/user/basicInfo', 'get', userInfo.getBasicInfo())
+Mock.mock('/user/optionalInfo', 'get', userInfo.getOptionalInfo())
+Mock.mock('/user/settings', 'get', userInfo.getSettings())
+Mock.mock('/user/message', 'get', userInfo.getMessage())
