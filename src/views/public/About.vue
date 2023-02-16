@@ -1,5 +1,4 @@
 <template>
-  <Header/>
   <div>
     <h1>About Page</h1>
     <p>
@@ -15,11 +14,10 @@
 
     </p>
   </div>
-  <publicFooter/>
 </template>
 
 <script>
-import Header from "../../components/public/PublicHeader.vue";
+import Header from "@/components/public/PublicHeader.vue";
 import PublicFooter from "@/components/public/PublicFooter.vue";
 export default {
   name: "about",

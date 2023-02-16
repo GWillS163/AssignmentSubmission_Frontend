@@ -3,10 +3,15 @@
   <li v-for="part in menuPart" class="nav-item">
     <!--          无子元素-->
     <div v-if="!('children' in part)">
-      <a :href="part.link" class="nav-link">
+      <router-link :to="part.link" class="nav-link">
         <i :class="part.icon" class="fas"></i>
         <span>{{ part.name }}</span>
-      </a>
+      </router-link>
+<!--      <router-link :to="part.link" class="nav-link">-->
+<!--        <i :class="part.icon" class="fas"></i>-->
+<!--        <span>{{ part.name }}</span>-->
+<!--      </router-link>-->
+
     </div>
 
     <!--            有子元素-->
@@ -22,10 +27,10 @@
       <div :id="part.name" class="collapse" :class="isCollapse ? 'show' : ''"
       >
         <div class="bg-white border rounded py-2 collapse-inner">
-          <a v-for="subPart in part.children" :href="subPart.link"
+          <router-link v-for="subPart in part.children" :to="subPart.link"
              class="collapse-item"
           >{{ subPart.name }}
-          </a>
+          </router-link>
         </div>
       </div>
     </div>

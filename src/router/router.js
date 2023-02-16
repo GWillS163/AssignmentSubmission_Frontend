@@ -1,10 +1,14 @@
 import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router'
 
 const routes = [
+
     {path: '/public', component: () => import ('../views/public/Main.vue'),
-        name: 'public', children: []},
-    {path: '/about', component: () => import ('../views/public/About.vue'),
-        name: 'about', children: []},
+        name: 'public', children: [
+            {path: '/public/', component: () => import ('../views/public/Home.vue'),  children: []},
+            {path: '/about', component: () => import ('../views/public/About.vue'),  children: []},
+        ]},
+    // {path: '/about', component: () => import ('../views/public/About.vue'),
+    //     name: 'about', children: []},
     { path: '/login', name: 'login',
         component: () => import ('../views/manage/others/Login.vue')
     },
@@ -16,6 +20,7 @@ const routes = [
     },
     // add a route object which is redirect '/' TO '/public'
     { path: '/', redirect: '/public' },
+
     // {
     //     path: '/admin',
     //     component: () => import ('../views/manage/test.vue'),

@@ -16,19 +16,19 @@ export default {
     getNavBarNotices() {
         return {
             code: 200, data: [{
-                id: 1, title: "作业已被下载", avatar: "/../public/favicon.ico", content: "自动通知", time: "58m"
+                id: 1, title: "作业已被下载", avatar: "../../public/favicon.ico", content: "自动通知", time: "58m"
             }, {
-                id: 2, title: "您有新的 新作业可提交", avatar: "/../public/favicon.ico", content: "自动通知", time: "1d"
+                id: 2, title: "您有新的 新作业可提交", avatar: "../../public/favicon.ico", content: "自动通知", time: "1d"
             }, {
                 id: 3,
                 title: "【未交提醒】过期不候",
-                avatar: "/../public/favicon.ico",
+                avatar: "../public/favicon.ico",
                 content: "Morgan Alvarez",
                 time: "2d"
             }, {
                 id: 4,
                 title: "欢迎初次使用AssignmentSubmission",
-                avatar: "/../public/favicon.ico",
+                avatar: "../public/favicon.ico",
                 content: "自动通知",
                 time: "2w"
             }]
