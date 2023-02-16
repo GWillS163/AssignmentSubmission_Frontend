@@ -4,13 +4,14 @@
      :class="{'toggled': isToggled}"
   >
     <div class="container-fluid d-flex flex-column p-0">
-      <a
+      <router-link
         class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
 
-        href="/public">
+        to="/public">
       <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
-      <div class="sidebar-brand-text mx-3"><span> 欢迎，{{ userName }}</span></div>
-    </a>
+      <div class="sidebar-brand-text mx-3">
+        <span> 欢迎，{{ userName }}</span></div>
+    </router-link>
       <hr class="sidebar-divider my-0">
       <ul id="accordionSidebar" class="navbar-nav text-light">
         <navBarSideRow :menu-part="menuPart1"/>
@@ -26,7 +27,7 @@
         <div class="sidebar-heading">
           <p class="mb-0">Debug Pages</p>
         </div>
-        <nav-bar-side-row :menu-part="menuDebugLink"></nav-bar-side-row>
+        <nav-bar-side-row :menu-part="menuDebugLink"/>
       </ul>
 
       <div class="text-center d-none d-md-inline">
@@ -51,12 +52,12 @@ export default {
   },
   // export data
   data() {
-
+    console.log("data")
     const {proxy} = getCurrentInstance();
     const isToggled = ref(false);
-    const menuPart1 = Array([]);
-    const menuDataManage = Array([]);
-    const menuDebugLink = Array([]);
+    const menuPart1 = ref([]);
+    const menuDataManage = ref([]);
+    const menuDebugLink = ref([]);
     const getMenuPart1 = async () => {
       const res = await proxy.$api.getMenuPart1();
       // console.log("menuPart1:", res);
@@ -75,6 +76,7 @@ export default {
 
     }
     onMounted(()=> {
+      console.log("mounted")
         getMenuPart1();
         getMenuDataMange();
         getMenuDebugLink()

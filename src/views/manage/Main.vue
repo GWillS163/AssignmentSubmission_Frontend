@@ -13,7 +13,10 @@
       <Footer/>
 
     </div>
-    <a class="border rounded d-inline scroll-to-top" href="#wrapper"><i class="fas fa-angle-up"></i></a>
+<!--    TODO: BUG修复 不能自动滚动 -->
+    <a class="border rounded d-inline scroll-to-top" href="#wrapper">
+      <i class="fas fa-angle-up"></i>
+    </a>
   </div>
 
 </template>

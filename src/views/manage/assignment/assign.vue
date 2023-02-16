@@ -84,7 +84,11 @@ export default {
     const assigns = [];
     const {proxy} = getCurrentInstance();
     const getAssigns = async () => {
-      let res = await proxy.$api.getTeacherAssigns(127);
+      let res = await proxy.$api.getAssignsByTeacher(127);
+      // set &lt; &gt; to < >
+      res.forEach(assign => {
+        assign.format = assign.format.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+      })
       this.assigns = res;
     }
     onMounted(() => {

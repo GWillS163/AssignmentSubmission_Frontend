@@ -11,7 +11,6 @@
 <!--        <i :class="part.icon" class="fas"></i>-->
 <!--        <span>{{ part.name }}</span>-->
 <!--      </router-link>-->
-
     </div>
 
     <!--            有子元素-->
@@ -19,7 +18,6 @@
       <a :aria-controls="part.name" :aria-expanded="isCollapse" class="btn btn-link nav-link"
           :class="'collapsed' ? isCollapse : ''"
          data-bs-toggle="collapse" :href="'#' + part.name" role="button">
-
         <i class="fas fa-chart-area"></i>
         <span>{{ part.name }}</span>
       </a>
