@@ -4,9 +4,20 @@
       <div class="col-12 col-sm-6 col-md-6">
         <h3 class="text-dark mb-4">我的学生</h3>
       </div>
-      <div class="col-12 col-sm-6 col-md-6 text-end" style="margin-bottom: 30px;"><a class="btn btn-primary"
-                                                                                     role="button"><i
-          class="fa fa-plus"></i> 新增学生 </a></div>
+
+      <div class="col-12 col-sm-6 col-md-6 text-end" style="margin-bottom: 30px;">
+        <div class="btn-group" role="group" aria-label="Basic example">
+
+          <button type="button" class="btn btn-primary"
+                  data-bs-target="#addStudent" data-bs-toggle="modal" >
+            <i class="fa fa-plus"></i> 新增学生
+          </button>
+          <button type="button" class="btn btn-primary"
+                  data-bs-target="#addBatchStudentForm" data-bs-toggle="modal" >
+            <i class="fa fa-file-excel"></i> 批量新增
+          </button>
+        </div>
+      </div>
     </div>
     <div id="TableSorterCard-1" class="card">
       <div class="card-header py-3">
@@ -71,15 +82,19 @@
       </div>
     </div>
   </div>
+<!--  <edit-student-form/>-->
+  <add-batch-student/>
 </template>
 
 <script>
 import PageSpliter from "@/components/management/PageSpliter.vue";
+import editStudentForm from "@/components/management/information/editStudentForm.vue";
 import {getCurrentInstance, onMounted} from "vue";
+import AddBatchStudent from "@/components/management/information/AddBatchStudent.vue";
 
 export default {
   name: "student",
-  components: {PageSpliter},
+  components: {AddBatchStudent, PageSpliter, editStudentForm},
   methods: {
     addNewStudent() {
       console.log("addNewStudent")
@@ -105,7 +120,44 @@ export default {
       getStudents();
     })
     return {
-      students
+      students,
+      classes: [
+        {
+          id: 1909,
+          name: "软件工程1909班"
+        },
+        {
+          id: 1910,
+          name: "软件工程1910班"
+        },
+        {
+          id: 127,
+          name: "孟老师天才班"
+        }
+      ],
+      teachers: [
+        {
+          id: 1,
+          name: "张三老师"
+        },
+        {
+          id: 2,
+          name: "李四老师"
+        },
+        {
+          id: 127,
+          name: "孟老师"
+        }
+      ],
+      formData: {
+        id: 0,
+        name: "孟骏清",
+        studentId: 19852331,
+        classId: 1909,
+        qq: "123456789",
+        mail: "gwills@qq.com",
+        phone: "123456789"
+      }
     }
   }
 }

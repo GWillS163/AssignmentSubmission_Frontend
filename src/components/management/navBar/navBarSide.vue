@@ -52,7 +52,6 @@ export default {
   },
   // export data
   data() {
-    console.log("data")
     const {proxy} = getCurrentInstance();
     const isToggled = ref(false);
     const menuPart1 = ref([]);
@@ -76,7 +75,6 @@ export default {
 
     }
     onMounted(()=> {
-      console.log("mounted")
         getMenuPart1();
         getMenuDataMange();
         getMenuDebugLink()
