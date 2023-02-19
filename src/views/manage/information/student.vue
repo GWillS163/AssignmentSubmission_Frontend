@@ -19,6 +19,8 @@
         </div>
       </div>
     </div>
+    <usecsv-button importerKey="your-importer-key">Import Data</usecsv-button>
+  <add-batch-student :classes="classes"/>
     <div id="TableSorterCard-1" class="card">
       <div class="card-header py-3">
         <div class="row table-topper align-items-center">
@@ -82,13 +84,13 @@
       </div>
     </div>
   </div>
-<!--  <edit-student-form/>-->
-  <add-batch-student/>
+
+  <edit-student-form :classes="classes"/>
 </template>
 
 <script>
 import PageSpliter from "@/components/management/PageSpliter.vue";
-import editStudentForm from "@/components/management/information/editStudentForm.vue";
+import editStudentForm from "@/components/management/information/EditStudentForm.vue";
 import {getCurrentInstance, onMounted} from "vue";
 import AddBatchStudent from "@/components/management/information/AddBatchStudent.vue";
 
