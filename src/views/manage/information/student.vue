@@ -1,26 +1,32 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-12 col-sm-6 col-md-6">
+      <div class="col-5 col-sm-6 col-md-6">
         <h3 class="text-dark mb-4">我的学生</h3>
       </div>
 
-      <div class="col-12 col-sm-6 col-md-6 text-end" style="margin-bottom: 30px;">
-        <div class="btn-group" role="group" aria-label="Basic example">
-
-          <button type="button" class="btn btn-primary"
+      <div class=" col-7 col-sm-6 col-md-6 ">
+        <div class="pull-right row " style="margin-right: 20px">
+            <button type="button"
+                    class="col-6 col-xl-6 btn btn-primary "
                   data-bs-target="#addStudent" data-bs-toggle="modal" >
-            <i class="fa fa-plus"></i> 新增学生
-          </button>
-          <button type="button" class="btn btn-primary"
-                  data-bs-target="#addBatchStudentForm" data-bs-toggle="modal" >
-            <i class="fa fa-file-excel"></i> 批量新增
-          </button>
+              <i class="fa fa-plus"></i> 新增学生
+            </button>
+            <usecsv-button class="col-6 col-xl-6"
+                           importerKey="4bbfb06a-c55e-4c25-bdd4-29ed68873317" v-slot="slotProps"
+                         :user="'{userId: 19852331}'"
+                         :metadata="'{classId: 1}'"
+          >
+              <button class="btn btn-outline-primary "  @click="slotProps.openModal()" style="width: 120%" >
+                <i class="fa fa-file-excel"></i>
+                批量新增</button>
+        </usecsv-button>
         </div>
       </div>
     </div>
-    <usecsv-button importerKey="your-importer-key">Import Data</usecsv-button>
-  <add-batch-student :classes="classes"/>
+
+<!--    <div id="usecsv-importer-inline-wrapper" />-->
+<!--  <add-batch-student :classes="classes"/>-->
     <div id="TableSorterCard-1" class="card">
       <div class="card-header py-3">
         <div class="row table-topper align-items-center">
@@ -91,7 +97,7 @@
 <script>
 import PageSpliter from "@/components/management/PageSpliter.vue";
 import editStudentForm from "@/components/management/information/EditStudentForm.vue";
-import {getCurrentInstance, onMounted} from "vue";
+import {getCurrentInstance, onMounted, ref} from "vue";
 import AddBatchStudent from "@/components/management/information/AddBatchStudent.vue";
 
 export default {
@@ -109,11 +115,19 @@ export default {
     },
     deleteStudent() {
       console.log("deleteStudent")
+    },
+    onData: function (data) {
+      console.log(data);
+    },
+    onClose: function () {
+      console.log("Import window close");
     }
   },
   data () {
+
     const { proxy } = getCurrentInstance();
     const students = [];
+    const classData = ref();
     const getStudents = async () => {
       const res = await proxy.$api.getStudentsByTeacherId(127);
       this.students = res.students;
@@ -122,6 +136,7 @@ export default {
       getStudents();
     })
     return {
+      classData,
       students,
       classes: [
         {
@@ -166,5 +181,15 @@ export default {
 </script>
 
 <style scoped>
-
+#importBtn {
+  /*width: 100px;*/
+  /*height: 30px;*/
+  /*color: #fff;*/
+  /*background-color: #027ad6;*/
+  /*box-shadow: 0 32px 64px rgba(0, 0, 0, 0.07);*/
+  /*font: 200 20px sans-serif;*/
+  /*text-align: center;*/
+  /*border: none;*/
+  /*border-radius: 3px;*/
+}
 </style>

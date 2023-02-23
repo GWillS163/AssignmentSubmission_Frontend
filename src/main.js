@@ -2,10 +2,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import './api/mock.js'
-import UseCSVButton from "@usecsv/vuejs";
+import UseCSVButton from "@usecsv/vuejs3";
 
 
-createApp(App).use(UseCSVButton).mount("#app"); // Vue 3
 
 
 // import './assets/main.css'

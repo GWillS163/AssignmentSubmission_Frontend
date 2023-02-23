@@ -5,7 +5,9 @@
         <h3 class="text-dark mb-4">教师管理</h3>
       </div>
       <div class="col-12 col-sm-6 col-md-6 text-end" style="margin-bottom: 30px;">
-        <a class="btn btn-primary" @click="addNewTeacher" role="button"><i
+        <a class="btn btn-primary"
+           data-bs-target="#addTeacher" data-bs-toggle="modal"
+           role="button"><i
           class="fa fa-plus"></i> 新增教师 </a></div>
     </div>
     <div class="col">
@@ -19,8 +21,8 @@
                     <p class="text-primary m-0 fw-bold">教师信息管理</p>
                   </div>
                   <div class="col-12 col-sm-7 col-md-6 text-end" style="margin: 0px;padding: 5px 15px;">
-                    <button class="btn btn-primary btn-sm reset" style="margin: 2px;" type="button">
-                      <i class="fa fa-download"></i>
+                    <button class="btn btn-primary btn-sm  " @click="downNewTeacher" style="margin: 2px;" type="button">
+                      <i class="fa fa-download" ></i>
                       下载教师信息
                     </button>
                   </div>
@@ -29,7 +31,7 @@
               <div class="row">
                 <div class="col-12">
                   <div class="table-responsive">
-                    <table id="ipi-table" class="table table-striped table tablesorter">
+                    <table id="ipi-table" class="table table-striped table tablesorter" >
                       <thead class="thead-dark">
                       <tr>
                         <th class="text-center" style="width: 124px;">姓名</th>
@@ -53,9 +55,9 @@
                         <td>{{ teacher.phone }}</td>
                         <td>{{ teacher.lastLogin }}</td>
                         <td style="width: 333.7656px;">{{ teacher.registerTime }}</td>
-                        <td class="text-center align-middle" style="max-height: 60px;height: 60px;width: 748.25px;">
+                        <td class="text-center align-middle" style="max-height: 60px;height: 60px;width: 748px;">
                           <a
-                            class="btn btnMaterial btn-flat primary semicircle" @click="viewTeacher" role="button"><i
+                            class="btn btnMaterial btn-flat primary semicircle"  @click="viewTeacher(teacher)" role="button"><i
                             class="far fa-eye"></i>
                         </a>
                           <a class="btn btnMaterial btn-flat success semicircle"
@@ -78,19 +80,25 @@
       </div>
     </div>
   </div>
+  <Edit-teacher-form/>
 </template>
 
 <script>
 import {getCurrentInstance, onMounted} from "vue";
+import EditTeacherForm from "@/components/management/information/EditTeacherForm.vue";
 
 export default {
   name: "teacher",
+  components: {EditTeacherForm  },
   methods: {
     addNewTeacher() {
-      console.log("addNewStudent")
+      console.log("addNewTeacher")
     },
-    viewTeacher() {
-      console.log("viewTeacher")
+    downNewTeacher() {
+      console.log("downNewTeacher")
+    },
+    viewTeacher(id) {
+      console.log("viewTeacher" + id)
     },
     editTeacher() {
       console.log("editTeacher")
@@ -103,8 +111,27 @@ export default {
     const { proxy } = getCurrentInstance();
     const teachers = [];
     const getTeachers = async () => {
-      const res = await proxy.$api.getAllTeachers();
-      this.teachers = res.teachers;
+      // const res = await proxy.$api.getAllTeachers();
+      // this.teachers = res.teachers;
+      this.teachers = [{
+                    name: "孟老师",
+                    id: "19852331",
+                    class: "1909班",
+                    qq: "1274667113",
+                    mail: "",
+                    phone: "18801002716",
+                    lastLogin: "2022-7-15 10:13:43",
+                    registerTime: "2022-7-15 10:14:53"
+                }, {
+                    name: "赵老师",
+                    id: "19852333",
+                    class: "1909班",
+                    qq: "280324329",
+                    mail: "19852331@czjtu.edu.cn",
+                    phone: "19901002839",
+                    lastLogin: "2022-7-15 10:15:58",
+                    registerTime: "2022-7-15 10:16:00"
+                }]
     };
     onMounted(() => {
       getTeachers();
