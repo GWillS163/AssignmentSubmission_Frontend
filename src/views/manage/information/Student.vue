@@ -61,14 +61,14 @@
               </thead>
               <tbody class="text-center">
               <tr v-for="student in students">
-                <td style="width: 168px;">{{ student.name }}</td>
-                <td>{{ student.id }}</td>
-                <td style="width: 119px;">{{ student.class }}</td>
-                <td>{{ student.qq }}</td>
-                <td style="width: 118px;">{{ student.mail }}</td>
-                <td>{{ student.phone }}</td>
-                <td>{{ student.lastLogin }}</td>
-                <td style="width: 333px;">{{ student.registerTime }}</td>
+                <td style="width: 168px;">{{ Student.name }}</td>
+                <td>{{ Student.id }}</td>
+                <td style="width: 119px;">{{ Student.class }}</td>
+                <td>{{ Student.qq }}</td>
+                <td style="width: 118px;">{{ Student.mail }}</td>
+                <td>{{ Student.phone }}</td>
+                <td>{{ Student.lastLogin }}</td>
+                <td style="width: 333px;">{{ Student.registerTime }}</td>
                 <td class="text-center align-middle" style="max-height: 60px;height: 60px;width: 748px;">
                   <a class="btn btnMaterial btn-flat primary semicircle" @click="viewStudent" role="button">
                     <i class="far fa-eye"></i>

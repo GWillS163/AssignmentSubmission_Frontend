@@ -47,17 +47,17 @@
                       </thead>
                       <tbody class="text-center">
                       <tr v-for="teacher in teachers">
-                        <td style="width: 168px;">{{ teacher.name }}</td>
-                        <td>{{ teacher.id }}</td>
-                        <td style="width: 119px;">{{ teacher.class }}</td>
-                        <td>{{ teacher.qq }}</td>
-                        <td style="width: 118.484px;">{{ teacher.mail }}</td>
-                        <td>{{ teacher.phone }}</td>
-                        <td>{{ teacher.lastLogin }}</td>
-                        <td style="width: 333.7656px;">{{ teacher.registerTime }}</td>
+                        <td style="width: 168px;">{{ Teacher.name }}</td>
+                        <td>{{ Teacher.id }}</td>
+                        <td style="width: 119px;">{{ Teacher.class }}</td>
+                        <td>{{ Teacher.qq }}</td>
+                        <td style="width: 118.484px;">{{ Teacher.mail }}</td>
+                        <td>{{ Teacher.phone }}</td>
+                        <td>{{ Teacher.lastLogin }}</td>
+                        <td style="width: 333.7656px;">{{ Teacher.registerTime }}</td>
                         <td class="text-center align-middle" style="max-height: 60px;height: 60px;width: 748px;">
                           <a
-                            class="btn btnMaterial btn-flat primary semicircle"  @click="viewTeacher(teacher)" role="button"><i
+                              class="btn btnMaterial btn-flat primary semicircle" @click="viewTeacher(Teacher)" role="button"><i
                             class="far fa-eye"></i>
                         </a>
                           <a class="btn btnMaterial btn-flat success semicircle"

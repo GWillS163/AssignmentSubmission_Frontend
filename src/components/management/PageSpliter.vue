@@ -1,64 +1,72 @@
 <template>
-  <!--    <div class="card-footer">-->
-
-  <div class="row">
-    <div class="col-md-6 align-self-center">
-      <p id="dataTable_info" aria-live="polite" class="dataTables_info" role="status">
-        <a v-if="records.length === 0">没有记录</a>
-        <a v-else>显示第 {{ (currentPage - 1) * pageSize + 1 }} 至 {{ currentPage * pageSize }} 项结果，
-          共 {{ records.length }} 项</a>
-      </p>
-    </div>
-    <div class="col-md-6">
-      <nav>
-        <ul class="pagination  mb-0 justify-content-center">
-<!--          generate some li label by pageSize and records.length-->
-          <li v-if="currentPage > 1" class="page-item"><a aria-label="Previous" class="page-link" href="#"><span
-              aria-hidden="true">«</span></a></li>
-          <li v-for=" i in Math.ceil(records.length / pageSize)" :key="i" class="page-item">
-            <a :class="{active: currentPage === i}" class="page-link" href="#">{{ i }}</a>
-          </li>
-<!--          <li  class="page-item"><a class="page-link" href="#">1</a></li>-->
-<!--          <li class="page-item"><a class="page-link" href="#">2</a></li>-->
-<!--          <li class="page-item"><a class="page-link" href="#">3</a></li>-->
-          <li v-if="currentPage < (Math.ceil(records.length / pageSize))" class="page-item"><a aria-label="Next" class="page-link" href="#">
-            <span aria-hidden="true">»</span></a>
-          </li>
-        </ul>
-      </nav>
+  <div>
+    <div class="row">
+      <div class="col-md-6 align-self-center">
+        <p id="dataTable_info" aria-live="polite" class="dataTables_info" role="status">
+          <a v-if="records.length === 0">没有记录</a>
+          <a v-else>显示第 {{ (currentPage - 1) * pageSize + 1 }} 至 {{ currentPage * pageSize }} 项结果，
+            共 {{ records.length }} 项</a>
+        </p>
+      </div>
+      <div class="col-md-6">
+        <nav>
+          <ul class="pagination">
+            <li :class="{disabled: currentPage === 1}" class="page-item">
+              <a class="page-link" href="#" @click.prevent="prevPage">上一页</a>
+            </li>
+            <li v-for="i in totalPages" :key="i" :class="{active: currentPage === i}" class="page-item">
+              <a class="page-link" href="#" @click.prevent="goToPage(i)">{{ i }}</a>
+            </li>
+            <li :class="{disabled: currentPage === totalPages}" class="page-item">
+              <a class="page-link" href="#" @click.prevent="nextPage">下一页</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "PageSpliter",
   props: {
     records: {
       type: Array,
-      default: () => {
-        return [
-          {},{},{},{},{}
-        ];
-      },
+      required: true,
+      default: () => [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
     },
     pageSize: {
       type: Number,
       default: 2
-    },
-    currentPage: {
-      type: Number,
-      default:1
-    },
-    pageName: {
-      type: String,
-      default: "default"
     }
   },
-}
+
+  data() {
+    return {
+      currentPage: 1,
+      totalPages: Math.ceil(this.records.length / this.pageSize)
+    };
+  },
+  watch: {
+    records() {
+      this.totalPages = Math.ceil(this.records.length / this.pageSize);
+      this.currentPage = 1;
+    }
+  },
+  methods: {
+    goToPage(pageNumber) {
+      this.currentPage = pageNumber;
+    },
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage -= 1;
+      }
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage += 1;
+      }
+    }
+  }
+};
 </script>
-
-<style scoped>
-
-</style>
-

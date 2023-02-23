@@ -99,19 +99,19 @@ const routes = [
             {
                 path: '/manage/information/teacher',
                 name: 'manageInformationTeacher',
-                component: () => import ('../views/manage/information/teacher.vue'),
+                component: () => import ('../views/manage/information/Teacher.vue'),
                 children: []
             },
             {
                 path: '/manage/information/student',
                 name: 'manageInformationStudent',
-                component: () => import ('../views/manage/information/student.vue'),
+                component: () => import ('../views/manage/information/Student.vue'),
                 children: []
             },
             {
                 path: '/manage/information/class',
                 name: 'manageInformationClass',
-                component: () => import ('../views/manage/information/class.vue'),
+                component: () => import ('../views/manage/information/Class.vue'),
                 children: []
             },
             {
