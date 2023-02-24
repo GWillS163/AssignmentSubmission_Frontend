@@ -49,6 +49,3 @@ import 'font-awesome/css/font-awesome.min.css'
 import "bootstrap/dist/css/bootstrap.min.css"
 // import "bootstrap/dist/js/bootstrap.js"
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js'
-
-// npm install bootstrap-vue-3
-import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'

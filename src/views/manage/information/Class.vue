@@ -29,6 +29,27 @@
             </div>
           </div>
         </div>
+
+<!--              use b-pagination to complete a function that can flip page of table  -->
+              <b-table striped hover
+                       :items="classes"
+                       :fields="fields"
+                      :per-page="perPage"
+                      :current-page="currentPage"
+                      id="class-table"
+              ></b-table>
+<!--              <page-spliter :records="classes"/>-->
+<!--             use b-pagination label , generate the page spliter that inject a classes, -->
+<!--             and the classes is a array, and the page spliter will split the array to pages-->
+
+              <b-pagination
+                v-model="currentPage"
+                :total-rows="rows"
+                :per-page="perPage"
+                aria-controls="my-table"
+            @change="onPageChange"
+              />
+
         <div class="row">
           <div class="col-12">
             <div class="table-responsive">
@@ -59,18 +80,6 @@
                 </tr>
                 </tbody>
               </table>
-              <page-spliter :records="classes"/>
-<!--             use b-pagination label , generate the page spliter that inject a classes, -->
-<!--             and the classes is a array, and the page spliter will split the array to pages-->
-              <b-pagination
-                v-model="classes"
-                :total-rows="classes.length"
-                per-page="2"
-                aria-controls="my-table"
-                class="my-0"
-              />
-
-
 
             </div>
           </div>
@@ -113,6 +122,16 @@ export default {
     }
 
   },
+  computed: {
+
+      rows() {
+        return this.classes.length
+      },
+
+      onPageChange() {
+        console.log('Current page changed to', this.currentPage)
+      }
+  },
   data() {
 
     const {proxy} = getCurrentInstance();
@@ -122,7 +141,7 @@ export default {
       // this.classes = res.classes;
       this.classes = [
         {
-          id: 1,
+          id: 10,
           name: "软件工程1909班",
           teacher: "孟老师"
         },
@@ -138,6 +157,26 @@ export default {
         },
         {
           id: 4,
+          name: "软件工程1906班",
+          teacher: "孟老师"
+        },
+        {
+          id: 5,
+          name: "软件工程1907班",
+          teacher: "孟老师"
+        },
+        {
+          id: 6,
+          name: "软件工程1906班",
+          teacher: "孟老师"
+        },
+        {
+          id: 7,
+          name: "软件工程1907班",
+          teacher: "孟老师"
+        },
+        {
+          id: 8,
           name: "软件工程1906班",
           teacher: "孟老师"
         }
@@ -167,7 +206,15 @@ export default {
         classId: 1,
         teacherId: 127,
         describe: "这是一个软件工程1909班"
-      }
+      },
+      currentPage: 1,
+      perPage: 4,
+      fields: [
+        { key: 'id', label: '班级id', sortable: true},
+        { key: 'name', label: '班级名', sortable: true },
+        { key: 'teacher', label: '创建教师' , sortable: true},
+        { key: 'actions', label: '操作', sortable: false }
+      ],
     }
   }
 }
