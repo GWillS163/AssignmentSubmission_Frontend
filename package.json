@@ -13,6 +13,7 @@
     "@popperjs/core": "^2.11.6",
     "@usecsv/vuejs3": "^1.0.1",
     "bootstrap": "^5.2.3",
+    "bootstrap-vue": "^2.23.1",
     "bootstrap-vue-3": "^0.5.1",
     "cnpm": "^9.0.1",
     "font-awesome": "^4.7.0",

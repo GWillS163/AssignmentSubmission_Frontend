@@ -1,225 +1,230 @@
 <template>
+  <b-container fluid>
+    <!-- User Interface controls -->
+    <b-row>
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-6">
-        <h3 class="text-dark mb-4">我的班级</h3>
-      </div>
-      <div class="col-12 col-sm-6 col-md-6 text-end" style="margin-bottom: 30px;">
-        <a id="addClassBtn" class="btn btn-primary" data-bs-target="#addClass" data-bs-toggle="modal" data-bs-whatever="@mdo"
-           role="button">
-          <i class="fa fa-plus"></i> 新增班级 </a>
-      </div>
-    </div>
-    <div class="col">
-      <div id="TableSorterCard" class="card">
-        <div class="card-header py-3">
-          <div class="row table-topper align-items-center">
-            <div class="col-12 col-sm-5 col-md-6 text-start" style=" padding: 5px 15px;">
-              <p class="text-primary m-0 fw-bold">
-                班级列表</p>
-            </div>
-            <div class="col-12 col-sm-7 col-md-6 text-end" style=" padding: 5px 15px;">
-              <button class="btn btn-primary btn-sm reset"
-                      @click="downloadClass"
-                      style="margin: 2px;" type="button">
-                <i class="fa fa-download"></i>
-                列表下载
-              </button>
-            </div>
-          </div>
-        </div>
+      <b-col lg="6" class="my-1">
+        <b-form-group
+          label="Filter"
+          label-for="filter-input"
+          label-cols-sm="3"
+          label-align-sm="right"
+          label-size="sm"
+          class="mb-0"
+        >
+          <b-input-group size="sm">
+            <b-form-input
+              id="filter-input"
+              v-model="filter"
+              type="search"
+              placeholder="Type to Search"
+            ></b-form-input>
 
-<!--              use b-pagination to complete a function that can flip page of table  -->
-              <b-table striped hover
-                       :items="classes"
-                       :fields="fields"
-                      :per-page="perPage"
-                      :current-page="currentPage"
-                      id="class-table"
-              ></b-table>
-<!--              <page-spliter :records="classes"/>-->
-<!--             use b-pagination label , generate the page spliter that inject a classes, -->
-<!--             and the classes is a array, and the page spliter will split the array to pages-->
+            <b-input-group-append>
+              <b-button :disabled="!filter" @click="filter = ''">清除</b-button>
+            </b-input-group-append>
+          </b-input-group>
+        </b-form-group>
+      </b-col>
 
-              <b-pagination
-                v-model="currentPage"
-                :total-rows="rows"
-                :per-page="perPage"
-                aria-controls="my-table"
-            @change="onPageChange"
-              />
+      <b-col lg="6" class="my-1">
+        <b-form-group
+          v-model="sortDirection"
+          label="Filter On"
+          description="Leave all unchecked to filter on all data"
+          label-cols-sm="3"
+          label-align-sm="right"
+          label-size="sm"
+          class="mb-0"
+          v-slot="{ ariaDescribedby }"
+        >
+          <b-form-checkbox-group
+            v-model="filterOn"
+            :aria-describedby="ariaDescribedby"
+            class="mt-1"
+          >
+            <b-form-checkbox value="name">班级名称</b-form-checkbox>
+            <b-form-checkbox value="age">Age</b-form-checkbox>
+            <b-form-checkbox value="isActive">Active</b-form-checkbox>
+          </b-form-checkbox-group>
+        </b-form-group>
+      </b-col>
 
-        <div class="row">
-          <div class="col-12">
-            <div class="table-responsive">
-              <table id="ipi-table" class="table table-striped table ">
-                <thead class="thead-dark">
-                <tr>
-                  <th class="text-center">班级id</th>
-                  <th class="text-center">班级名</th>
-                  <th class="text-center">创建教师</th>
-                  <th class="text-center filter-false sorter-false">操作</th>
-                </tr>
-                </thead>
-                <tbody class="text-center">
-                <tr v-for="clazz in classes">
-                  <td>{{ clazz.id }}</td>
-                  <td>{{ clazz.name }}</td>
-                  <td>{{ clazz.teacher }}</td>
-                  <td class="text-center align-middle" style="max-height: 60px;height: 60px;">
-                    <a class="btn btnMaterial btn-flat success semicircle" @click="editClass(clazz)"
-                       role="button">
-                      <i class="fas fa-pen"></i>
-                    </a>
-                    <a class="btn btnMaterial btn-flat accent semicircle "
-                       @click="deleteClass(clazz.id)" role="button" style="margin-left: 5px;">
-                      <i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i>
-                    </a>
-                  </td>
-                </tr>
-                </tbody>
-              </table>
+      <b-col sm="5" md="6" class="my-1">
+        <b-form-group
+          label="Per page"
+          label-for="per-page-select"
+          label-cols-sm="6"
+          label-cols-md="4"
+          label-cols-lg="3"
+          label-align-sm="right"
+          label-size="sm"
+          class="mb-0"
+        >
+          <b-form-select
+            id="per-page-select"
+            v-model="perPage"
+            :options="pageOptions"
+            size="sm"
+          ></b-form-select>
+        </b-form-group>
+      </b-col>
 
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+      <b-col sm="7" md="6" class="my-1">
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="totalRows"
+          :per-page="perPage"
+          align="fill"
+          size="sm"
+          class="my-0"
+        ></b-pagination>
+      </b-col>
+    </b-row>
 
-  <!-- Modal -->
-  <EditClassForm :clazz="formData"/>
+    <!-- Main table element -->
+    <b-table
+      :items="items"
+      :fields="fields"
+      :current-page="currentPage"
+      :per-page="perPage"
+      :filter="filter"
+      :filter-included-fields="filterOn"
+      :sort-by.sync="sortBy"
+      :sort-desc.sync="sortDesc"
+      :sort-direction="sortDirection"
+      stacked="md"
+      show-empty
+      small
+      @filtered="onFiltered"
+    >
+      <template #cell(name)="row">
+        {{ row.value.first }} {{ row.value.last }}
+      </template>
+
+      <template #cell(actions)="row">
+        <b-button size="sm" @click="openDetail" class="mr-1">
+<!--        <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1">-->
+          Info modal
+        </b-button>
+        <b-button size="sm" @click="row.toggleDetails">
+          {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+        </b-button>
+      </template>
+
+      <template #row-details="row">
+        <b-card>
+          <ul>
+            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
+          </ul>
+        </b-card>
+      </template>
+    </b-table>
+
+    <!-- Info modal -->
+    <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
+      <pre>{{ infoModal.content }}</pre>
+    </b-modal>
+  </b-container>
 </template>
 
 <script>
-import PageSpliter from "@/components/management/PageSpliter.vue";
-import {getCurrentInstance, onMounted} from "vue";
-import EditClassForm from "@/components/management/information/EditClassForm.vue";
-
-export default {
-
-  name: "class",
-  components: {EditClassForm, PageSpliter},
-  methods:{
-    downloadClass() {
-      console.log("download class");
-    },
-    addClass(){
-      console.log("add class");
-      console.log(this.formData);
-    },
-    editClass(clazz) {
-      // set  show modal the status like data-bs-target="#addClass" data-bs-toggle="modal"
-      // set the data to the modal , click the button to open, its id is addClassBtn
-      document.getElementById("addClassBtn").click();
-      console.log("edit class " + clazz);
-      this.formData = clazz;
-
-    },
-    deleteClass(id) {
-      console.log("delete class " + id);
-    }
-
-  },
-  computed: {
-
-      rows() {
-        return this.classes.length
-      },
-
-      onPageChange() {
-        console.log('Current page changed to', this.currentPage)
+  export default {
+    compatConfig: { MODE: 3 },
+    data() {
+      return {
+        items: [
+          { isActive: true, age: 40, name: { first: 'Dickerson', last: 'Macdonald' } },
+          { isActive: false, age: 21, name: { first: 'Larsen', last: 'Shaw' } },
+          {
+            isActive: false,
+            age: 9,
+            name: { first: 'Mini', last: 'Navarro' },
+            _rowVariant: 'success'
+          },
+          { isActive: false, age: 89, name: { first: 'Geneva', last: 'Wilson' } },
+          { isActive: true, age: 38, name: { first: 'Jami', last: 'Carney' } },
+          { isActive: false, age: 27, name: { first: 'Essie', last: 'Dunlap' } },
+          { isActive: true, age: 40, name: { first: 'Thor', last: 'Macdonald' } },
+          {
+            isActive: true,
+            age: 87,
+            name: { first: 'Larsen', last: 'Shaw' },
+            _cellVariants: { age: 'danger', isActive: 'warning' }
+          },
+          { isActive: false, age: 26, name: { first: 'Mitzi', last: 'Navarro' } },
+          { isActive: false, age: 22, name: { first: 'Genevieve', last: 'Wilson' } },
+          { isActive: true, age: 38, name: { first: 'John', last: 'Carney' } },
+          { isActive: false, age: 29, name: { first: 'Dick', last: 'Dunlap' } }
+        ],
+        fields: [
+          { key: 'name', label: 'Person full name', sortable: true},
+          { key: 'age', label: 'Person age', sortable: true },
+          {key: 'isActive', label: 'Is Active', sortable: true},
+          { key: 'actions', label: 'Actions', sortable: true },
+          // { key: 'name', label: 'Person full name', sortable: true, sortDirection: 'desc' },
+          // { key: 'age', label: 'Person age', sortable: true, class: 'text-center' },
+          // {
+          //   key: 'isActive',
+          //   label: 'Is Active',
+          //   formatter: (value, key, item) => {
+          //     return value ? 'Yes' : 'No'
+          //   },
+          //   sortable: true,
+          //   sortByFormatted: true,
+          //   filterByFormatted: true
+          // },
+          // { key: 'actions', label: 'Actions',
+          //   sortable: true }
+        ],
+        totalRows: 1,
+        currentPage: 1,
+        perPage: 5,
+        pageOptions: [5, 10, 15, { value: 100, text: "Show a lot" }],
+        sortBy: '',
+        sortDesc: false,
+        sortDirection: 'asc',
+        filter: null,
+        filterOn: [],
+        infoModal: {
+          id: 'info-modal',
+          title: '',
+          content: ''
+        }
       }
-  },
-  data() {
-
-    const {proxy} = getCurrentInstance();
-    const classes = [];
-    const getClasses = async () => {
-      // const res = await proxy.$api.getClassesByTeacherId(127);
-      // this.classes = res.classes;
-      this.classes = [
-        {
-          id: 10,
-          name: "软件工程1909班",
-          teacher: "孟老师"
-        },
-        {
-          id: 2,
-          name: "软件工程1908班",
-          teacher: "孟老师"
-        },
-        {
-          id: 3,
-          name: "软件工程1907班",
-          teacher: "孟老师"
-        },
-        {
-          id: 4,
-          name: "软件工程1906班",
-          teacher: "孟老师"
-        },
-        {
-          id: 5,
-          name: "软件工程1907班",
-          teacher: "孟老师"
-        },
-        {
-          id: 6,
-          name: "软件工程1906班",
-          teacher: "孟老师"
-        },
-        {
-          id: 7,
-          name: "软件工程1907班",
-          teacher: "孟老师"
-        },
-        {
-          id: 8,
-          name: "软件工程1906班",
-          teacher: "孟老师"
-        }
-      ]
-    }
-    onMounted(() => {
-      getClasses();
-    })
-    return {
-      classes,
-      teachers: [
-        {
-          id: 1,
-          name: "张三老师"
-        },
-        {
-          id: 2,
-          name: "李四老师"
-        },
-        {
-          id: 127,
-          name: "孟老师"
-        }
-      ],
-      formData: {
-        className: "软件工程1909班",
-        classId: 1,
-        teacherId: 127,
-        describe: "这是一个软件工程1909班"
+    },
+    computed: {
+      sortOptions() {
+        // Create an options list from our fields
+        return this.fields
+          .filter(f => f.sortable)
+          .map(f => {
+            return { text: f.label, value: f.key }
+          })
+      }
+    },
+    mounted() {
+      // Set the initial number of items
+      this.totalRows = this.items.length
+    },
+    methods: {
+      openDetail() {
+        console.log('open detail');
       },
-      currentPage: 1,
-      perPage: 4,
-      fields: [
-        { key: 'id', label: '班级id', sortable: true},
-        { key: 'name', label: '班级名', sortable: true },
-        { key: 'teacher', label: '创建教师' , sortable: true},
-        { key: 'actions', label: '操作', sortable: false }
-      ],
+      info(item, index, button) {
+        this.infoModal.title = `Row index: ${index}`
+        this.infoModal.content = JSON.stringify(item, null, 2)
+        this.$root.$emit('bv::show::modal', this.infoModal.id, button)
+      },
+      resetInfoModal() {
+        this.infoModal.title = ''
+        this.infoModal.content = ''
+      },
+      onFiltered(filteredItems) {
+        // Trigger pagination to update the number of buttons/pages due to filtering
+        this.totalRows = filteredItems.length
+        this.currentPage = 1
+      }
     }
   }
-}
 </script>
-
-<style scoped>
-
-</style>

@@ -38,6 +38,13 @@ app.use(UseCSVButton)
 app.mount('#app')
 
 
+export default {
+  compatConfig: {
+    MODE: 3, // opt-in to Vue 3 behavior for this component only
+    FEATURE_ID_A: true // features can also be toggled at component level
+  }
+  // ...
+}
 
 // use BoostrapVue3
 // 本地导入部分，不需要
@@ -46,6 +53,8 @@ app.mount('#app')
 // import './assets/bootstrap/js/bootstrap.min.js'
 // 使用 npm install bootstrap，可使用
 import 'font-awesome/css/font-awesome.min.css'
-import "bootstrap/dist/css/bootstrap.min.css"
 // import "bootstrap/dist/js/bootstrap.js"
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
