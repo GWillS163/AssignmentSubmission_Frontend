@@ -31,9 +31,9 @@ app.config.globalProperties.jquery = jquery;
 
 
 import router from './router/router'
-import BootstrapVue3 from 'bootstrap-vue-3'
+import BootstrapVueNext from 'bootstrap-vue-next'
 app.use(router)
-app.use(BootstrapVue3)
+app.use(BootstrapVueNext)
 app.use(UseCSVButton)
 app.mount('#app')
 
@@ -57,4 +57,4 @@ import 'font-awesome/css/font-awesome.min.css'
 // import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap-vue-next/dist/bootstrap-vue-next.css'

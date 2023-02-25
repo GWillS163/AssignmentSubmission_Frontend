@@ -1,5 +1,4 @@
 <template>
-  {{clazz}}
   <div id="addClass" aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
