@@ -208,5 +208,13 @@ export default {
             method: 'get',
             mock: true
         })
+    },
+    putClass(clazz) {
+        return request({
+            url: '/api/data',
+            method: 'put',
+            mock: true,
+            data: clazz
+        })
     }
 }

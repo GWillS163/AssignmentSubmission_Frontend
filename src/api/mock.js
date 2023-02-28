@@ -39,6 +39,45 @@ Mock.mock(/assign\/1\/progress/, assign.getAssignProgress(1))
 Mock.mock(/assign\/class\/0/, assign.getAssignsByClass(0))
 Mock.mock(/assign\/class\/1909/, assign.getAssignsByClass(1909))
 
+// CRUD
+
+
+// 拦截post请求，处理添加数据
+Mock.mock('/api/data', 'post', (options) => {return classes.postClass(options)});
+
+// 拦截put请求，处理修改数据
+Mock.mock('/api/data', 'put', (options) => { return classes.putClass(options) });
+
+// 处理 /api/data 删除请求
+Mock.mock('/api/data', 'delete', (options) => {
+  const clazz = JSON.parse(options.body);
+  console.log('Delete clazz with id:', clazz.id);
+
+  if (isNaN(clazz.id)) {
+    return { success: false, message: '删除时发现无效id' };
+  } else {
+    return deleteData(clazz.id);
+  }
+});
+// 模拟数据列表
+const list = [
+  { id: 1, name: '张三', age: 18 },
+  { id: 2, name: '李四', age: 20 },
+  { id: 3, name: '王五', age: 22 },
+];
+const deleteData = (id) => {
+  const index = list.findIndex(item => item.id === id);
+  if (index !== -1) {
+    list.splice(index, 1);
+    return { success: true };
+  } else {
+    return { success: false, message: 'Not found' };
+  }
+};
+Mock.mock('/api/data/:id', 'delete', (options) => { return classes.deleteClazz(options) });
+
+
+
 
 // assign Opr
 Mock.mock(/assign\/teacher\/127/, assign.getAssignsByTeacher(127))
@@ -59,3 +98,4 @@ Mock.mock('/user/basicInfo', 'get', userInfo.getBasicInfo())
 Mock.mock('/user/optionalInfo', 'get', userInfo.getOptionalInfo())
 Mock.mock('/user/settings', 'get', userInfo.getSettings())
 Mock.mock('/user/message', 'get', userInfo.getMessage())
+
