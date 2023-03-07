@@ -276,6 +276,12 @@ export default {
     const getClassesData = async () => {
       // const res = await proxy.$api.getClassesByTeacherId(127);
       // this.classes = res.classes;
+      await axios.get("http://localhost:8080/file/allInfo")
+          .then(res => {
+            console.log("测试file")
+            console.log(res.data)
+            this.classes = res.data
+          })
 
       this.classes = [
         {
@@ -360,7 +366,7 @@ export default {
     onMounted(() => {
       postData();
       putClazz();
-      deleteClazz({classId: 11});
+      deleteClazz(formData);
 
       console.log('onMounted')
       getClassesData();
