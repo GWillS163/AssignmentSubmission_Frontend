@@ -91,8 +91,9 @@ Mock.mock('/file/student/127', 'get', files.getFilesByStudentId(127))
 Mock.mock('/file/teacher/0', 'get', files.getAllFiles(0))
 Mock.mock('/file/teacher/127', 'get', files.getAllFiles(127))
 
-Mock.mock('/class/teacher/127', 'get', classes.getClassesByTeacherId(127))
+Mock.mock('/class/teacher', 'post', (options) => { return classes.getClassesByTeacherId(options)})
 Mock.mock('/teacher/all', 'get', teachers.getAllTeachers())
+Mock.mock('/teacher/map', 'get', teachers.getAllTeachersMapping())
 Mock.mock('/student/teacher/127', 'get', students.getStudentsByTeacherId(127))
 
 // basic Info

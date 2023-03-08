@@ -2,10 +2,12 @@ import Mock from "mockjs";
 
 export default {
     getClassesByTeacherId(teacherId) {
+        console.log("mock getClassesByTeacherId:", teacherId);
+        console.log(teacherId)
         let classes = [];
         if (teacherId === 127) {
             classes = [{
-                id: 1909, name: "计算机科学与技术1909", teacher: "张三"
+                id: 1909, className: "计算机科学与技术1909", teacher_id: 0
 
             }, {
                 id: 1910, name: "计算机科学与技术1910", teacher: "李四"

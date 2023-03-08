@@ -1,4 +1,21 @@
 export default {
+    getAllTeachersMapping() {
+      return {
+          code: 200,
+          data: [
+              {
+                id: 127,
+                name: "孟老师",
+              },{
+                id: 128,
+                name: "赵老师",
+              },{
+                    id: 129,
+                    name: "李老师",
+              }
+          ]
+      }
+    },
     getAllTeachers() {
         return {
             code: 200, data: {

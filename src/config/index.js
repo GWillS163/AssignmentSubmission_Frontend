@@ -1,6 +1,6 @@
 
 const env = "dev"
-const baseApi = "http://localhost:8080/api"
+const baseApi = "http://localhost:8080"
 const mockApi = "https://www.fastmock.site/mock/.../api"
 
 export default {

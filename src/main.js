@@ -29,9 +29,10 @@ app.config.globalProperties.$ = $;
 app.config.globalProperties.jquery = jquery;
 
 
-
+// import vueRouter from 'vue-router'
 import router from './router/router'
 import BootstrapVueNext from 'bootstrap-vue-next'
+// app.use(vueRouter)
 app.use(router)
 app.use(BootstrapVueNext)
 app.use(UseCSVButton)

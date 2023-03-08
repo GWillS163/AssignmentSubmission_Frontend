@@ -274,99 +274,24 @@ export default {
     };
 
     const getClassesData = async () => {
-      // const res = await proxy.$api.getClassesByTeacherId(127);
-      // this.classes = res.classes;
-      await axios.get("http://localhost:8080/file/allInfo")
-          .then(res => {
-            console.log("测试file")
-            console.log(res.data)
-            this.classes = res.data
-          })
-
-      this.classes = [
-        {
-          classId: 11,
-          className: "软件工程1909班",
-          teacherId: 127,
-          describe: "这是一个软件工程1909班"
-        },
-        {
-          classId: 12,
-          className: "软件工程1909班",
-          teacherId: 128,
-          describe: "这是一个软件工程1909班"
-        },
-        {
-          classId: 13,
-          className: "软件工程1909班",
-          teacherId: 127,
-          describe: "这是一个软件工程1909班"
-        },
-        {
-          classId: 14,
-          className: "软件工程1909班",
-          teacherId: 127,
-          describe: "这是一个软件工程1909班"
-        },
-        {
-          classId: 15,
-          className: "软件工程1909班",
-          teacherId: 127,
-          describe: "这是一个软件工程1909班"
-        },
-        {
-          classId: 16,
-          className: "软件工程1909班",
-          teacherId: 127,
-          describe: "这是一个软件工程1909班"
-        },
-        {
-          classId: 17,
-          className: "软件工程1909班",
-          teacherId: 127,
-          describe: "这是一个软件工程1909班"
-        },
-        {
-          classId: 18,
-          className: "软件工程1909班",
-          teacherId: 127,
-          describe: "这是一个软件工程1909班"
-        },
-        {
-          classId: 19,
-          className: "软件工程1909班",
-          teacherId: 127,
-          describe: "这是一个软件工程1909班"
-        },
-        {
-          classId: 20,
-          className: "软件工程1909班",
-          teacherId: 127,
-          describe: "这是一个软件工程1909班"
-        },
-      ]
-      // console.log(this.classes)
-      // axios.get('/api/clazz')
-      //     .then(response => {
-      //       this.classes = response.data
-      //     })
-      //     .catch(error => {
-      //       console.log(error)
-      //     })
-    }
+      const res = await proxy.$api.getClassesByTeacherId(127);
+      this.classes = res.data;
+      // console.log("请求到的数据", res.data)
+    };
     const getTeacherData = async () => {
-      // const res = await proxy.$api.getTeachers();
-      // this.teachers = res.teachers;
+      const res = await proxy.$api.getAllTeachers();
+      console.log(res)
+      this.teachers = res.teachers;
       this.teachers = {
         127: "孟老师",
         128: "李四",
-        129: "王五"
+        0: "王五"
       }
     }
     onMounted(() => {
-      postData();
-      putClazz();
-      deleteClazz(formData);
+      // postData();
+      // putClazz();
+      // deleteClazz(formData);
 
       console.log('onMounted')
       getClassesData();
@@ -380,10 +305,10 @@ export default {
       formData,
       classes,
       fields: [
-        {key: 'classId', label: '班级id', sortable: true},
+        {key: 'id', label: '班级id', sortable: true},
         {key: 'className', label: '班级名', sortable: true},
         {
-          key: 'teacherId', label: '创建教师', sortable: true,
+          key: 'teacher_id', label: '创建教师', sortable: true,
           formatter: (value) => {
             return this.teachers[value]
           },

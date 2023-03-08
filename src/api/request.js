@@ -1,5 +1,6 @@
 import axios from 'axios'
 import config from '../config'
+// import { Message } from "bootstrap-vue-next";
 // import Message part of bootstrap-vue
 // import { Message } from 'bootstrap-vue'
 const NETWORK_ERROR = 'Network Error(网络错误)'
@@ -8,6 +9,43 @@ const NETWORK_ERROR = 'Network Error(网络错误)'
 const service = axios.create({
     baseURL: config.baseApi, // api的base_url
 })
+
+// make response
+const getResp = (options) => {
+    // console.log(service.defaults.baseURL + options.url)
+
+    if (!service.defaults.baseURL) {
+        return service(options)
+    }
+    else if (options.method === 'get') {
+        return axios.get(service.defaults.baseURL + options.url,
+            {
+        })
+    } else if (options.method === 'post') {
+        const formData = new FormData()
+        for (const key in options.params) {
+            // console.log("打印:" + key + options.params[key])
+            formData.append(key, options.params[key])
+        }
+        // formData.append(options.params.key, options.params.value)
+        return axios.post(
+            service.defaults.baseURL + options.url,
+            formData
+        )
+    } else if (options.method === 'put') {
+        return axios.put(service.defaults.baseURL + options.url,
+            {
+                data: options.data
+            })
+    } else if (options.method === 'delete') {
+        return axios.delete(service.defaults.baseURL + options.url,
+            {
+                data: options.data
+            })
+    } else {
+        return "请求错误！不是get, post, put, delete or Mock"
+    }
+}
 
 // before request hook
 service.interceptors.request.use((req) => {
@@ -18,7 +56,8 @@ service.interceptors.request.use((req) => {
 
 // after response hook
 service.interceptors.response.use((res) => {
-    // console.log("by Interceptor: ", res.data)
+    // console.log("res")
+    // console.log(res)
     const { code, data, msg } = res.data
     if (code === 200) {
         return data
@@ -33,6 +72,7 @@ service.interceptors.response.use((res) => {
 function request(options) {
     // { method: 'get', data: { } }
 
+    // 默认GET方式
     options.method = options.method || 'get'
     if (options.method.toLowerCase() === 'get') {
         options.params = options.data
@@ -50,8 +90,9 @@ function request(options) {
     } else {
         service.defaults.baseURL = isMock ? config.mockApi : config.baseApi
     }
-
-    return service(options)
+    // console.log('request url: ' + service.defaults.baseURL + options.url)
+    return getResp(options)
+    // return service(options)
 }
 
 export default request

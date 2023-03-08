@@ -154,14 +154,26 @@ export default {
     },
     getClassesByTeacherId(teacherId) {
         return request({
-            url: '/class/teacher/' + teacherId,
-            method: 'get',
-            mock: true,
+            // url: '/class/teacher/' + teacherId,
+            url: '/class/teacher',
+            method: 'post',
+            // put teacherId to post request
+            params: {
+                teacherId: teacherId
+            },
+            mock: false,
         })
     },
     getAllTeachers() {
         return request({
             url: '/teacher/all',
+            method: 'get',
+            mock: true
+        })
+    },
+    getAllTeachersMapping() {
+        return request({
+            url: '/teacher/map',
             method: 'get',
             mock: true
         })
