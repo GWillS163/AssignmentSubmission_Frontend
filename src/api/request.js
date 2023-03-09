@@ -24,9 +24,10 @@ const getResp = (options) => {
     } else if (options.method === 'post') {
         const formData = new FormData()
         for (const key in options.params) {
-            // console.log("打印:" + key + options.params[key])
+            console.log("打印params:" + key + options.params[key])
             formData.append(key, options.params[key])
         }
+        console.log("打印formData:" + formData)
         // formData.append(options.params.key, options.params.value)
         return axios.post(
             service.defaults.baseURL + options.url,
@@ -83,6 +84,11 @@ function request(options) {
     if (typeof options.mock !== 'undefined') { // 针对某个接口是否使用mock
         isMock = options.mock
     }
+    // if (isMock) {
+    //     console.log('Mock request url: ' +  options.url)
+    // } else {
+    //     console.log('Real Request url: ' +  options.url)
+    // }
 
     // 线上环境不使用mock
     if (config.env === 'prod') {
@@ -90,7 +96,7 @@ function request(options) {
     } else {
         service.defaults.baseURL = isMock ? config.mockApi : config.baseApi
     }
-    // console.log('request url: ' + service.defaults.baseURL + options.url)
+
     return getResp(options)
     // return service(options)
 }

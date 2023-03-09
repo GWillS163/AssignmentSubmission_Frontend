@@ -157,9 +157,19 @@ export default {
             // url: '/class/teacher/' + teacherId,
             url: '/class/teacher',
             method: 'post',
+            // TODO: 这里不知道对不对
+            params: teacherId,
+            mock: false,
+        })
+    },
+    getClassesByAdmin(adminId) {
+        return request({
+            // url: '/class/teacher/' + teacherId,
+            url: '/class/allInfo',
+            method: 'get',
             // put teacherId to post request
             params: {
-                teacherId: teacherId
+                adminId: adminId
             },
             mock: false,
         })
@@ -175,7 +185,15 @@ export default {
         return request({
             url: '/teacher/map',
             method: 'get',
-            mock: true
+            mock: false
+        })
+    },
+    postClass(clazz) {
+        return request({
+            url: '/class',
+            method: 'post',
+            mock: false,
+            params: clazz
         })
     },
     getStudentsByTeacherId(teacherId) {

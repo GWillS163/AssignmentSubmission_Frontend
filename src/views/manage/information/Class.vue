@@ -3,24 +3,23 @@
            cancel-title="取消"
            ok-title="确认"
            @cancel="cancel"
-           @ok="saveClazz"
+           @ok="submit"
+           :title="editMethod ==='edit' ? '编辑班级' : '新增班级'"
   >
 
     <form class="row g-3">
-      <div class="col-md-6">
+      <div :class="editMethod==='edit' ? 'col-md-6' : 'col-md-8'">
         <label class="form-label" for="validationServer01">班级名</label>
-        <input id="validationServer01" v-model="formData.className" class="form-control is-valid" required type="text">
-        <div class="valid-feedback">
-          看起来不错
-        </div>
+        <b-form-input v-model="formData.className" :state="validation" id="validationServer01" required  type="text"></b-form-input>
+        <b-form-invalid-feedback :state="validation">
+          Your user Id must be 5-12 characters long.
+        </b-form-invalid-feedback>
+        <b-form-valid-feedback :state="validation"> Looks Good. </b-form-valid-feedback>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2" v-show="editMethod==='edit'">
         <label class="form-label" for="validationServer02">ID</label>
-        <input id="validationServer02" v-model="formData.classId" class="form-control is-valid" disabled required
+        <input id="validationServer02" v-model="formData.id" class="form-control is-valid" disabled required
                type="text">
-        <!--              <div class="valid-feedback">-->
-        <!--                看起来不错-->
-        <!--              </div>-->
       </div>
       <div class="col-md-4">
         <label class="form-label" for="validationServer04">所属教师</label>
@@ -35,7 +34,7 @@
       </div>
       <div class="col-md-12">
         <label class="form-label" for="validationServer03">描述</label>
-        <input id="validationServer03" v-model="formData.describe" aria-describedby="validationServer03Feedback"
+        <input id="validationServer03" v-model="formData.description" aria-describedby="validationServer03Feedback"
                class="form-control " type="text">
       </div>
       <!--            <div class="col-12">-->
@@ -194,6 +193,8 @@
               small
               stacked="md"
               @filtered="onFiltered"
+              empty-filtered-text="你还没有班级哦"
+              empty-text="这里还没有班级哦"
           >
             <template #cell(name)="row">
             </template>
@@ -237,23 +238,32 @@
 </template>
 
 <script>
-import {getCurrentInstance, onMounted, ref} from "vue";
+import {getCurrentInstance, onMounted, ref, computed} from "vue";
 import EditClassForm from "@/components/management/information/EditClassForm.vue";
 import axios from "axios";
+import api from "@/api/api";
 
 export default {
   components: {EditClassForm},
   compatConfig: {MODE: 3},
   data() {
+
+    // const userId = ref('')
+    // const validation = computed(() => userId.value.length > 4 && userId.value.length < 13)
     const {proxy} = getCurrentInstance();
     const classes = [];
     const isModalOpen = ref(false)
     const teachers = ref({})
-    const formData = {className: "default",
-                      classId: 0,
+    const formData = ref({
+                      className: "新班级",
+                      id: 0,
                       teacherId: 0,
-                      describe: " "
-                    }
+                      description: " ",
+                      faculty: '默认系',
+                      major: '默认专业',
+
+                    })
+    const validation = computed(() => formData.value.className.length > 4 && formData.value.className.length < 13)
     const postData = () => {
       // 发送 POST 请求到 /api/data 接口
       axios.post('/api/data', formData).then((res) => {
@@ -274,26 +284,28 @@ export default {
     };
 
     const getClassesData = async () => {
-      const res = await proxy.$api.getClassesByTeacherId(127);
+      // TODO： 自动根据当前用户的角色获取班级列表
+      // const res = await proxy.$api.getClassesByTeacherId(127);
+      const res = await proxy.$api.getClassesByAdmin(0);
+      console.log("Classes:",  res.data)
       this.classes = res.data;
       // console.log("请求到的数据", res.data)
     };
     const getTeacherData = async () => {
-      const res = await proxy.$api.getAllTeachers();
-      console.log(res)
-      this.teachers = res.teachers;
-      this.teachers = {
-        127: "孟老师",
-        128: "李四",
-        0: "王五"
-      }
+      const res = await proxy.$api.getAllTeachersMapping();
+      console.log("TeachersMap:",  res.data)
+      this.teachers = res.data;
+      // this.teachers = {
+      //   127: "孟老师",
+      //   128: "李四",
+      //   0: "王五"
+      // }
     }
     onMounted(() => {
       // postData();
       // putClazz();
       // deleteClazz(formData);
 
-      console.log('onMounted')
       getClassesData();
       getTeacherData();
       this.totalRows = this.classes.length;
@@ -301,15 +313,23 @@ export default {
     return {
       editMethod: "edit",
       modal: isModalOpen,
+      validation,
       teachers,
       formData,
       classes,
       fields: [
         {key: 'id', label: '班级id', sortable: true},
         {key: 'className', label: '班级名', sortable: true},
+        {key: 'faculty', label: '所属学院', sortable: true},
+        {key: 'major', label: '所属专业', sortable: true},
         {
-          key: 'teacher_id', label: '创建教师', sortable: true,
+          key: 'teacherId', label: '创建教师', sortable: true,
           formatter: (value) => {
+            if (value === 0) {
+              return "管理员"
+            } else if (!value in this.teachers) {
+              return "未知"
+            }
             return this.teachers[value]
           },
         },
@@ -342,8 +362,10 @@ export default {
     addClazz() {
       this.editMethod = "add";
       this.modal = !this.modal
+      // this.formData.id = null;
       // document.getElementById("addClassBtn").click();
     },
+    // async getClassesData() {
     editClazz(row) {
       this.editMethod = "edit";
       console.log(row);
@@ -363,10 +385,17 @@ export default {
       //     })
 
     },
-    saveClazz() {
+    submit() {
       if (this.editMethod === "add") {
-        // console.log("add");
+      //   // console.log("add");
         this.createClazz(this.formData);
+      //   this.createClazz({
+      //                 className: "新班级",
+      //                 id: 0,
+      //                 teacherId: 0,
+      //                 description: " ",
+      //                 faculty: '默认系',
+      //                 major: '默认专业',})
       } else {
         // console.log("edit");
         this.updateClazz(this.formData);
@@ -375,11 +404,13 @@ export default {
       // this.clear();
     },
     // CRUD
-    createClazz(clazz ) {
+    async createClazz(clazz )  {
       // console.log("create");
-      console.log(clazz);
-      this.classes.push(clazz);
-      console.log(this.classes);
+      console.log("create:", clazz);
+      const res = api.postClass(clazz)
+      console.log("post res: ", res)
+      // this.classes.push(clazz);
+      // console.log(this.classes);
     },
     deleteClazz(clazz) {
       console.log("delete");

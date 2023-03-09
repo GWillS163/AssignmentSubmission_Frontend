@@ -2,21 +2,11 @@ export default {
     getAllTeachersMapping() {
       return {
           code: 200,
-          data: [
-              {
-                id: 127,
-                name: "孟老师",
-              },{
-                id: 128,
-                name: "赵老师",
-              },{
-                    id: 129,
-                    name: "李老师",
-              }
-          ]
+          data: {"3":"David Lee","2":"Emma Johnson","1":"John Smith"}
       }
     },
-    getAllTeachers() {
+    getAllTeachers(adminId) {
+        console.log("Admin  mock getAllTeachers:", adminId);
         return {
             code: 200, data: {
                 teachers: [{

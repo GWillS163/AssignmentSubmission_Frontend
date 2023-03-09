@@ -1,7 +1,20 @@
 import Mock from "mockjs";
 
 export default {
-    getClassesByTeacherId(teacherId) {
+    getAllClassesByAdmin(adminId) {
+        console.log("mock getAllClassesByAdmin:", adminId);
+
+        return {
+            code: 200, data: {
+                classes: [{
+                    id: 1909, className: "管理员的计算机科学与技术1909", teacher_id: 0
+
+                }, {
+                    id: 1910, name: "管理员的计算机科学与技术1910", teacher: "李四"
+                }]
+            }
+        }
+    }, getClassesByTeacherId(teacherId) {
         console.log("mock getClassesByTeacherId:", teacherId);
         console.log(teacherId)
         let classes = [];
@@ -26,15 +39,10 @@ export default {
         // const list = Mock.mock('@range(1, 10)', ['@integer(1, 100)']);
         const list = [{
             // write mock data here
-            id: 1,
-            name: "张三",
-            age: "18",
+            id: 1, name: "张三", age: "18",
         }, {
-            id: 2,
-            name: "李四",
-            age: "19",
-        }
-        ];
+            id: 2, name: "李四", age: "19",
+        }];
         const index = list.findIndex(item => item.id === id);
         if (index === -1) {
             return {
@@ -51,6 +59,7 @@ export default {
             };
         }
     }, postClass(clazz) {
+        console.log("调用了classes", clazz);
         const data = JSON.parse(clazz.body);
         const newItem = {
             id: Mock.mock('@integer(1, 100)'),
@@ -78,9 +87,7 @@ export default {
         } else {
             list.splice(index, 1);
             return {
-                code: 200,
-                message: '删除成功',
-                data: {
+                code: 200, message: '删除成功', data: {
                     list
                 }
             };
