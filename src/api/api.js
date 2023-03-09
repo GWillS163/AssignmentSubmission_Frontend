@@ -196,6 +196,13 @@ export default {
             params: clazz
         })
     },
+    deleteClass(clazzId) {
+        return request({
+            url: '/class/' + clazzId,
+            method: 'delete',
+            mock: false,
+        })
+    },
     getStudentsByTeacherId(teacherId) {
         return request({
             url: '/student/teacher/' + teacherId,

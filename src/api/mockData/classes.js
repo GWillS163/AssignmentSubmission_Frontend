@@ -76,7 +76,7 @@ export default {
             }
         }
 
-    }, deleteClazz(clazz) {
+    }, deleteClass(clazz) {
         const id = clazz.url.split('/').pop();
         const list = Mock.mock('@range(1, 10)', ['@integer(1, 100)']);
         const index = list.findIndex(item => item.id === id);

@@ -251,7 +251,7 @@ export default {
     // const userId = ref('')
     // const validation = computed(() => userId.value.length > 4 && userId.value.length < 13)
     const {proxy} = getCurrentInstance();
-    const classes = [];
+    const classes = ref([]);
     const totalRows = 0;
     const isModalOpen = ref(false)
     const teachers = ref({})
@@ -343,6 +343,8 @@ export default {
       sortDirection: '升序',
       filter: null,
       filterOn: [],
+
+      getClassesData,
     }
   },
   computed: {
@@ -359,61 +361,36 @@ export default {
     addClazz() {
       this.editMethod = "add";
       this.modal = !this.modal
-      // this.formData.id = null;
-      // document.getElementById("addClassBtn").click();
     },
-    // async getClassesData() {
     editClazz(row) {
       this.editMethod = "edit";
       console.log(row);
       this.modal = !this.modal
       this.formData = row;
-      // document.getElementById("addClassBtn").click();
-
-      // axios.put(`/api/clazz/${this.clazz.id}`, this.clazz)
-      //     .then(response => {
-      //       const index = this.clazzes.findIndex(c => c.id === response.data.id)
-      //       this.clazzes.splice(index, 1, response.data)
-      //       this.clazz = {id: null, name: '', description: ''}
-      //       this.editing = false
-      //     })
-      //     .catch(error => {
-      //       console.log(error)
-      //     })
 
     },
     submit() {
-      if (this.editMethod === "add") {
-      //   // console.log("add");
-        this.createClazz(this.formData);
-      //   this.createClazz({
-      //                 className: "新班级",
-      //                 id: 0,
-      //                 teacherId: 0,
-      //                 description: " ",
-      //                 faculty: '默认系',
-      //                 major: '默认专业',})
-      } else {
-        // console.log("edit");
-        this.updateClazz(this.formData);
-      }
+      if (this.editMethod === "add")
+      { this.createClazz(this.formData); }
+      else { this.updateClazz(this.formData); }
       // console.log(this.formData);
-      // this.clear();
+      this.clear();
     },
     // CRUD
     async createClazz(clazz )  {
       // console.log("create");
       console.log("create:", clazz);
-      const res = api.postClass(clazz)
-      console.log("post res: ", res)
-      // this.classes.push(clazz);
-      // console.log(this.classes);
+      const res = await api.postClass(clazz)
+      console.log("create res: ", res.data)
+      await this.getClassesData();
     },
-    deleteClazz(clazz) {
+    async deleteClazz(clazz) {
       console.log("delete");
-      console.log(clazz.classId)
+      console.log(clazz.id)
+      const res = await api.deleteClass(clazz.id)
+      console.log("delete res: ", res.data)
 
-      this.classes.splice(this.classes.indexOf(clazz), 1)
+      await this.getClassesData();
 
       // axios.delete(`/api/clazz/${clazz.id}`)
       //     .then(response => {
