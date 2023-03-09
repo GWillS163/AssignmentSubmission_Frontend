@@ -252,6 +252,7 @@ export default {
     // const validation = computed(() => userId.value.length > 4 && userId.value.length < 13)
     const {proxy} = getCurrentInstance();
     const classes = [];
+    const totalRows = 0;
     const isModalOpen = ref(false)
     const teachers = ref({})
     const formData = ref({
@@ -289,17 +290,14 @@ export default {
       const res = await proxy.$api.getClassesByAdmin(0);
       console.log("Classes:",  res.data)
       this.classes = res.data;
+      this.totalRows = this.classes.length;
       // console.log("请求到的数据", res.data)
     };
     const getTeacherData = async () => {
       const res = await proxy.$api.getAllTeachersMapping();
       console.log("TeachersMap:",  res.data)
       this.teachers = res.data;
-      // this.teachers = {
-      //   127: "孟老师",
-      //   128: "李四",
-      //   0: "王五"
-      // }
+
     }
     onMounted(() => {
       // postData();
@@ -308,7 +306,6 @@ export default {
 
       getClassesData();
       getTeacherData();
-      this.totalRows = this.classes.length;
     })
     return {
       editMethod: "edit",
@@ -337,7 +334,7 @@ export default {
         {key: 'actions', label: '操作', sortable: false}
       ],
 
-      totalRows: 1,
+      totalRows,
       currentPage: 1,
       perPage: 5,
       pageOptions: [5, 10, 15, {value: 100, text: "展示更多"}],
