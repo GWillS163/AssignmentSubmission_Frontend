@@ -188,6 +188,15 @@ export default {
             mock: false
         })
     },
+    putClass(clazz) {
+        console.log("put class")
+        return request({
+            url: '/class/' + clazz.id,
+            method: 'put',
+            mock: false,
+            params: clazz
+        })
+    },
     postClass(clazz) {
         return request({
             url: '/class',
@@ -244,14 +253,6 @@ export default {
             url: '/user/message',
             method: 'get',
             mock: true
-        })
-    },
-    putClass(clazz) {
-        return request({
-            url: '/api/data',
-            method: 'put',
-            mock: true,
-            data: clazz
         })
     }
 }

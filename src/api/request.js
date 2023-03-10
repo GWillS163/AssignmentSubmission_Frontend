@@ -24,20 +24,25 @@ const getResp = (options) => {
     } else if (options.method === 'post') {
         const formData = new FormData()
         for (const key in options.params) {
-            console.log("打印params:" + key + options.params[key])
+            // console.log("打印params:" + key + options.params[key])
             formData.append(key, options.params[key])
         }
-        console.log("打印formData:" + formData)
+        // console.log("打印formData:" + formData)
         // formData.append(options.params.key, options.params.value)
         return axios.post(
             service.defaults.baseURL + options.url,
             formData
         )
     } else if (options.method === 'put') {
-        return axios.put(service.defaults.baseURL + options.url,
-            {
-                data: options.data
-            })
+        const formData = new FormData()
+        for (const key in options.params) {
+            // console.log("打印params:" + key + options.params[key])
+            formData.append(key, options.params[key])
+        }
+        return axios.put(
+            service.defaults.baseURL + options.url,
+            formData
+        )
     } else if (options.method === 'delete') {
         return axios.delete(service.defaults.baseURL + options.url,
             {

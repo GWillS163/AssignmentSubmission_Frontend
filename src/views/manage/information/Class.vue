@@ -18,41 +18,49 @@
       </div>
       <div class="col-md-2" v-show="editMethod==='edit'">
         <label class="form-label" for="validationServer02">ID</label>
-        <input id="validationServer02" v-model="formData.id" class="form-control is-valid" disabled required
+        <input id="validationServer02" v-model="formData.id" class="form-control " disabled
                type="text">
       </div>
       <div class="col-md-4">
         <label class="form-label" for="validationServer04">所属教师</label>
-        <select id="validationServer04" v-model="formData.teacherId"
+        <select id="validationServer04" v-model="formData.teacherId" :disabled="!isAdmin"
                 aria-describedby="validationServer04Feedback" class="form-select is-invalid" required>
-          <option disabled selected value="">请选择...</option>
+          <option selected value="">请选择...</option>
           <option v-for="(teacherName, teacherId) in teachers" :value="teacherId">{{ teacherName }}</option>
         </select>
         <div id="validationServer04Feedback" class="invalid-feedback">
           请选择有效值
         </div>
       </div>
+        <b-col
+          cols="12"
+          md="6"
+          lg="4"
+          xl="3"
+          class="mb-6">
+          <label for="text-password">系别</label>
+          <b-form-input
+            type="text"
+            id="faculty" v-model="formData.faculty"
+          ></b-form-input>
+        </b-col>
+        <b-col
+          cols="12"
+          md="6"
+          lg="4"
+          xl="3"
+          class="mb-6">
+          <label for="text-password">专业</label>
+          <b-form-input
+            type="text"
+            id="major" v-model="formData.major"
+          ></b-form-input>
+        </b-col>
       <div class="col-md-12">
         <label class="form-label" for="validationServer03">描述</label>
         <input id="validationServer03" v-model="formData.description" aria-describedby="validationServer03Feedback"
                class="form-control " type="text">
       </div>
-      <!--            <div class="col-12">-->
-      <!--              <div class="form-check">-->
-      <!--                <input id="invalidCheck3" aria-describedby="invalidCheck3Feedback" class="form-check-input is-invalid" required-->
-      <!--                       type="checkbox" value="">-->
-      <!--                <label class="form-check-label" for="invalidCheck3">-->
-      <!--                  Agree to terms and conditions-->
-      <!--                </label>-->
-      <!--                <div id="invalidCheck3Feedback" class="invalid-feedback">-->
-      <!--                  You must agree before submitting.-->
-      <!--                </div>-->
-      <!--              </div>-->
-      <!--            </div>-->
-      <!--      <div class="col-12 modal-footer">-->
-      <!--        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">关闭</button>-->
-      <!--        <button class="btn btn-primary" data-bs-dismiss="modal" type="button" @click="submitClass">提交</button>-->
-      <!--      </div>-->
     </form>
   </b-modal>
   <b-container fluid>
@@ -71,53 +79,53 @@
           <i class="fa fa-plus"></i> 新增班级 </a>
       </div>
 
+<!-- 筛选框 -->
+<!--            <b-col class="my-1" lg="6">-->
+<!--              <b-form-group-->
+<!--                  class="mb-0"-->
+<!--                  label="Filter"-->
+<!--                  label-align-sm="right"-->
+<!--                  label-cols-sm="3"-->
+<!--                  label-for="filter-input"-->
+<!--                  label-size="sm"-->
+<!--              >-->
+<!--                <b-input-group size="sm">-->
+<!--                  <b-form-input-->
+<!--                      id="filter-input"-->
+<!--                      v-model="filter"-->
+<!--                      placeholder="Type to Search"-->
+<!--                      type="search"-->
+<!--                  ></b-form-input>-->
 
-      <!--      <b-col class="my-1" lg="6">-->
-      <!--        <b-form-group-->
-      <!--            class="mb-0"-->
-      <!--            label="Filter"-->
-      <!--            label-align-sm="right"-->
-      <!--            label-cols-sm="3"-->
-      <!--            label-for="filter-input"-->
-      <!--            label-size="sm"-->
-      <!--        >-->
-      <!--          <b-input-group size="sm">-->
-      <!--            <b-form-input-->
-      <!--                id="filter-input"-->
-      <!--                v-model="filter"-->
-      <!--                placeholder="Type to Search"-->
-      <!--                type="search"-->
-      <!--            ></b-form-input>-->
+<!--                  <b-input-group-append>-->
+<!--                    <b-button :disabled="!filter" @click="filter = ''">清除</b-button>-->
+<!--                  </b-input-group-append>-->
+<!--                </b-input-group>-->
+<!--              </b-form-group>-->
+<!--            </b-col>-->
 
-      <!--            <b-input-group-append>-->
-      <!--              <b-button :disabled="!filter" @click="filter = ''">清除</b-button>-->
-      <!--            </b-input-group-append>-->
-      <!--          </b-input-group>-->
-      <!--        </b-form-group>-->
-      <!--      </b-col>-->
-
-      <!--      <b-col class="my-1" lg="6">-->
-      <!--        <b-form-group-->
-      <!--            v-slot="{ ariaDescribedby }"-->
-      <!--            v-model="sortDirection"-->
-      <!--            class="mb-0"-->
-      <!--            description="取消所有勾选以展示所有数据"-->
-      <!--            label="Filter On"-->
-      <!--            label-align-sm="right"-->
-      <!--            label-cols-sm="3"-->
-      <!--            label-size="sm"-->
-      <!--        >-->
-      <!--          <b-form-checkbox-group-->
-      <!--              v-model="filterOn"-->
-      <!--              :aria-describedby="ariaDescribedby"-->
-      <!--              class="mt-1"-->
-      <!--          >-->
-      <!--            <b-form-checkbox value="className">班级名称</b-form-checkbox>-->
-      <!--            <b-form-checkbox value="teacher">创建教师</b-form-checkbox>-->
-      <!--            <b-form-checkbox value="isActive">是否启用</b-form-checkbox>-->
-      <!--          </b-form-checkbox-group>-->
-      <!--        </b-form-group>-->
-      <!--      </b-col>-->
+<!--            <b-col class="my-1" lg="6">-->
+<!--              <b-form-group-->
+<!--                  v-slot="{ ariaDescribedby }"-->
+<!--                  v-model="sortDirection"-->
+<!--                  class="mb-0"-->
+<!--                  description="取消所有勾选以展示所有数据"-->
+<!--                  label="Filter On"-->
+<!--                  label-align-sm="right"-->
+<!--                  label-cols-sm="3"-->
+<!--                  label-size="sm"-->
+<!--              >-->
+<!--                <b-form-checkbox-group-->
+<!--                    v-model="filterOn"-->
+<!--                    :aria-describedby="ariaDescribedby"-->
+<!--                    class="mt-1"-->
+<!--                >-->
+<!--                  <b-form-checkbox value="className">班级名称</b-form-checkbox>-->
+<!--                  <b-form-checkbox value="teacher">创建教师</b-form-checkbox>-->
+<!--                  <b-form-checkbox value="isActive">是否启用</b-form-checkbox>-->
+<!--                </b-form-checkbox-group>-->
+<!--              </b-form-group>-->
+<!--            </b-col>-->
 
     </b-row>
     <b-row>
@@ -265,25 +273,11 @@ export default {
 
                     })
     const validation = computed(() => formData.value.className.length > 4 && formData.value.className.length < 13)
-    const postData = () => {
-      // 发送 POST 请求到 /api/data 接口
-      axios.post('/api/data', formData).then((res) => {
-        console.log(res.data.message);
-      });
-    };
-    const putClazz = () => {
-      // 发送 PUT 请求到 /api/data 接口
-      axios.put('/api/data', formData).then((res) => {
-        console.log(res.data.message);
-      });
-    };
-    const deleteClazz = (clazz) => {
-      // 发送 DELETE 请求到 /api/data 接口
-      axios.delete('/api/data', {data: clazz}).then((res) => {
-        console.log(res.data.message);
-      });
-    };
+    const isAdmin = computed(() =>
+        false
+        // proxy.$store.state.user.role === "admin"
 
+    )
     const getClassesData = async () => {
       // TODO： 自动根据当前用户的角色获取班级列表
       // const res = await proxy.$api.getClassesByTeacherId(127);
@@ -299,17 +293,18 @@ export default {
       this.teachers = res.data;
 
     }
-    onMounted(() => {
-      // postData();
-      // putClazz();
-      // deleteClazz(formData);
-
+    onMounted(() => { // 在组件挂载后执行
       getClassesData();
       getTeacherData();
     })
     return {
+      isAdmin,
       editMethod: "edit",
       modal: isModalOpen,
+      userInfo: {
+        type: 'teacher',
+        id: 1,
+      },
       validation,
       teachers,
       formData,
@@ -317,8 +312,9 @@ export default {
       fields: [
         {key: 'id', label: '班级id', sortable: true},
         {key: 'className', label: '班级名', sortable: true},
-        {key: 'faculty', label: '所属学院', sortable: true},
-        {key: 'major', label: '所属专业', sortable: true},
+        {key: 'description', label: '备注', sortable: true},
+        // {key: 'faculty', label: '所属学院', sortable: true},
+        // {key: 'major', label: '所属专业', sortable: true},
         {
           key: 'teacherId', label: '创建教师', sortable: true,
           formatter: (value) => {
@@ -361,6 +357,7 @@ export default {
     addClazz() {
       this.editMethod = "add";
       this.modal = !this.modal
+      this.formData.teacherId = this.userInfo.id;
     },
     editClazz(row) {
       this.editMethod = "edit";
@@ -373,7 +370,7 @@ export default {
       if (this.editMethod === "add")
       { this.createClazz(this.formData); }
       else { this.updateClazz(this.formData); }
-      // console.log(this.formData);
+      console.log(this.formData);
       this.clear();
     },
     // CRUD
@@ -389,31 +386,15 @@ export default {
       console.log(clazz.id)
       const res = await api.deleteClass(clazz.id)
       console.log("delete res: ", res.data)
-
       await this.getClassesData();
 
-      // axios.delete(`/api/clazz/${clazz.id}`)
-      //     .then(response => {
-      //       const index = this.clazzes.findIndex(c => c.id === clazz.id)
-      //       this.clazzes.splice(index, 1)
-      //     })
-      //     .catch(error => {
-      //       console.log(error)
-      //     })
-      //   f
     },
-    updateClazz(clazz) {
+    async updateClazz(clazz) {
       console.log("update");
       console.log(clazz);
-      const res = this.proxy.$api.putClass(clazz);
-      // axios.put(`/api/clazz/${clazz.id}`, clazz)
-      //     .then(response => {
-      //       const index = this.clazzes.findIndex(c => c.id === clazz.id)
-      //       this.clazzes.splice(index, 1, response.data)
-      //     })
-      //     .catch(error => {
-      //       console.log(error)
-      //     })
+      const res = await api.putClass(clazz)
+      console.log("update res: ", res.data)
+      await this.getClassesData();
     },
     // Modal clear
     clear() {
