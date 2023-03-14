@@ -128,6 +128,7 @@
 <!--            </b-col>-->
 
     </b-row>
+<!--   up^^ Filter-->
     <b-row>
       <b-col class="my-1" md="2" sm="5">
         <b-form-group
@@ -170,7 +171,6 @@
       <div class="card">
 
         <b-card-header>
-
           <b-row>
             <div class="col-12 col-sm-5 col-md-6 text-start" style=" padding: 5px 15px;">
               <p class="text-primary m-0 fw-bold">
@@ -188,6 +188,9 @@
         </b-card-header>
         <b-card-body>
           <b-table
+              sticky-header="true"
+              bordered="true"
+              striped="true"
               :current-page="currentPage"
               :fields="fields"
               :filter="filter"
@@ -198,14 +201,12 @@
               :sort-desc.sync="sortDesc"
               :sort-direction="sortDirection"
               show-empty
-              small
               stacked="md"
               @filtered="onFiltered"
               empty-filtered-text="你还没有班级哦"
               empty-text="这里还没有班级哦"
           >
-            <template #cell(name)="row">
-            </template>
+            <template #cell(name)="row"> </template>
 
 
             <template #cell(actions)="row">
