@@ -10,17 +10,43 @@ const service = axios.create({
     baseURL: config.baseApi, // api的base_url
 })
 
+function downloadFile(requestUrl, method, fileName) {
+    return new Promise((resolve, reject) => {
+              axios({
+                method:  method,
+                url: requestUrl,
+                responseType: 'blob',
+              }).then(response => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', fileName);
+                document.body.appendChild(link);
+                link.click();
+                resolve(response.data);
+              }).catch(error => {
+                reject(error);
+              });
+            });
+}
 // make response
 const getResp = (options) => {
     // console.log(service.defaults.baseURL + options.url)
 
+
     if (!service.defaults.baseURL) {
+        // 这是干嘛的？
         return service(options)
     }
     else if (options.method === 'get') {
-        return axios.get(service.defaults.baseURL + options.url,
-            {
-        })
+
+    // 是否是下载文件的请求
+    // 如果是下载文件的请求，则使用window.open进行下载
+        const requestUrl = service.defaults.baseURL + options.url;
+        if (options.isDownload) {
+            return downloadFile(requestUrl, options.method, options.fileName)
+          }
+        return axios.get(requestUrl, { })
     } else if (options.method === 'post') {
         const formData = new FormData()
         for (const key in options.params) {
@@ -76,7 +102,6 @@ service.interceptors.response.use((res) => {
 
 // request method
 function request(options) {
-    // { method: 'get', data: { } }
 
     // 默认GET方式
     options.method = options.method || 'get'

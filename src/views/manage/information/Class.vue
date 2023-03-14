@@ -294,7 +294,7 @@ export default {
 
     }
     onMounted(() => { // 在组件挂载后执行
-      getClassesData();
+      getClassesData(); // 根据用户信息不同获取不同的班级列表
       getTeacherData();
     })
     return {
@@ -408,9 +408,10 @@ export default {
     cancel() {
       // console.log('cancel');
     },
-    downloadClass() {
-      console.log('downloadClass' + this.classes.length);
-    },
+      downloadClass() {
+      api.testDownload()
+    }
+    ,
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length

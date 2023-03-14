@@ -3,6 +3,15 @@
 import request from '@/api/request'
 
 export default {
+    testDownload() {
+        return request({
+            url: '/get-file',
+            method: 'get',
+            mock: false,
+            isDownload: true,
+            fileName: 'test.csv'
+        })
+    },
     // NavBar Top
     getUserNavBarDrops() {
         return request({
