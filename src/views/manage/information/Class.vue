@@ -264,7 +264,7 @@ export default {
     const totalRows = 0;
     const isModalOpen = ref(false)
     const teachers = ref({})
-    const formData = ref({
+    const formData =  {
                       className: "新班级",
                       id: 0,
                       teacherId: 0,
@@ -272,8 +272,8 @@ export default {
                       faculty: '默认系',
                       major: '默认专业',
 
-                    })
-    const validation = computed(() => formData.value.className.length > 4 && formData.value.className.length < 13)
+                    }
+    const validation = computed(() => formData.className.length > 4 && formData.className.length < 13)
     const isAdmin = computed(() =>
         false
         // proxy.$store.state.user.role === "admin"
@@ -409,7 +409,7 @@ export default {
     cancel() {
       // console.log('cancel');
     },
-      downloadClass() {
+    downloadClass() {
       api.testDownload()
     }
     ,

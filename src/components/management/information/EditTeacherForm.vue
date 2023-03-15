@@ -1,13 +1,20 @@
 <template>
-  <div id="addTeacher" aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 id="exampleModalLabel" class="modal-title">新增教师</h5>
-          <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
-        </div>
-        <div class="modal-body">
+<!--  <div id="teacherModal" aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" tabindex="-1">-->
+<!--    <div class="modal-dialog">-->
+<!--      <div class="modal-content">-->
+<!--        <div class="modal-header">-->
+<!--          <h5 id="exampleModalLabel" class="modal-title">新增教师</h5>-->
+<!--          <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>-->
+<!--        </div>-->
+<!--        <div class="modal-body">-->
 
+  <b-modal v-model="modal"
+           cancel-title="取消"
+           ok-title="确认"
+           @cancel="cancel"
+           @ok="submit"
+           :title="editMethod ==='edit' ? '编辑班级' : '新增班级'"
+  >
           <b-form>
     <b-row>
       <b-col md="4">
@@ -62,16 +69,13 @@
       </b-col>
     </b-row>
   </b-form>
-          <div class="col-12 modal-footer">
-            <div aria-label="Basic example" class="btn-group" role="group">
-              <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">关闭</button>
-              <button class="btn btn-primary" data-bs-dismiss="modal" type="button" @click="addTeacher">提交</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<!--          <div class="col-12 modal-footer">-->
+<!--            <div aria-label="Basic example" class="btn-group" role="group">-->
+<!--              <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">关闭</button>-->
+<!--              <button class="btn btn-primary" data-bs-dismiss="modal" type="button" @click="addTeacher">提交</button>-->
+<!--            </div>-->
+<!--          </div>-->
+  </b-modal>
 </template>
 
 <script>
@@ -111,6 +115,7 @@ export default {
   data() {
     return {
       teachers: [],
+      editMethod: "add",
       formData: {
         id: 0,
         name: '孟老师',
@@ -121,10 +126,8 @@ export default {
         registerTime: '2023-02-22 20:20:24',
         password: '11112222333',
         qq: "qq123456789",
-        email: 'www@qq.com',
+        mail: 'www@qq.com',
         phone: '18801002716',
-
-
       }
     }
   }

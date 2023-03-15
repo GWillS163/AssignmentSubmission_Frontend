@@ -33,7 +33,6 @@ function downloadFile(requestUrl, method, fileName) {
 const getResp = (options) => {
     // console.log(service.defaults.baseURL + options.url)
 
-
     if (!service.defaults.baseURL) {
         // 这是干嘛的？
         return service(options)
@@ -46,11 +45,14 @@ const getResp = (options) => {
         if (options.isDownload) {
             return downloadFile(requestUrl, options.method, options.fileName)
           }
-        return axios.get(requestUrl, { })
+        return axios.get(requestUrl, {
+                          headers: { 'Cache-Control': 'no-cache' }
+                        })
     } else if (options.method === 'post') {
         const formData = new FormData()
         for (const key in options.params) {
             // console.log("打印params:" + key + options.params[key])
+            if (key === 'id') { continue }
             formData.append(key, options.params[key])
         }
         // console.log("打印formData:" + formData)
@@ -65,6 +67,7 @@ const getResp = (options) => {
             // console.log("打印params:" + key + options.params[key])
             formData.append(key, options.params[key])
         }
+        console.log("打印formData:",  formData)
         return axios.put(
             service.defaults.baseURL + options.url,
             formData
@@ -88,7 +91,7 @@ service.interceptors.request.use((req) => {
 
 // after response hook
 service.interceptors.response.use((res) => {
-    // console.log("res")
+    // console.log("request 请求后res")
     // console.log(res)
     const { code, data, msg } = res.data
     if (code === 200) {

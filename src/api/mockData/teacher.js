@@ -8,26 +8,29 @@ export default {
     getAllTeachers(adminId) {
         console.log("Admin  mock getAllTeachers:", adminId);
         return {
-            code: 200, data: {
-                teachers: [{
-                    name: "孟老师",
-                    id: "19852331",
-                    class: "1909班",
-                    qq: "1274667113",
-                    mail: "",
-                    phone: "18801002716",
-                    lastLogin: "2022-7-15 10:13:43",
-                    registerTime: "2022-7-15 10:14:53"
-                }, {
-                    name: "赵老师",
-                    id: "19852333",
-                    class: "1909班",
-                    qq: "280324329",
-                    mail: "19852331@czjtu.edu.cn",
-                    phone: "19901002839",
-                    lastLogin: "2022-7-15 10:15:58",
-                    registerTime: "2022-7-15 10:16:00"
-                }]
+            code: 200, data:  {
+                data: [{
+        name: "孟老师",
+        id: "2",
+        ownClasses: "19852331",
+        class: "1909班",
+        qq: "1274667113",
+        mail: "",
+        phone: "18801002716",
+        lastLogin: "2022-7-15 10:13:43",
+        createTime: "2022-7-15 10:14:53",
+        description: "测试老师"
+      }, {
+        name: "赵老师",
+        id: "3",
+        teacherId: "19852333",
+        ownClasses: "1909班, 1910",
+        qq: "280324329",
+        mail: "19852331@czjtu.edu.cn",
+        phone: "19901002839",
+        lastLogin: "2022-7-15 10:15:58",
+        createTime: "2022-7-15 10:16:00"
+      }],
             }
         }
     }, getOwnClazz() {

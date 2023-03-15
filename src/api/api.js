@@ -185,9 +185,36 @@ export default {
     },
     getAllTeachers() {
         return request({
-            url: '/teacher/all',
+            url: '/teacher/allInfo',
             method: 'get',
-            mock: true
+            mock: false
+        })
+    },
+    postTeacher(teacher) {
+        console.log(teacher)
+        return request({
+            url: '/teacher',
+            method: 'post',
+            mock: false,
+            params: teacher
+        })
+    },
+    putTeacher(teacher) {
+        return request({
+            url: '/teacher/' + teacher.id,
+            method: 'put',
+            mock: false,
+            params: {
+                id: teacher.id,
+                name: teacher.name,
+            }
+        })
+    },
+    deleteTeacher(teacherId) {
+        return request({
+            url: '/teacher/' + teacherId,
+            method: 'delete',
+            mock: false,
         })
     },
     getAllTeachersMapping() {

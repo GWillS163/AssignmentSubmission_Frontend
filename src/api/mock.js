@@ -97,7 +97,7 @@ Mock.mock('/class', 'post', (options) => { return classes.postClass(options)})
 //  关于MOck.js 传入ID这部分不会写，就这样吧，累了，直接写真的接口了
 // Mock.mock('/class/${id}', 'delete', (options) => { return classes.deleteClass(options)})
 // Mock.mock('/class/{id}', 'put', (options) => { return classes.putClass(options)})
-Mock.mock('/teacher/all', 'get', teachers.getAllTeachers())
+Mock.mock('/teacher/allInfo', 'get', teachers.getAllTeachers())
 Mock.mock('/teacher/map', 'get', teachers.getAllTeachersMapping())
 Mock.mock('/student/teacher/127', 'get', students.getStudentsByTeacherId(127))
 
