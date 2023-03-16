@@ -1,17 +1,82 @@
 <template>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-5 col-sm-6 col-md-6">
-        <h3 class="text-dark mb-4">我的学生</h3>
-      </div>
 
-      <div class=" col-7 col-sm-6 col-md-6 ">
-        <div class="pull-right row " style="margin-right: 20px">
-            <button type="button"
+  <b-modal
+      v-model="modal"
+      :title="editMethod ==='edit' ? '编辑教师' : '新增教师'"
+      cancel-title="取消"
+      ok-title="确认"
+      @ok="submit"
+  >
+
+          <form class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label" for="validationServer01">学生数据ID</label>
+              <input id="id" v-model="formData.id" class="form-control is-valid" required type="text">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="validationServer01">学生名</label>
+              <input id="validationServer01" v-model="formData.name" class="form-control is-valid" required type="text">
+              <div class="valid-feedback">
+                看起来不错
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="validationServer02">学号</label>
+              <input id="validationServer02" v-model="formData.studentId" class="form-control is-valid" required
+                     type="text">
+              <!--              <div class="valid-feedback">-->
+              <!--                看起来不错-->
+              <!--              </div>-->
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="validationServer04">所属班级</label>
+              <select id="validationServer04" :value="formData.classId"
+                      aria-describedby="validationServer04Feedback" class="form-select is-invalid" required>
+                <option disabled selected>请选择...</option>
+                <option v-for="clazz in classes" :value="clazz.id">{{ clazz.name }}</option>
+              </select>
+              <div id="validationServer04Feedback" class="invalid-feedback">
+                请选择有效班级
+              </div>
+            </div>
+            <!--        <div class="col-md-4">-->
+            <!--          <label class="form-label" for="validationServer04">所属教师</label>-->
+            <!--          <select id="validationServer04" aria-describedby="validationServer04Feedback"-->
+            <!--                  class="form-select is-invalid" required disabled :value="formData.teacherId">-->
+            <!--            <option disabled selected value="">请选择...</option>-->
+            <!--            <option v-for="teacher in teachers" :value="teacher.id">{{ teacher.name }}</option>-->
+            <!--          </select>-->
+            <!--          <div id="validationServer04Feedback" class="invalid-feedback">-->
+            <!--            请选择有效值-->
+            <!--          </div>-->
+            <!--        </div>-->
+            <div class="col-md-8">
+              <label class="form-label" for="validationServer03">描述</label>
+              <input id="validationServer03" aria-describedby="validationServer03Feedback" class="form-control "
+                     type="text">
+            </div>
+            <div class="col-12 modal-footer">
+              <div aria-label="Basic example" class="btn-group" role="group">
+                <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">关闭</button>
+                <button class="btn btn-primary" data-bs-dismiss="modal" type="button" @click="addStudent">提交</button>
+              </div>
+            </div>
+          </form>
+  </b-modal>
+  <b-container fluid>
+    <b-row>
+      <b-col col="12" md="6" sm="6">
+        <h3 class="text-dark mb-4">学生管理</h3>
+      </b-col>
+
+
+      <b-col class="text-end" col="12" md="6" sm="6">
+        <div class="pull-right row "  style="margin-right: 20px">
+            <a type="button"
                     class="col-6 col-xl-6 btn btn-primary "
-                  data-bs-target="#addStudent" data-bs-toggle="modal" >
+            >
               <i class="fa fa-plus"></i> 新增学生
-            </button>
+            </a>
             <usecsv-button class="col-6 col-xl-6"
                            importerKey="4bbfb06a-c55e-4c25-bdd4-29ed68873317" v-slot="slotProps"
                          :user="'{userId: 19852331}'"
@@ -22,88 +87,159 @@
                 批量新增</button>
         </usecsv-button>
         </div>
-      </div>
-    </div>
+      </b-col>
 
-<!--    <div id="usecsv-importer-inline-wrapper" />-->
-<!--  <add-batch-student :classes="classes"/>-->
-    <div id="TableSorterCard-1" class="card">
-      <div class="card-header py-3">
-        <div class="row table-topper align-items-center">
-          <div class="col-12 col-sm-5 col-md-6 text-start" style="margin: 0px;padding: 5px 15px;">
-            <p class="text-primary m-0 fw-bold">学生信息管理</p>
-          </div>
-          <div class="col-12 col-sm-7 col-md-6 text-end" style="margin: 0px;padding: 5px 15px;">
-            <button class="btn btn-primary btn-sm reset" style="margin: 2px;" type="button"
-            @click="addNewStudent"
-            >
-              <i class="fa fa-download"></i>
-              下载学生清单</button>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
+    </b-row>
+    <!--    Pagination-->
+    <b-row>
+      <b-col class="my-1" md="2" sm="5">
+        <b-form-group
+            class="mb-0"
+            label="Per page"
+            label-align-sm="right"
+            label-cols-lg="3"
+            label-cols-md="4"
+            label-cols-sm="6"
+            label-for="per-page-select"
+            label-size="sm"
+        >
+          <b-form-select
+              id="per-page-select"
+              v-model="perPage"
+              :options="pageOptions"
+              size="sm"
+          ></b-form-select>
+        </b-form-group>
+      </b-col>
+
+      <b-col class="my-1" md="9" sm="7">
+        <b-pagination
+            v-model="currentPage"
+            :per-page="perPage"
+            :total-rows="totalRows"
+            align="fill"
+            class="my-0"
+            first-text="⏮"
+            last-text="⏭"
+            next-text="⏩"
+            prev-text="⏪"
+            size="sm"
+        ></b-pagination>
+      </b-col>
+    </b-row>
+
+    <!--    List Card-->
+    <b-row>
+      <b-col>
+        <div id="TableSorterCard-1" class="card">
+          <b-card-header>
+            <b-row>
+              <b-col class="text-start" col="12" md="6" sm="5" style=" padding: 5px 15px;">
+                <p class="text-primary m-0 fw-bold">
+                  学生信息管理</p>
+              </b-col>
+              <b-col class="text-end" col="12" md="6" sm="7" style=" padding: 5px 15px;">
+                <b-button class="btn  btn-sm" style="margin: 2px;" type="button" variant="primary"
+                          @click="downStudents">
+                  <i class="fa fa-download"></i>
+                  下载学生信息
+                </b-button>
+              </b-col>
+            </b-row>
+          </b-card-header>
           <div class="table-responsive">
-            <table id="ipi-table" class="table table-striped table tablesorter">
-              <thead class="thead-dark">
-              <tr>
-                <th class="text-center" style="width: 124px;">姓名</th>
-                <th class="text-center">学号</th>
-                <th class="text-center" style="width: 101.5px;">班级(fk)</th>
-                <th class="text-center">qq</th>
-                <th class="text-center">mail</th>
-                <th class="text-center">电话</th>
-                <th class="text-center" style="width: 192px;">最近登陆</th>
-                <th class="text-center">注册时间</th>
-                <th class="text-center filter-false sorter-false">操作</th>
-              </tr>
-              </thead>
-              <tbody class="text-center">
-              <tr v-for="student in students">
-                <td style="width: 168px;">{{ Student.name }}</td>
-                <td>{{ Student.id }}</td>
-                <td style="width: 119px;">{{ Student.class }}</td>
-                <td>{{ Student.qq }}</td>
-                <td style="width: 118px;">{{ Student.mail }}</td>
-                <td>{{ Student.phone }}</td>
-                <td>{{ Student.lastLogin }}</td>
-                <td style="width: 333px;">{{ Student.registerTime }}</td>
-                <td class="text-center align-middle" style="max-height: 60px;height: 60px;width: 748px;">
-                  <a class="btn btnMaterial btn-flat primary semicircle" @click="viewStudent" role="button">
-                    <i class="far fa-eye"></i>
-                  </a>
-                  <a class="btn btnMaterial btn-flat success semicircle" @click="editStudent" role="button">
-                    <i class="fas fa-pen"></i>
-                  </a>
-                  <a class="btn btnMaterial btn-flat accent btnNoBorders checkboxHover"
-                      @click="deleteStudent" role="button" style="margin-left: 5px;">
-                    <i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i>
-                  </a>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-              <page-spliter/>
+            <b-table
+                :current-page="currentPage"
+                :fields="fields"
+                :filter="filter"
+                :filter-included-fields="filterOn"
+                :items="students"
+                :per-page="perPage"
+                :sort-by.sync="sortBy"
+                :sort-desc.sync="sortDesc"
+                :sort-direction="sortDirection"
+                bordered="true"
+                empty-filtered-text="条件太多了，未查询到学生"
+                empty-text="还没有学生哦"
+                show-empty
+                stacked="md"
+                sticky-header="true"
+                striped="true"
+                @filtered="onFiltered"
+            >
+
+              <template #cell(actions)="row">
+                <b-button class="mr-1 " size="sm"
+                          variant="outline-primary"
+                          @click="editTeacher(row.item)"
+                > 编辑
+                </b-button>
+                <b-button size="sm" variant="outline-secondary" @click="row.toggleDetails">
+                  {{ row.detailsShowing ? '隐藏' : '展示' }}详情
+                </b-button>
+                <b-button class="mr-1 " size="sm" variant="outline-danger" @click="deleteStudent(row.item)">
+                  删除
+                </b-button>
+              </template>
+
+              <template #row-details="row">
+                <b-card>
+                  <table class="detailTable">
+                    <tr>
+                      <th v-for="(value, key) in row.item">
+                        {{ key }}
+                      </th>
+                    </tr>
+                    <tr>
+                      <td v-for="(value, key) in row.item">
+                        {{ value }}
+                      </td>
+                    </tr>
+                  </table>
+                </b-card>
+              </template>
+            </b-table>
+
           </div>
         </div>
-      </div>
-    </div>
-  </div>
+      </b-col>
+    </b-row>
 
-  <edit-student-form :classes="classes"/>
+  </b-container>
+
+
+
 </template>
 
 <script>
+import {getCurrentInstance, onMounted, ref} from "vue";
 import PageSpliter from "@/components/management/PageSpliter.vue";
 import editStudentForm from "@/components/management/information/EditStudentForm.vue";
-import {getCurrentInstance, onMounted, ref} from "vue";
+
 import AddBatchStudent from "@/components/management/information/AddBatchStudent.vue";
 
 export default {
   name: "student",
   components: {AddBatchStudent, PageSpliter, editStudentForm},
   methods: {
+    addNew() {
+      this.editMethod = "add";
+      this.modal = !this.modal // toggle modal
+    },
+    editTeacher(teacher) {
+      this.editMethod = "edit";
+      this.modal = !this.modal
+      this.formData = teacher
+    },
+    submit() {
+      console.log("submit");
+      console.log(this.formData);
+      if (this.editMethod === "add") {
+        this.postTeacher(this.formData);
+      } else {
+        this.putTeacher(this.formData);
+      }
+    },
     addNewStudent() {
       console.log("addNewStudent")
     },
@@ -113,31 +249,76 @@ export default {
     editStudent() {
       console.log("editStudent")
     },
-    deleteStudent() {
-      console.log("deleteStudent")
+    // deleteStudent() {
+    //   console.log("deleteStudent")
+    // },
+
+    onFiltered(filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length
+      this.currentPage = 1
     },
     onData: function (data) {
       console.log(data);
     },
     onClose: function () {
       console.log("Import window close");
+    },
+    downStudents() {
+      console.log("downStudents")
     }
   },
-  data () {
+  data() {
 
     const { proxy } = getCurrentInstance();
     const students = [];
+    const totalRows = 0;
     const classData = ref();
     const getStudents = async () => {
-      const res = await proxy.$api.getStudentsByTeacherId(127);
-      this.students = res.students;
+      // const res = await proxy.$api.getStudentsByTeacherId(127);
+      const res = await proxy.$api.getStudentsByAdmin();
+      console.log("更新！ students", res)
+      this.students = res.data;
+      this.totalRows = this.students.length;
     };
+    const postStudent = async (student) => {
+      const res = await proxy.$api.postStudent(student);
+      // console.log("postStudent", res);
+      await getStudents();
+    };
+    const putStudent = async (student) => {
+      const res = await proxy.$api.putStudent(student);
+      // console.log("putStudent", res);
+      await getStudents();
+    };
+    const deleteStudent = async (student) => {
+      console.log("deleteStudent", student)
+      const res = await proxy.$api.deleteStudent(student);
+      // console.log("deleteStudent", res);
+      await getStudents();
+    };
+
     onMounted(() => {
       getStudents();
     })
     return {
-      classData,
+      getStudents,
+      postStudent,
+      putStudent,
+      deleteStudent,
       students,
+      editMethod: "edit",
+      modal: false,
+      totalRows,
+      currentPage: 1,
+      perPage: 5,
+      pageOptions: [5, 10, 15, {value: 100, text: "展示更多"}],
+      sortBy: '',
+      sortDesc: false,
+      sortDirection: '升序',
+      filter: null,
+      filterOn: [],
+      classData,
       classes: [
         {
           id: 1909,
@@ -174,7 +355,34 @@ export default {
         qq: "123456789",
         mail: "gwills@qq.com",
         phone: "123456789"
-      }
+      },
+
+      fields: [
+        // {key: 'user_id', label: '数据ID', sortable: true},
+        {key: 'username', label: '姓名', sortable: true},
+        {key: 'clazz_info', label: '班级', sortable: true,
+        formatter: (value) => {
+          if (value === null) {
+            return "-"
+          }
+          return value.clazzName
+        }},
+        {key: 'phone', label: '手机号', sortable: true},
+        {key: 'mail', label: '邮箱', sortable: true},
+        {
+          key: 'files', label: '作业数', sortable: true,
+          formatter: (value) => {
+            if (value.length === 0) {
+              return "-"
+            }
+            return value.length
+          },
+        },
+        {key: 'description', label: '备注', sortable: true},
+        // {key: 'qq', label: 'QQ', sortable: true},
+        // {key: 'phone', label: '电话', sortable: true},
+        {key: 'actions', label: '操作', sortable: false}
+      ],
     }
   }
 }

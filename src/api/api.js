@@ -161,26 +161,14 @@ export default {
             mock: true
         })
     },
-    getClassesByTeacherId(teacherId) {
+
+
+    // Teacher
+    getAllTeachersMapping() {
         return request({
-            // url: '/class/teacher/' + teacherId,
-            url: '/class/teacher',
-            method: 'post',
-            // TODO: 这里不知道对不对
-            params: teacherId,
-            mock: false,
-        })
-    },
-    getClassesByAdmin(adminId) {
-        return request({
-            // url: '/class/teacher/' + teacherId,
-            url: '/class/allInfo',
+            url: '/teacher/map',
             method: 'get',
-            // put teacherId to post request
-            params: {
-                adminId: adminId
-            },
-            mock: false,
+            mock: false
         })
     },
     getAllTeachers() {
@@ -217,11 +205,28 @@ export default {
             mock: false,
         })
     },
-    getAllTeachersMapping() {
+
+    // CLass
+    getClassesByTeacherId(teacherId) {
         return request({
-            url: '/teacher/map',
+            // url: '/class/teacher/' + teacherId,
+            url: '/class/teacher',
+            method: 'post',
+            // TODO: 这里不知道对不对，应该不对
+            params: teacherId,
+            mock: false,
+        })
+    },
+    getClassesByAdmin(adminId) {
+        return request({
+            // url: '/class/teacher/' + teacherId,
+            url: '/class/allInfo',
             method: 'get',
-            mock: false
+            // put teacherId to post request
+            params: {
+                adminId: adminId
+            },
+            mock: false,
         })
     },
     putClass(clazz) {
@@ -248,6 +253,8 @@ export default {
             mock: false,
         })
     },
+
+    // Student
     getStudentsByTeacherId(teacherId) {
         return request({
             url: '/student/teacher/' + teacherId,
@@ -255,6 +262,37 @@ export default {
             mock: true
         })
     },
+    getStudentsByAdmin() {
+        return request({
+            url: '/student/allInfo',
+            method: 'get',
+            mock: false
+        })
+    },
+    postStudent(student) {
+        return request({
+            url: '/student',
+            method: 'post',
+            mock: false,
+            params: student,
+        })
+    },
+    putStudent(student) {
+        return request({
+            url: '/student/' + student.id,
+            method: 'put',
+            mock: false,
+            params: student
+        })
+    },
+    deleteStudent(student) {
+        return request({
+            url: '/student/' + student.user_id,
+            method: 'delete',
+            mock: false,
+        })
+    },
+
     // 获取个人信息页面的数据
     getInfoCard() {
       return request({
