@@ -55,6 +55,18 @@ export default {
             data: classAssigns
         }
     },
+    getAssignsByAdmin() {
+        return {
+            code: 200,
+            data: [
+                {
+                    id: 5,
+                },
+                {
+                    id: 4,
+                }]
+        }
+    },
     getAssignsByTeacher(teacherId) {
         let teacherAssigns = [];
         if (teacherId === 127) {

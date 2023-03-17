@@ -140,6 +140,13 @@ export default {
             mock:true
         })
     },
+    getAssignsByAdmin() {
+        return request({
+            url: '/assign/allInfo',
+            method: 'get',
+            mock: true
+        })
+    },
     getAssignsByTeacher(teacherId) {
         return request({
             url: '/assign/teacher/' + teacherId ,

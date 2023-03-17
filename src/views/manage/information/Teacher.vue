@@ -70,7 +70,7 @@
   <b-container fluid>
     <b-row>
       <b-col col="12" md="6" sm="6">
-        <h3 class="text-dark mb-4">教师管理</h3>
+        <h3 class="text-dark mb-4">教师管理 ({{teachers.length}})</h3>
       </b-col>
       <b-col class="text-end" col="12" md="6" sm="6"
              style="margin-bottom: 30px; margin-right: 0;">

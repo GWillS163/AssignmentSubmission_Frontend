@@ -68,7 +68,7 @@
     <b-row>
 
       <div class="col-12 col-sm-6 col-md-6">
-        <h3 class="text-dark mb-4">我的班级</h3>
+        <h3 class="text-dark mb-4">我的班级 ({{classes.length}})</h3>
       </div>
       <div class="col-12 col-sm-6 col-md-6 text-end" style="margin-bottom: 30px;">
         <!--         data-bs-target="#addClass" data-bs-toggle="modal"-->
@@ -311,11 +311,10 @@ export default {
       formData,
       classes,
       fields: [
-        {key: 'id', label: '班级id', sortable: true},
-        {key: 'className', label: '班级名', sortable: true},
-        {key: 'description', label: '备注', sortable: true},
-        // {key: 'faculty', label: '所属学院', sortable: true},
-        // {key: 'major', label: '所属专业', sortable: true},
+        // {key: 'clazzId', label: '班级id', sortable: true},
+        {key: 'clazzName', label: '班级名', sortable: true},
+        {key: 'faculty', label: '所属学院', sortable: true},
+        {key: 'major', label: '所属专业', sortable: true},
         {
           key: 'teacherId', label: '创建教师', sortable: true,
           formatter: (value) => {
@@ -327,7 +326,7 @@ export default {
             return this.teachers[value]
           },
         },
-        // { key: 'describe', label: '班级描述', sortable: true },
+        {key: 'description', label: '备注', sortable: true},
         {key: 'actions', label: '操作', sortable: false}
       ],
 

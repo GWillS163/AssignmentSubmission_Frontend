@@ -99,7 +99,7 @@
   <b-container fluid>
     <b-row>
       <b-col col="12" md="6" sm="6">
-        <h3 class="text-dark mb-4">学生管理 {{ students.length}}</h3>
+        <h3 class="text-dark mb-4">学生管理 ({{ students.length}})</h3>
       </b-col>
 
 
@@ -253,7 +253,7 @@ import editStudentForm from "@/components/management/information/EditStudentForm
 import AddBatchStudent from "@/components/management/information/AddBatchStudent.vue";
 
 export default {
-  username: "student",
+  name: "student",
   components: {AddBatchStudent, PageSpliter, editStudentForm},
   methods: {
     addNew() {
