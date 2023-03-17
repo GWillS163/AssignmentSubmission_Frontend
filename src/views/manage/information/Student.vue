@@ -308,9 +308,6 @@ export default {
     downStudents() {
       console.log("downStudents")
     },
-    passwordVarify(){
-      return true
-    }
   },
   data() {
 

@@ -285,7 +285,7 @@ export default {
     },
     deleteStudent(student) {
         return request({
-            url: '/student/' + student.user_id,
+            url: '/student/' + student.userId,
             method: 'delete',
             mock: false,
         })
