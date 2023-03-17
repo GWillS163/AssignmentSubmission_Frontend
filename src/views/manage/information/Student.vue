@@ -10,39 +10,52 @@
 
     <b-form>
       <b-row>
-        <b-col md="6" v-show="editMethod ==='edit'">
+        <b-col md="4" v-show="editMethod ==='edit'">
           <b-form-group id="input-group-1" label="数据ID" label-for="input-1">
-            <b-form-input id="input-1" v-model="formData.id" disabled required></b-form-input>
+            <b-form-input id="input-1" v-model="formData.userId" disabled required></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col md="6">
-          <b-form-group id="input-group-5" label="所属班级" label-for="input-5">
-              <b-form-select v-model="formData.classId" :options="classes"></b-form-select>
-          </b-form-group>
-        </b-col>
-        <b-col :md="editMethod ==='edit' ? 4 : 8">
+        <b-col :md="editMethod ==='edit' ? 4 : 6">
           <b-form-group id="input-group-2" label="姓名" label-for="input-2">
-            <b-form-input id="input-2" v-model="formData.name" required></b-form-input>
+            <b-form-input id="input-2" v-model="formData.username" required></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col md="4">
+        <b-col :md="editMethod ==='edit' ? 4 : 6">
+          <b-form-group id="input-group-5" label="所属班级" label-for="input-5">
+              <b-form-select v-model="formData.clazzId" :options="classes"></b-form-select>
+          </b-form-group>
+        </b-col>
+        <b-col md="6">
           <b-form-group id="input-group-5" label="学号" label-for="input-5">
-            <b-form-input id="input-5" v-model="formData.studentId" required></b-form-input>
+            <b-form-input  v-model="formData.studentId" required></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col md="4">
+        <b-col md="6">
           <b-form-group id="input-group-5" label="邮箱" label-for="input-5">
-            <b-form-input id="input-5" v-model="formData.mail" required></b-form-input>
+            <b-form-input   v-model="formData.mail" required></b-form-input>
           </b-form-group>
         </b-col>
         <b-col md="6">
+
           <b-form-group id="input-group-5" label="密码" label-for="input-5">
-            <b-form-input id="input-5" v-model="formData.password" required type="password"></b-form-input>
+            <b-form-input required type="password"
+             v-model="formData.password"
+            :state="lifeNameState"
+            aria-describedby="input-live-help input-live-feedback"
+            ></b-form-input>
           </b-form-group>
+          <!-- This will only be shown if the preceding input has an invalid state -->
+          <b-form-invalid-feedback id="input-live-feedback">
+            Enter at least 3 letters
+          </b-form-invalid-feedback>
+
         </b-col>
         <b-col md="6">
-          <b-form-group id="input-group-5" label="密码确认" label-for="input-5">
-            <b-form-input id="input-5" required type="password"></b-form-input>
+          <b-form-group  label="密码确认" label-for="input-5">
+            <b-form-input v-model="passwordAgain" required type="password"
+
+
+            :state="lifeNameState"></b-form-input>
           </b-form-group>
         </b-col>
 
@@ -62,7 +75,7 @@
         </b-col>
         <b-col md="4" v-show="editMethod ==='edit'">
           <b-form-group id="input-group-9" label="作业数" label-for="input-9">
-            <b-form-input id="input-9" v-model="formData.files.length" disabled></b-form-input>
+            <b-form-input id="input-9" v-model="formData.filesCount" disabled></b-form-input>
           </b-form-group>
         </b-col>
         <b-col md="6">
@@ -82,59 +95,11 @@
         </b-col>
       </b-row>
     </b-form>
-<!--    <form class="row g-3">-->
-<!--      <div class="col-md-4">-->
-<!--        <label class="form-label" for="validationServer01">学生数据ID</label>-->
-<!--        <input id="id" v-model="formData.id" class="form-control is-valid" required type="text">-->
-<!--      </div>-->
-<!--      <div class="col-md-4">-->
-<!--        <label class="form-label" for="validationServer01">学生名</label>-->
-<!--        <input id="validationServer01" v-model="formData.name" class="form-control is-valid" required type="text">-->
-<!--        <div class="valid-feedback">-->
-<!--          看起来不错-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="col-md-4">-->
-<!--        <label class="form-label" for="validationServer02">学号</label>-->
-<!--        <input id="validationServer02" v-model="formData.studentId" class="form-control is-valid" required-->
-<!--               type="text">-->
-<!--        &lt;!&ndash;              <div class="valid-feedback">&ndash;&gt;-->
-<!--        &lt;!&ndash;                看起来不错&ndash;&gt;-->
-<!--        &lt;!&ndash;              </div>&ndash;&gt;-->
-<!--      </div>-->
-<!--      <div class="col-md-4">-->
-<!--        <label class="form-label" for="validationServer04">所属班级</label>-->
-<!--        <select id="validationServer04" :value="formData.classId"-->
-<!--                aria-describedby="validationServer04Feedback" class="form-select is-invalid" required>-->
-<!--          <option disabled selected>请选择...</option>-->
-<!--          <option v-for="clazz in classes" :value="clazz.id">{{ clazz.name }}</option>-->
-<!--        </select>-->
-<!--        <div id="validationServer04Feedback" class="invalid-feedback">-->
-<!--          请选择有效班级-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      &lt;!&ndash;        <div class="col-md-4">&ndash;&gt;-->
-<!--      &lt;!&ndash;          <label class="form-label" for="validationServer04">所属教师</label>&ndash;&gt;-->
-<!--      &lt;!&ndash;          <select id="validationServer04" aria-describedby="validationServer04Feedback"&ndash;&gt;-->
-<!--      &lt;!&ndash;                  class="form-select is-invalid" required disabled :value="formData.teacherId">&ndash;&gt;-->
-<!--      &lt;!&ndash;            <option disabled selected value="">请选择...</option>&ndash;&gt;-->
-<!--      &lt;!&ndash;            <option v-for="teacher in teachers" :value="teacher.id">{{ teacher.name }}</option>&ndash;&gt;-->
-<!--      &lt;!&ndash;          </select>&ndash;&gt;-->
-<!--      &lt;!&ndash;          <div id="validationServer04Feedback" class="invalid-feedback">&ndash;&gt;-->
-<!--      &lt;!&ndash;            请选择有效值&ndash;&gt;-->
-<!--      &lt;!&ndash;          </div>&ndash;&gt;-->
-<!--      &lt;!&ndash;        </div>&ndash;&gt;-->
-<!--      <div class="col-md-8">-->
-<!--        <label class="form-label" for="validationServer03">描述</label>-->
-<!--        <input id="validationServer03" aria-describedby="validationServer03Feedback" class="form-control "-->
-<!--               type="text">-->
-<!--      </div>-->
-<!--    </form>-->
   </b-modal>
   <b-container fluid>
     <b-row>
       <b-col col="12" md="6" sm="6">
-        <h3 class="text-dark mb-4">学生管理</h3>
+        <h3 class="text-dark mb-4">学生管理 {{ students.length}}</h3>
       </b-col>
 
 
@@ -241,11 +206,11 @@
               <template #cell(actions)="row">
                 <b-button class="mr-1 " size="sm"
                           variant="outline-primary"
-                          @click="editTeacher(row.item)"
+                          @click="edit(row.item)"
                 > 编辑
                 </b-button>
                 <b-button size="sm" variant="outline-secondary" @click="row.toggleDetails">
-                  {{ row.detailsShowing ? '隐藏' : '展示' }}详情
+                  {{ row.detailsShowing ? '隐藏' : '展示' }}更多
                 </b-button>
                 <b-button class="mr-1 " size="sm" variant="outline-danger" @click="deleteStudent(row.item)">
                   删除
@@ -281,32 +246,39 @@
 </template>
 
 <script>
-import {getCurrentInstance, onMounted, ref} from "vue";
+import {computed, getCurrentInstance, onMounted, ref} from "vue";
 import PageSpliter from "@/components/management/PageSpliter.vue";
 import editStudentForm from "@/components/management/information/EditStudentForm.vue";
 
 import AddBatchStudent from "@/components/management/information/AddBatchStudent.vue";
 
 export default {
-  name: "student",
+  username: "student",
   components: {AddBatchStudent, PageSpliter, editStudentForm},
   methods: {
     addNew() {
       this.editMethod = "add";
       this.modal = !this.modal // toggle modal
     },
-    editTeacher(teacher) {
+    edit(student) {
       this.editMethod = "edit";
       this.modal = !this.modal
-      this.formData = teacher
+      this.formData = student
+      this.formData.filesCount = student.files.length
+      this.passwordAgain = student.password
+
     },
     submit() {
       console.log("submit");
       console.log(this.formData);
+      this.modal = !this.modal
+
+      delete this.formData.clazzInfo;
+      delete this.formData.files;
       if (this.editMethod === "add") {
-        this.postTeacher(this.formData);
+        this.postStudent(this.formData);
       } else {
-        this.putTeacher(this.formData);
+        this.putStudent(this.formData);
       }
     },
     addNewStudent() {
@@ -335,14 +307,39 @@ export default {
     },
     downStudents() {
       console.log("downStudents")
+    },
+    passwordVarify(){
+      return true
     }
   },
   data() {
 
     const {proxy} = getCurrentInstance();
     const students = [];
+    const classes = [];
     const totalRows = 0;
-    const classData = ref();
+    const userInfo = {
+      type: 'admin',
+      id: 1
+    }
+    const getClasses = async () => {
+      let res;
+      if (userInfo.type === 'admin') {
+        console.log("获取admin classes")
+        res = await proxy.$api.getClassesByAdmin(userInfo);
+      } else if (userInfo.type === 'teacher') {
+        console.log("获取teacher classes")
+        res = await proxy.$api.getClassesByTeacherId(userInfo.id);
+      }
+      for (let each of res.data) {
+        this.classes.push({
+          text: each.clazzName,
+          value: each.clazzId
+        })
+      }
+      console.log("更新！ classes", classes);
+      // this.classes.value = res.data;
+    };
     const getStudents = async () => {
       // const res = await proxy.$api.getStudentsByTeacherId(127);
       const res = await proxy.$api.getStudentsByAdmin();
@@ -369,12 +366,21 @@ export default {
 
     onMounted(() => {
       getStudents();
+      getClasses();
     })
+    const lifeName = ref('')
+    const passwordAgain = ref('')
+    const lifeNameState = computed(() => (
+        this.formData.password === passwordAgain.value))
     return {
       getStudents,
       postStudent,
       putStudent,
       deleteStudent,
+      lifeName,
+      passwordAgain,
+      lifeNameState,
+      passwordVarify: null,
       students,
       editMethod: "edit",
       modal: false,
@@ -387,52 +393,29 @@ export default {
       sortDirection: '升序',
       filter: null,
       filterOn: [],
-      classData,
-      classes: [
-        {
-          value: 1909,
-          text: "软件工程1909班"
-        },
-        {
-          value: 1910,
-          text: "软件工程1910班"
-        },
-        {
-          value: 127,
-          text: "孟老师天才班"
-        }
-      ],
-      teachers: [
-        {
-          id: 1,
-          name: "张三老师"
-        },
-        {
-          id: 2,
-          name: "李四老师"
-        },
-        {
-          id: 127,
-          name: "孟老师"
-        }
-      ],
+      classes,
       formData: {
-        id: 0,
-        name: "孟骏清",
+        userId: 0,
+        clazzInfo: [],
+        username: "孟骏清",
+        password: "234234",
         studentId: 19852331,
-        classId: 1909,
+        clazzId: 1909,
         qq: "123456789",
         mail: "gwills@qq.com",
-        phone: "123456789"
+        phone: "123456789",
+        description: "",
       },
 
       fields: [
         // {key: 'user_id', label: '数据ID', sortable: true},
         {key: 'username', label: '姓名', sortable: true},
         {
-          key: 'clazz_info', label: '班级', sortable: true,
+          key: 'clazzInfo', label: '班级', sortable: true,
           formatter: (value) => {
             if (value === null) {
+              return "-"
+            } else if ( value.clazzName === null) {
               return "-"
             }
             return value.clazzName
@@ -454,6 +437,9 @@ export default {
         // {key: 'phone', label: '电话', sortable: true},
         {key: 'actions', label: '操作', sortable: false}
       ],
+      detailFields: [
+
+      ]
     }
   }
 }
