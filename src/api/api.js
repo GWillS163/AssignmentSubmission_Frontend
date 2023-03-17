@@ -217,15 +217,13 @@ export default {
             mock: false,
         })
     },
-    getClassesByAdmin(adminId) {
+    getClassesByAdmin(userInfo) {
         return request({
             // url: '/class/teacher/' + teacherId,
             url: '/class/allInfo',
             method: 'get',
             // put teacherId to post request
-            params: {
-                adminId: adminId
-            },
+            params: userInfo,
             mock: false,
         })
     },
