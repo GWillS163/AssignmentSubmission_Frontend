@@ -402,6 +402,9 @@ export default {
         mail: "gwills@qq.com",
         phone: "123456789",
         description: "",
+        files: [],
+        registerTime: "",
+        lastLoginTime: "",
       },
 
       fields: [
@@ -410,11 +413,12 @@ export default {
         {
           key: 'clazzInfo', label: '班级', sortable: true,
           formatter: (value) => {
-            if (value === null) {
-              return "-"
-            } else if ( value.clazzName === null) {
+            if (!value) {
               return "-"
             }
+            // else if ( value.clazzName === null) {
+            //   return "-"
+            // }
             return value.clazzName
           }
         },
@@ -423,7 +427,9 @@ export default {
         {
           key: 'files', label: '作业数', sortable: true,
           formatter: (value) => {
-            if (value.length === 0) {
+            if (!value) {
+              return "-"
+            }else if (value.length === 0) {
               return "-"
             }
             return value.length

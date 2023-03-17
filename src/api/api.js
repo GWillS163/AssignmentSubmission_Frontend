@@ -277,7 +277,7 @@ export default {
     },
     putStudent(student) {
         return request({
-            url: '/student/' + student.id,
+            url: '/student',
             method: 'put',
             mock: false,
             params: student
