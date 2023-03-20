@@ -1,4 +1,82 @@
 <template>
+
+  <b-modal
+      v-model="modal"
+      :title="editMethod ==='edit' ? '编辑作业' : '新增作业'"
+      cancel-title="取消"
+      ok-title="确认"
+      @ok="submit"
+  >
+
+    <b-form>
+      <b-row>
+        <b-col md="4" v-show="editMethod ==='edit'">
+          <b-form-group id="input-group-1" label="数据ID" label-for="input-1">
+            <b-form-input id="input-1" v-model="formData.userId" disabled required></b-form-input>
+          </b-form-group>
+        </b-col>
+        <b-col md="4" v-show="editMethod ==='edit'">
+          <b-form-group id="input-group-8" label="创建日期" label-for="input-8" type="datetime-local">
+            <b-form-input type="date" v-model="formData.createdDate" disabled></b-form-input>
+          </b-form-group>
+        </b-col>
+        <b-col md="4" v-show="editMethod ==='edit'">
+          <b-form-group id="input-group-8" label="创建时间" label-for="input-8" type="datetime-local">
+            <b-form-input type="time" v-model="formData.createdTime" disabled></b-form-input>
+          </b-form-group>
+        </b-col>
+        <b-col  md="4">
+          <b-form-group id="input-group-5" label="所属班级" label-for="input-5">
+              <b-form-select v-model="formData.clazzId" :options="classes"></b-form-select>
+          </b-form-group>
+        </b-col>
+        <b-col md="8">
+          <b-form-group id="input-group-2" label="简名" label-for="input-2">
+            <b-form-input id="input-2" v-model="formData.briefName" required></b-form-input>
+          </b-form-group>
+        </b-col>
+        <b-col md="4">
+          <b-form-group id="input-group-5" label="所属教师" label-for="input-5">
+              <b-form-select v-model="formData.teacherId" :options="teachers"></b-form-select>
+          </b-form-group>
+        </b-col>
+        <b-col md="4" >
+          <b-form-group id="input-group-8" label="截止日期" label-for="input-8" type="datetime-local">
+            <b-form-input type="date" v-model="formData.ddlDate" >22</b-form-input>
+          </b-form-group>
+        </b-col>
+        <b-col md="4" >
+          <b-form-group id="input-group-8" label="截止时间" label-for="input-8" type="datetime-local">
+            <b-form-input type="time" v-model="formData.ddlTime" ></b-form-input>
+          </b-form-group>
+        </b-col>
+<!--        hr line -->
+        <b-col md="12">
+          <hr>
+        </b-col>
+        <b-col md="4" >
+          <b-form-group id="input-group-4" label="作业公开" label-for="input-4">
+            <b-form-checkbox v-model="formData.permitAnonymous"  size="lg" switch ></b-form-checkbox>
+          </b-form-group>
+        </b-col>
+        <b-col md="4" >
+          <b-form-group id="input-group-4" label="文件名校验" label-for="input-4">
+            <b-form-checkbox v-model="formData.fileNameVerify"  size="lg" switch ></b-form-checkbox>
+          </b-form-group>
+        </b-col>
+        <b-col md="4" >
+          <b-form-group id="input-group-4" label="过时可交" label-for="input-4">
+            <b-form-checkbox v-model="formData.timeoutSubmit"  size="lg" switch ></b-form-checkbox>
+          </b-form-group>
+        </b-col>
+        <b-col md="12">
+          <b-form-group id="input-group-10" label="描述" label-for="input-10">
+            <b-form-input id="input-10" v-model="formData.description" required></b-form-input>
+          </b-form-group>
+        </b-col>
+      </b-row>
+    </b-form>
+  </b-modal>
   <b-container fluid>
     <b-row>
       <b-col col="12" md="6" sm="6">
@@ -102,7 +180,7 @@
                 <b-button size="sm" variant="outline-secondary" @click="row.toggleDetails">
                   {{ row.detailsShowing ? '隐藏' : '展示' }}更多
                 </b-button>
-                <b-button class="mr-1 " size="sm" variant="outline-danger" @click="deleteStudent(row.item)">
+                <b-button class="mr-1 " size="sm" variant="outline-danger" @click="deleteAssign(row.item)">
                   删除
                 </b-button>
               </template>
@@ -143,12 +221,10 @@ export default {
       this.editMethod = "add";
       this.modal = !this.modal // toggle modal
     },
-    edit(student) {
+    edit(assign) {
       this.editMethod = "edit";
       this.modal = !this.modal
-      this.formData = student
-      this.formData.filesCount = student.files.length
-      this.passwordAgain = student.password
+      this.formData = assign
 
     },
     submit() {
@@ -159,9 +235,9 @@ export default {
       delete this.formData.clazzInfo;
       delete this.formData.files;
       if (this.editMethod === "add") {
-        this.postStudent(this.formData);
+        this.postAssign(this.formData);
       } else {
-        this.putStudent(this.formData);
+        this.putAssign(this.formData);
       }
     },
     downAssigns() {
@@ -175,11 +251,38 @@ export default {
   },
   data() {
     const assigns = [];
+    const classes = [];
+    const teachers = [];
     const {proxy} = getCurrentInstance();
     const totalRows = 0;
     const userInfo = {
       type: 'admin',
       id: 1
+    }
+    const getClasses = async () => {
+      let res;
+      if (userInfo.type === 'admin') {
+        console.log("获取admin classes")
+        res = await proxy.$api.getClassesByAdmin(userInfo);
+      } else if (userInfo.type === 'teacher') {
+        console.log("获取teacher classes")
+        res = await proxy.$api.getClassesByTeacherId(userInfo.id);
+      }
+      for (let each of res.data) {
+        this.classes.push({
+          text: each.clazzName,
+          value: each.clazzId
+        })
+      }
+      console.log("更新！ classes", classes);
+      // this.classes.value = res.data;
+    };
+
+    const getTeacherData = async () => {
+      const res = await proxy.$api.getAllTeachersMapping();
+      console.log("TeachersMap:",  res.data)
+      this.teachers = res.data;
+
     }
     const getAssigns = async () => {
       let res;
@@ -191,69 +294,32 @@ export default {
         this.assigns = res.data;
       console.log("更新作业格式", res)
       // set &lt; &gt; to < >
-      res.forEach(assign => {
-        assign.format = assign.format.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-      })
+      // res.data.forEach(assign => {
+      //   assign.format = assign.format.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+      // })
       this.assigns = res.data;
+    }
+    const postAssign = async () => {
+      await proxy.$api.postAssign(this.formData);
+      await getAssigns();
+    }
+    const deleteAssign = async (assign) => {
+      console.log("delete", assign);
+      const res = await proxy.$api.deleteAssign(assign.id);
+      console.log("delete", res);
+      await getAssigns();
     }
     onMounted(() => {
       getAssigns();
-      console.log("assign mounted", this.assigns)
+      getClasses();
+      getTeacherData();
     })
     return {
-      assigns: [
-        {
-          "id": 1,
-          "name": "作业1",
-          "format": "<p>作业1</p>",
-          "deadline": "2021-06-01 00:00:00",
-          "teacherId": 127,
-          "courseId": 1,
-          "createTime": "2021-05-31 00:00:00",
-          "updateTime": "2021-05-31 00:00:00"
-        },
-        {
-          "id": 2,
-          "name": "作业2",
-          "format": "<p>作业2</p>",
-          "deadline": "2021-06-01 00:00:00",
-          "teacherId": 127,
-          "courseId": 1,
-          "createTime": "2021-05-31 00:00:00",
-          "updateTime": "2021-05-31 00:00:00"
-        },
-        {
-          "id": 3,
-          "name": "作业3",
-          "format": "<p>作业3</p>",
-          "deadline": "2021-06-01 00:00:00",
-          "teacherId": 127,
-          "courseId": 1,
-          "createTime": "2021-05-31 00:00:00",
-          "updateTime": "2021-05-31 00:00:00"
-        },
-        {
-          "id": 4,
-          "name": "作业4",
-          "format": "<p>作业4</p>",
-          "deadline": "2021-06-01 00:00:00",
-          "teacherId": 127,
-          "courseId": 1,
-          "createTime": "2021-05-31 00:00:00",
-          "updateTime": "2021-05-31 00:00:00"
-        },
-        {
-          "id": 5,
-          "name": "作业5",
-          "format": "<p>作业5</p>",
-          "deadline": "2021-06-01 00:00:00",
-          "teacherId": 127,
-          "courseId": 1,
-          "createTime": "2021-05-31 00:00:00",
-
-        }
-      ],
-
+      postAssign,
+      deleteAssign,
+      assigns,
+      teachers,
+      classes,
       editMethod: "edit",
       modal: false,
       totalRows,
@@ -268,52 +334,50 @@ export default {
       detailBlockList: ["_showDetails"],
       // classes,
       formData: {
-        userId: 0,
-        clazzInfo: [],
-        username: "孟骏清",
-        password: "234234",
-        studentId: 19852331,
-        clazzId: 1909,
-        qq: "123456789",
-        mail: "gwills@qq.com",
-        phone: "123456789",
-        description: "",
-        files: [],
-        registerTime: "",
-        lastLoginTime: "",
+          id: 28,
+          clazzId: 49,
+          teacherId: null,
+          ddlDate: "2023-03-09",
+          ddlTime: "21:26:22",
+          createTime: null,
+          briefName: "级人又信人法",
+          description: "土标精后部万则实明会情说更飞。",
+          fileNameRule: "强报音质运积子加_第一次作业_今三片则",
+          permitAnonymous: true,
+          fileNameVerify: false,
+          timeoutSubmit: true,
       },
 
       fields: [
         // {key: 'user_id', label: '数据ID', sortable: true},
-        {key: 'username', label: '姓名', sortable: true},
+        {key: 'briefName', label: '简述', sortable: true},
         {
-          key: 'clazzInfo', label: '班级', sortable: true,
-          formatter: (value) => {
-            if (!value) {
-              return "-"
-            }
-            // else if ( value.clazzName === null) {
-            //   return "-"
-            // }
-            return value.clazzName
-          }
+          key: 'clazzId', label: '班级', sortable: true,
+          // formatter: (value) => {
+          //   if (!value) {
+          //     return "-"
+          //   }
+          //   // else if ( value.clazzName === null) {
+          //   //   return "-"
+          //   // }
+          //   return value.clazzName
+          // }
         },
-        {key: 'phone', label: '手机号', sortable: true},
-        {key: 'mail', label: '邮箱', sortable: true},
-        {
-          key: 'files', label: '作业数', sortable: true,
-          formatter: (value) => {
-            if (!value) {
-              return "-"
-            }else if (value.length === 0) {
-              return "-"
-            }
-            return value.length
-          },
-        },
-        {key: 'description', label: '备注', sortable: true},
-        // {key: 'qq', label: 'QQ', sortable: true},
-        // {key: 'phone', label: '电话', sortable: true},
+        {key: 'ddl', label: 'DDL', sortable: true},
+        {key: 'description', label: '描述', sortable: true},
+        {key: 'fileNameRule', label: '文件名规则', sortable: true},
+        {key: 'teacherId', label: '创建的教师', sortable: true},
+        // {
+        //   key: 'files', label: '作业数', sortable: true,
+        //   formatter: (value) => {
+        //     if (!value) {
+        //       return "-"
+        //     }else if (value.length === 0) {
+        //       return "-"
+        //     }
+        //     return value.length
+        //   },
+        // },
         {key: 'actions', label: '操作', sortable: false}
       ],
     }

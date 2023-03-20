@@ -142,9 +142,9 @@ export default {
     },
     getAssignsByAdmin() {
         return request({
-            url: '/assign/allInfo',
+            url: '/assign',
             method: 'get',
-            mock: true
+            mock: false
         })
     },
     getAssignsByTeacher(teacherId) {
@@ -154,6 +154,17 @@ export default {
             mock: true
         });
     },
+    postAssign(assign) {
+        return request({
+            url: '/assign',
+            method: 'post',
+            mock: false,
+            param: assign,
+        })
+    },
+
+
+
     getFilesByStudentId(studentId) {
         return request({
             url: '/file/student/' + studentId,
@@ -161,6 +172,9 @@ export default {
             mock: true
         })
     },
+
+
+
     getAllFiles(teacherId) {
         return request({
             url: '/file/teacher/' + teacherId,
