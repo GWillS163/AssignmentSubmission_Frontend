@@ -212,7 +212,7 @@
 </template>
 
 <script>
-import {computed, getCurrentInstance, onMounted, ref} from "vue";
+import {getCurrentInstance, onMounted} from "vue";
 
 export default {
   name: "assign",
@@ -280,10 +280,33 @@ export default {
 
     const getTeacherData = async () => {
       const res = await proxy.$api.getAllTeachersMapping();
-      console.log("TeachersMap:",  res.data)
+      // console.log("TeachersMap:",  res.data)
       this.teachers = res.data;
 
     }
+
+    const combineTime = (date, time) => {
+      if (date && time) {
+        console.log("date", date)
+        console.log("time", time)
+        return date + " " + time;
+      } else if (date) {
+        return date;
+      } else if (time) {
+        return time;
+      } else {
+        return "";
+      }
+    }
+    const divideTime = (time) => {
+      console.log("time", time)
+      if (time) {
+        return time.split(" ");
+      } else {
+        return ["", ""];
+      }
+    }
+
     const getAssigns = async () => {
       let res;
       if (userInfo.type === 'admin') {
@@ -293,14 +316,39 @@ export default {
       }
         this.assigns = res.data;
       console.log("更新作业格式", res)
-      // set &lt; &gt; to < >
-      // res.data.forEach(assign => {
-      //   assign.format = assign.format.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-      // })
+
+      res.data.forEach(assign => {
+        if (assign.ddl) {
+          const ddlSet = divideTime(assign.ddl);
+          assign.ddlDate = ddlSet[0];
+          assign.ddlTime = ddlSet[1];
+        }
+        if (assign.createTime) {
+          const createTimeSet = divideTime(assign.createTime);
+          assign.createdDate = createTimeSet[0];
+          assign.createdTime = createTimeSet[1];
+        }
+      })
+
       this.assigns = res.data;
+      this.totalRows = res.data.length;
     }
     const postAssign = async () => {
+      console.log("Post Assign", this.formData);
+      this.formData.ddl = combineTime(this.formData.ddlDate, this.formData.ddlTime);
+      this.formData.createTime = combineTime(this.formData.createdDate, this.formData.createdTime);
+      delete this.formData.createdDate;
+      delete this.formData.createdTime;
+      delete this.formData.ddlDate;
+      delete this.formData.ddlTime;
       await proxy.$api.postAssign(this.formData);
+      await getAssigns();
+    }
+    const putAssign = async () => {
+      console.log("Put Assign", this.formData);
+      this.formData.dll = combineTime(this.formData.ddlDate, this.formData.ddlTime);
+      this.formData.createTime = combineTime(this.formData.createdDate, this.formData.createdTime);
+      await proxy.$api.putAssign(this.formData);
       await getAssigns();
     }
     const deleteAssign = async (assign) => {
@@ -336,10 +384,13 @@ export default {
       formData: {
           id: 28,
           clazzId: 49,
-          teacherId: null,
+          teacherId: 1,
           ddlDate: "2023-03-09",
           ddlTime: "21:26:22",
-          createTime: null,
+          createdDate: null,
+          createdTime: null,
+          ddl: "",
+          createTime: "",
           briefName: "级人又信人法",
           description: "土标精后部万则实明会情说更飞。",
           fileNameRule: "强报音质运积子加_第一次作业_今三片则",
@@ -367,17 +418,6 @@ export default {
         {key: 'description', label: '描述', sortable: true},
         {key: 'fileNameRule', label: '文件名规则', sortable: true},
         {key: 'teacherId', label: '创建的教师', sortable: true},
-        // {
-        //   key: 'files', label: '作业数', sortable: true,
-        //   formatter: (value) => {
-        //     if (!value) {
-        //       return "-"
-        //     }else if (value.length === 0) {
-        //       return "-"
-        //     }
-        //     return value.length
-        //   },
-        // },
         {key: 'actions', label: '操作', sortable: false}
       ],
     }

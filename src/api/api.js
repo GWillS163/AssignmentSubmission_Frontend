@@ -159,6 +159,14 @@ export default {
             url: '/assign',
             method: 'post',
             mock: false,
+            params: assign,
+        })
+    },
+    putAssign(assign) {
+        return request({
+            url: '/assign/' + assign.id,
+            method: 'put',
+            mock: false,
             param: assign,
         })
     },
