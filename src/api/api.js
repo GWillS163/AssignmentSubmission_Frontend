@@ -264,6 +264,16 @@ export default {
             mock: false,
         })
     },
+    getClassesMap(userInfo) {
+        return request({
+            // url: '/class/teacher/' + teacherId,
+            url: '/class/map',
+            method: 'get',
+            // put teacherId to post request
+            params: userInfo,
+            mock: false,
+        })
+    },
     putClass(clazz) {
         console.log("put class")
         return request({
