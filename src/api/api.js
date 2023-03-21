@@ -193,9 +193,34 @@ export default {
 
     getAllFiles(teacherId) {
         return request({
-            url: '/file/teacher/' + teacherId,
+            url: '/myFile',
             method: 'get',
-            mock: true
+            mock: false,
+
+        })
+    },
+    postFile(file) {
+        return request({
+            url: '/myFile',
+            method: 'post',
+            mock: false,
+            params: file,
+        })
+    },
+    putFile(file) {
+        return request({
+            url: '/myFile/' + file.id,
+            method: 'put',
+            mock: false,
+            params: file,
+        })
+    },
+    deleteFile(file) {
+        return request({
+            url: '/myFile/' + file.fileId,
+            method: 'delete',
+            mock: false,
+
         })
     },
 
