@@ -167,7 +167,15 @@ export default {
             url: '/assign/' + assign.id,
             method: 'put',
             mock: false,
-            param: assign,
+            params: assign,
+        })
+    },
+    deleteAssign(assign) {
+        return request({
+            url: '/assign/' + assign.id,
+            method: 'delete',
+            mock: false,
+
         })
     },
 

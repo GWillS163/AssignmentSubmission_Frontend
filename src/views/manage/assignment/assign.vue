@@ -55,17 +55,17 @@
           <hr>
         </b-col>
         <b-col md="4" >
-          <b-form-group id="input-group-4" label="作业公开" label-for="input-4">
+          <b-form-group label="作业公开" label-for="input-4">
             <b-form-checkbox v-model="formData.permitAnonymous"  size="lg" switch ></b-form-checkbox>
           </b-form-group>
         </b-col>
         <b-col md="4" >
-          <b-form-group id="input-group-4" label="文件名校验" label-for="input-4">
+          <b-form-group  label="文件名校验" label-for="input-4">
             <b-form-checkbox v-model="formData.fileNameVerify"  size="lg" switch ></b-form-checkbox>
           </b-form-group>
         </b-col>
         <b-col md="4" >
-          <b-form-group id="input-group-4" label="过时可交" label-for="input-4">
+          <b-form-group  label="过时可交" label-for="input-4">
             <b-form-checkbox v-model="formData.timeoutSubmit"  size="lg" switch ></b-form-checkbox>
           </b-form-group>
         </b-col>
@@ -82,6 +82,7 @@
       <b-col col="12" md="6" sm="6">
         <h3 class="text-dark mb-4">作业管理 ({{ assigns.length}})</h3>
       </b-col>
+      {{formData}}
 
       <b-col class="text-end" col="12" md="6" sm="6"
              style="margin-bottom: 30px; margin-right: 0;">
@@ -262,10 +263,10 @@ export default {
     const getClasses = async () => {
       let res;
       if (userInfo.type === 'admin') {
-        console.log("获取admin classes")
+        // console.log("获取admin classes")
         res = await proxy.$api.getClassesByAdmin(userInfo);
       } else if (userInfo.type === 'teacher') {
-        console.log("获取teacher classes")
+        // console.log("获取teacher classes")
         res = await proxy.$api.getClassesByTeacherId(userInfo.id);
       }
       for (let each of res.data) {
@@ -274,7 +275,7 @@ export default {
           value: each.clazzId
         })
       }
-      console.log("更新！ classes", classes);
+      // console.log("更新！ classes", classes);
       // this.classes.value = res.data;
     };
 
@@ -287,8 +288,6 @@ export default {
 
     const combineTime = (date, time) => {
       if (date && time) {
-        console.log("date", date)
-        console.log("time", time)
         return date + " " + time;
       } else if (date) {
         return date;
@@ -299,12 +298,21 @@ export default {
       }
     }
     const divideTime = (time) => {
-      console.log("time", time)
+      // console.log("time", time)
       if (time) {
         return time.split(" ");
       } else {
         return ["", ""];
       }
+    }
+
+    const decorateBeforeSubmit = () => {
+      this.formData.ddl = combineTime(this.formData.ddlDate, this.formData.ddlTime);
+      this.formData.createTime = combineTime(this.formData.createdDate, this.formData.createdTime);
+      delete this.formData.ddlDate;
+      delete this.formData.ddlTime;
+      delete this.formData.createdDate;
+      delete this.formData.createdTime;
     }
 
     const getAssigns = async () => {
@@ -335,25 +343,19 @@ export default {
     }
     const postAssign = async () => {
       console.log("Post Assign", this.formData);
-      this.formData.ddl = combineTime(this.formData.ddlDate, this.formData.ddlTime);
-      this.formData.createTime = combineTime(this.formData.createdDate, this.formData.createdTime);
-      delete this.formData.createdDate;
-      delete this.formData.createdTime;
-      delete this.formData.ddlDate;
-      delete this.formData.ddlTime;
+      decorateBeforeSubmit();
       await proxy.$api.postAssign(this.formData);
       await getAssigns();
     }
     const putAssign = async () => {
       console.log("Put Assign", this.formData);
-      this.formData.dll = combineTime(this.formData.ddlDate, this.formData.ddlTime);
-      this.formData.createTime = combineTime(this.formData.createdDate, this.formData.createdTime);
+      decorateBeforeSubmit();
       await proxy.$api.putAssign(this.formData);
       await getAssigns();
     }
     const deleteAssign = async (assign) => {
       console.log("delete", assign);
-      const res = await proxy.$api.deleteAssign(assign.id);
+      const res = await proxy.$api.deleteAssign(assign);
       console.log("delete", res);
       await getAssigns();
     }
@@ -365,6 +367,7 @@ export default {
     return {
       postAssign,
       deleteAssign,
+      putAssign,
       assigns,
       teachers,
       classes,
