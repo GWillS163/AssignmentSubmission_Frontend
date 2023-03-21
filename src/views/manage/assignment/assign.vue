@@ -150,6 +150,7 @@
                           @click="downAssigns">
                   <i class="fa fa-download"></i>
                   下载作业格式
+{{ typeof (formData.clazzId) }}
                 </b-button>
               </b-col>
             </b-row>
