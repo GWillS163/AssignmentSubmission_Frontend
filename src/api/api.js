@@ -112,6 +112,8 @@ export default {
             mock: true,
         })
     },
+
+
     getTeacherCenterAssigns(teacherId) {
         return request({
             url: '/manage/teacher/assign',
@@ -138,6 +140,15 @@ export default {
             url: '/assign/class/' + classId,
             method: 'get',
             mock:true
+        })
+    },
+
+    // Assign
+    getAssignsMapping() {
+        return request({
+            url: '/assign/map',
+            method: 'get',
+            mock: false
         })
     },
     getAssignsByAdmin() {
@@ -209,7 +220,7 @@ export default {
     },
     putFile(file) {
         return request({
-            url: '/myFile/' + file.id,
+            url: '/myFile/' + file.fileId,
             method: 'put',
             mock: false,
             params: file,
@@ -325,6 +336,13 @@ export default {
     },
 
     // Student
+    getUsersMapping() {
+        return request({
+            url: '/student/map',
+            method: 'get',
+            mock: false
+        })
+    },
     getStudentsByTeacherId(teacherId) {
         return request({
             url: '/student/teacher/' + teacherId,

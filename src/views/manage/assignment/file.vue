@@ -12,47 +12,42 @@
       <b-row>
         <b-col md="4" v-show="editMethod ==='edit'">
           <b-form-group id="input-group-1" label="数据ID" label-for="input-1">
-            <b-form-input id="input-1" v-model="formData.id" disabled required></b-form-input>
+            <b-form-input id="input-1" v-model="formData.fileId" disabled required></b-form-input>
           </b-form-group>
         </b-col>
         <b-col md="4" v-show="editMethod ==='edit'">
-          <b-form-group id="input-group-8" label="创建日期" label-for="input-8" type="datetime-local">
-            <b-form-input type="date" v-model="formData.createdDate" disabled></b-form-input>
+          <b-form-group id="input-group-8" label="上传日期" label-for="input-8" type="datetime-local">
+            <b-form-input type="date" v-model="formData.uploadedDate" disabled></b-form-input>
           </b-form-group>
         </b-col>
         <b-col md="4" v-show="editMethod ==='edit'">
-          <b-form-group id="input-group-8" label="创建时间" label-for="input-8" type="datetime-local">
-            <b-form-input type="time" v-model="formData.createdTime" disabled></b-form-input>
+          <b-form-group id="input-group-8" label="上传时间" label-for="input-8" type="datetime-local">
+            <b-form-input type="time" v-model="formData.uploadedTime" disabled></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col  md="4">
-          <b-form-group id="input-group-5" label="所属班级" label-for="input-5">
-              <b-form-select v-model="formData.clazzId"  type="number" :options="classes"></b-form-select>
+        <b-col  md="6">
+          <b-form-group id="input-group-5" label="所属作业" label-for="input-5">
+              <b-form-select v-model="formData.assignId"  type="number" :options="assigns"></b-form-select>
           </b-form-group>
         </b-col>
-        <b-col md="8">
-          <b-form-group id="input-group-2" label="简名" label-for="input-2">
-            <b-form-input id="input-2" v-model="formData.briefName" required></b-form-input>
+        <b-col md="6">
+          <b-form-group id="input-group-5" label="所属用户" label-for="input-5">
+              <b-form-select v-model="formData.userId"  type="number" :options="users"></b-form-select>
           </b-form-group>
         </b-col>
-        <b-col md="4">
-          <b-form-group id="input-group-5" label="所属教师" label-for="input-5">
-              <b-form-select v-model="formData.teacherId"  type="number" :options="teachers"></b-form-select>
+        <b-col md="8" v-show="editMethod ==='edit'">
+          <b-form-group  label="原文件名" label-for="input-4">
+            <b-form-input v-model="formData.rawName"  disabled ></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col md="4" >
-          <b-form-group id="input-group-8" label="截止日期" label-for="input-8" type="datetime-local">
-            <b-form-input type="date" v-model="formData.ddlDate" >22</b-form-input>
+        <b-col :md="editMethod ==='edit' ? 4 : 12">
+          <b-form-group id="input-group-2" label="上传文件" label-for="input-2">
+            <input type="file" @change="onFileChange" ref="file"  class="form-control" placeholder="请上传文件">
           </b-form-group>
         </b-col>
-        <b-col md="4" >
-          <b-form-group id="input-group-8" label="截止时间" label-for="input-8" type="datetime-local">
-            <b-form-input type="time" v-model="formData.ddlTime" ></b-form-input>
-          </b-form-group>
-        </b-col>
-        <b-col md="12">
-          <b-form-group  label="文件名格式" label-for="input-10">
-            <b-form-input   v-model="formData.fileNameRule" required></b-form-input>
+        <b-col md="12" >
+          <b-form-group  label="格式化文件名" label-for="input-4">
+            <b-form-input v-model="formData.formatName"  switch ></b-form-input>
           </b-form-group>
         </b-col>
 <!--        hr line -->
@@ -60,23 +55,38 @@
           <hr>
         </b-col>
         <b-col md="4" >
-          <b-form-group label="作业公开" label-for="input-4">
-            <b-form-checkbox v-model="formData.permitAnonymous"  size="lg" switch ></b-form-checkbox>
+          <b-form-group id="input-group-8" label="最后编辑日期" label-for="input-8" type="datetime-local">
+            <b-form-input type="date" v-model="formData.lastEditedDate" disabled></b-form-input>
           </b-form-group>
         </b-col>
         <b-col md="4" >
-          <b-form-group  label="文件名校验" label-for="input-4">
-            <b-form-checkbox v-model="formData.fileNameVerify"  size="lg" switch ></b-form-checkbox>
+          <b-form-group id="input-group-8" label="最后编辑时间" label-for="input-8" type="datetime-local">
+            <b-form-input type="time" v-model="formData.lastEditedTime" disabled></b-form-input>
+          </b-form-group>
+        </b-col>
+        <b-col md="4">
+          <b-form-group id="input-group-2" label="文件大小" label-for="input-2">
+            <b-form-input id="input-2" v-model="formData.fileSize" disabled></b-form-input>
+          </b-form-group>
+        </b-col>
+        <b-col md="8">
+<!--          add a button that can copy value by click -->
+          <b-form-group id="input-group-2"   label="Hash" label-for="input-2">
+            <b-form-input id="input-2" v-model="formData.hash"  @click="copyHash"  disabled></b-form-input>
+            <!--          add a prompt it can be copied by click -->
+            <b-form-text target="input-2" triggers="hover" placement="bottom">
+              点击复制
+            </b-form-text>
           </b-form-group>
         </b-col>
         <b-col md="4" >
-          <b-form-group  label="过时可交" label-for="input-4">
-            <b-form-checkbox v-model="formData.timeoutSubmit"  size="lg" switch ></b-form-checkbox>
+          <b-form-group label="类型" label-for="input-4">
+            <b-form-input v-model="formData.type" ></b-form-input>
           </b-form-group>
         </b-col>
-        <b-col md="12">
-          <b-form-group id="input-group-10" label="描述" label-for="input-10">
-            <b-form-input id="input-10" v-model="formData.description" required></b-form-input>
+        <b-col md="4" >
+          <b-form-group label="云路径" label-for="input-4">
+            <b-form-input v-model="formData.savePath"  disabled ></b-form-input>
           </b-form-group>
         </b-col>
       </b-row>
@@ -229,13 +239,13 @@ export default {
       this.editMethod = "edit";
       this.modal = !this.modal
       this.formData = file
+      this.formData.fileData = file.rawName
 
     },
     submit() {
       console.log("submit");
       console.log(this.formData);
       this.modal = !this.modal
-
       if (this.editMethod === "add") {
         this.postFile(this.formData);
       } else {
@@ -250,27 +260,115 @@ export default {
       this.totalRows = filteredItems.length
       this.currentPage = 1
     },
+    turnTimeStampToString(timeStamp) {
+      // turn 1679387459559 to 2023-05-23 12:12:12
+      function addZero(num) {
+        return num < 10 ? "0" + num : num;
+      }
+      const date = new Date(timeStamp);
+      const year = date.getFullYear();
+      const month = addZero(date.getMonth() + 1);
+      const day = addZero(date.getDate());
+      const hour = addZero(date.getHours());
+      const minute = addZero(date.getMinutes());
+      const second = addZero(date.getSeconds());
+      return [year + "-" + month + "-" + day, hour + ":" + minute + ":" + second];
+     },
+    onFileChange(e) {
+      const file = e.target.files[0];
+      console.log("文件", file);
+      this.formData.fileData = file;
+      this.formData.rawName = file.name;
+      this.formData.fileSize = file.size;
+      this.formData.type = file.type;
+      const lastDateTime = this.turnTimeStampToString(file.lastModified);
+      console.log(lastDateTime)
+      this.formData.lastEditedDate = lastDateTime[0];
+      this.formData.lastEditedTime = lastDateTime[1];
+
+    },
+    copyHash() {
+      console.log("复制hash");
+    }
   },
   data() {
     const {proxy} = getCurrentInstance();
     const files = [];
+    const users = [];
+    const assigns = [];
     const totalRows = 0;
     const userInfo = {
       type: 'admin',
       id: 1
     }
+
+    const combineTime = (date, time) => {
+      if (date && time) {
+        return date + " " + time;
+      } else if (date) {
+        return date;
+      } else if (time) {
+        return time;
+      } else {
+        return "";
+      }
+    }
+    const divideTime = (time) => {
+      // console.log("time", time)
+      if (time) {
+        return time.split(" ");
+      } else {
+        return ["", ""];
+      }
+    }
+
+    const decorateBeforeSubmit = () => {
+      // this.formData.uploadTime = combineTime(this.formData.uploadedDate, this.formData.uploadedTime);
+      this.formData.lastEditTime = combineTime(this.formData.lastEditedDate, this.formData.lastEditedTime);
+      delete this.formData.createdDate;
+      delete this.formData.createdTime;
+      delete this.formData.lastEditedDate;
+      delete this.formData.lastEditedTime;
+
+    }
+    const getUsersMapping = async () => {
+      const res = await proxy.$api.getUsersMapping();
+      console.log("获得所有用户", res.data);
+      this.users = res.data;
+    }
+    const getAssignsMapping = async () => {
+      const res = await proxy.$api.getAssignsMapping();
+      console.log("获得所有作业", res.data);
+      this.assigns = res.data;
+    }
     const getAllFiles = async () => {
       const res = await proxy.$api.getAllFiles(127);
       console.log("获得所有文件", res.data);
+
+
+      res.data.forEach(files => {
+        if (files.lastEditTime) {
+          const lastEditTimeSet = divideTime(files.lastEditTime);
+          files.lastEditedDate = lastEditTimeSet[0];
+          files.lastEditedTime = lastEditTimeSet[1];
+        }
+        if (files.uploadTime) {
+          const createTimeSet = divideTime(files.uploadTime);
+          files.uploadedDate = createTimeSet[0];
+          files.uploadedTime = createTimeSet[1];
+        }
+      })
       this.files = res.data;
       this.totalRows = res.data.length;
     }
     const postFile = async (file) => {
+      decorateBeforeSubmit();
       const res = await proxy.$api.postFile(file);
       console.log("添加文件", res.data);
       await getAllFiles();
     }
     const putFile = async (file) => {
+      decorateBeforeSubmit();
       const res = await proxy.$api.putFile(file);
       console.log("修改文件", res.data);
       await getAllFiles();
@@ -282,11 +380,14 @@ export default {
     }
     onMounted(() => {
       getAllFiles();
-      // getClasses();
-      // getTeacherData();
+      getUsersMapping();
+      getAssignsMapping();
     })
     return {
       files,
+      users,
+      assigns,
+      decorateBeforeSubmit,
       getAllFiles,
       postFile,
       putFile,
@@ -305,21 +406,22 @@ export default {
       detailBlockList: ["_showDetails"],
       // classes,
       formData: {
-          id: 28,
-          clazzId: 1,
-          teacherId: 1,
-          ddlDate: "2023-03-09",
-          ddlTime: "21:26:22",
-          createdDate: null,
-          createdTime: null,
-          ddl: "",
-          createTime: "",
-          briefName: "级人又信人法",
-          description: "土标精后部万则实明会情说更飞。",
-          fileNameRule: "强报音质运积子加_第一次作业_今三片则",
-          permitAnonymous: true,
-          fileNameVerify: false,
-          timeoutSubmit: true,
+          fileId: 28,
+        assignId: 1,
+        userId: 1,
+        uploadedDate: "2021-05-01",
+        uploadedTime: "01:00:00",
+        lastEditedDate: "2021-05-01",
+        lastEditedTime: "01:00:00",
+        rawName: "原名称",
+        formatName: "格式化后名称",
+        fileSize: 9029,
+        hash: "3ca30 sa09f9v09",
+        type: "doc",
+        savePath: "/upload/",
+        fileData: ""
+
+
       },
 
       fields: [
