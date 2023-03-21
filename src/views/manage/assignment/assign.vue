@@ -12,7 +12,7 @@
       <b-row>
         <b-col md="4" v-show="editMethod ==='edit'">
           <b-form-group id="input-group-1" label="数据ID" label-for="input-1">
-            <b-form-input id="input-1" v-model="formData.userId" disabled required></b-form-input>
+            <b-form-input id="input-1" v-model="formData.id" disabled required></b-form-input>
           </b-form-group>
         </b-col>
         <b-col md="4" v-show="editMethod ==='edit'">
@@ -27,7 +27,7 @@
         </b-col>
         <b-col  md="4">
           <b-form-group id="input-group-5" label="所属班级" label-for="input-5">
-              <b-form-select v-model="formData.clazzId" :options="classes"></b-form-select>
+              <b-form-select v-model="formData.clazzId"  type="number" :options="classes"></b-form-select>
           </b-form-group>
         </b-col>
         <b-col md="8">
@@ -37,7 +37,7 @@
         </b-col>
         <b-col md="4">
           <b-form-group id="input-group-5" label="所属教师" label-for="input-5">
-              <b-form-select v-model="formData.teacherId" :options="teachers"></b-form-select>
+              <b-form-select v-model="formData.teacherId"  type="number" :options="teachers"></b-form-select>
           </b-form-group>
         </b-col>
         <b-col md="4" >
@@ -48,6 +48,11 @@
         <b-col md="4" >
           <b-form-group id="input-group-8" label="截止时间" label-for="input-8" type="datetime-local">
             <b-form-input type="time" v-model="formData.ddlTime" ></b-form-input>
+          </b-form-group>
+        </b-col>
+        <b-col md="12">
+          <b-form-group  label="文件名格式" label-for="input-10">
+            <b-form-input   v-model="formData.fileNameRule" required></b-form-input>
           </b-form-group>
         </b-col>
 <!--        hr line -->
@@ -82,8 +87,6 @@
       <b-col col="12" md="6" sm="6">
         <h3 class="text-dark mb-4">作业管理 ({{ assigns.length}})</h3>
       </b-col>
-      {{formData}}
-
       <b-col class="text-end" col="12" md="6" sm="6"
              style="margin-bottom: 30px; margin-right: 0;">
         <a class="btn btn-primary"
@@ -233,8 +236,6 @@ export default {
       console.log(this.formData);
       this.modal = !this.modal
 
-      delete this.formData.clazzInfo;
-      delete this.formData.files;
       if (this.editMethod === "add") {
         this.postAssign(this.formData);
       } else {
@@ -261,27 +262,28 @@ export default {
       id: 1
     }
     const getClasses = async () => {
-      let res;
-      if (userInfo.type === 'admin') {
-        // console.log("获取admin classes")
-        res = await proxy.$api.getClassesByAdmin(userInfo);
-      } else if (userInfo.type === 'teacher') {
-        // console.log("获取teacher classes")
-        res = await proxy.$api.getClassesByTeacherId(userInfo.id);
-      }
-      for (let each of res.data) {
-        this.classes.push({
-          text: each.clazzName,
-          value: each.clazzId
-        })
-      }
-      // console.log("更新！ classes", classes);
-      // this.classes.value = res.data;
+      let res = await proxy.$api.getClassesMap(userInfo);
+      // let res;
+      // if (userInfo.type === 'admin') {
+      //   // console.log("获取admin classes")
+      //   res = await proxy.$api.getClassesMap(userInfo);
+      // } else if (userInfo.type === 'teacher') {
+      //   // console.log("获取teacher classes")
+      //   res = await proxy.$api.getClassesMap(userInfo.id);
+      // }
+      // for (let each of res.data) {
+      //   this.classes.push({
+      //     text: each.clazzName,
+      //     value: each.clazzId
+      //   })
+      // }
+      console.log(" classesMap", res.data);
+      this.classes = res.data;
     };
 
     const getTeacherData = async () => {
       const res = await proxy.$api.getAllTeachersMapping();
-      // console.log("TeachersMap:",  res.data)
+      console.log("TeachersMap:",  res.data)
       this.teachers = res.data;
 
     }
@@ -313,6 +315,9 @@ export default {
       delete this.formData.ddlTime;
       delete this.formData.createdDate;
       delete this.formData.createdTime;
+
+      delete this.formData.clazzInfo;
+      delete this.formData.files;
     }
 
     const getAssigns = async () => {
@@ -386,7 +391,7 @@ export default {
       // classes,
       formData: {
           id: 28,
-          clazzId: 49,
+          clazzId: 1,
           teacherId: 1,
           ddlDate: "2023-03-09",
           ddlTime: "21:26:22",
@@ -407,20 +412,24 @@ export default {
         {key: 'briefName', label: '简述', sortable: true},
         {
           key: 'clazzId', label: '班级', sortable: true,
-          // formatter: (value) => {
-          //   if (!value) {
-          //     return "-"
-          //   }
-          //   // else if ( value.clazzName === null) {
-          //   //   return "-"
-          //   // }
-          //   return value.clazzName
-          // }
+          formatter: (value) => {
+            if (!value  || !(value in this.classes)) {
+              return "-"
+            }
+            return this.classes[value];
+          }
         },
         {key: 'ddl', label: 'DDL', sortable: true},
         {key: 'description', label: '描述', sortable: true},
         {key: 'fileNameRule', label: '文件名规则', sortable: true},
-        {key: 'teacherId', label: '创建的教师', sortable: true},
+        {key: 'teacherId', label: '创建的教师', sortable: true,
+          formatter: (value) => {
+            if (!value || !(value in this.teachers)) {
+              return "-"
+            }
+            return this.teachers[value];
+          }
+        },
         {key: 'actions', label: '操作', sortable: false}
       ],
     }
