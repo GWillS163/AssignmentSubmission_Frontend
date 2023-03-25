@@ -289,6 +289,8 @@ export default {
     },
     copyHash() {
       console.log("复制hash");
+      // q: 为什么这里的this指向不对
+
     }
   },
   data() {
