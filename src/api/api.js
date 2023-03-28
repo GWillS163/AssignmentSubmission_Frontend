@@ -194,9 +194,9 @@ export default {
 
     getFilesByStudentId(studentId) {
         return request({
-            url: '/file/student/' + studentId,
+            url: '/myFile/student/' + studentId,
             method: 'get',
-            mock: true
+            mock: false
         })
     },
 
