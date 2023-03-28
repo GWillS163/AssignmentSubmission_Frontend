@@ -1,4 +1,5 @@
 <template>
+
 <!--  &lt;!&ndash;    Pagination&ndash;&gt;-->
 <!--  <b-row>-->
 <!--    <b-col class="my-1" md="3" sm="5">-->
@@ -36,6 +37,11 @@
 <!--      ></b-pagination>-->
 <!--    </b-col>-->
 <!--  </b-row>-->
+
+  <b-alert  v-model="dismissibleAlert"
+            @click="dismissibleAlert = false"
+            :variant="response.style" dismissible>{{ response.message }}</b-alert>
+
   <b-card
       v-for="assign in addStyle"
       v-show="isShow(assign)"
@@ -87,6 +93,7 @@
 </template>
 
 <script>
+import {ref} from 'vue'
 export default {
   name: "assignList",
   props: {
@@ -116,16 +123,36 @@ export default {
 
   },
   methods: {
-    // const api = this.$api;
 
     onFileChange(e, assign) {
       const file = e.target.files[0];
-      console.log("文件", file);
-      console.log(assign.id);
-      //   TODO: 直接上传文件
-      file.assignId = assign.id;
-      this.$api.postFile(file).then(res => {
-        console.log(res);
+      // console.log("文件", file);
+      // console.log(assign);
+      //   TODO: post的时候信息没有填写完整，需要补充
+      const formData = {
+        fileData: file,
+        assignId: assign.id,
+        userId: this.userInfo.id
+      }
+      console.log(formData)
+      this.dismissibleAlert = true;
+      this.response = {
+        message: "正在上传" + assign.name,
+        style: "info"
+      }
+      this.$api.postFile(formData).then(res => {
+        // console.log(res);
+        if (res.status === 200 ){
+          this.response = {
+            message: assign.name + "上传成功",
+            style: "success"
+          }
+        } else {
+          this.response = {
+            message: assign.name + "上传失败" + res.statusText,
+            style: "danger"
+          }
+        }
       })
 
     },
@@ -215,10 +242,21 @@ export default {
     },
   },
   data() {
+
+    const dismissibleAlert = ref(false);
     const totalRows = 1;
+    const response = {
+      style: 'dark',
+      message: '暂无数据'
+    };
   //   return assigns
     return {
-
+      userInfo: {
+        name: "张三",
+        avatar: "https://avatars.githubusercontent.com/u/10731096?v=4",
+        role: "学生",
+        id: 1
+      },
       totalRows,
       currentPage: 1,
       perPage: 5,
@@ -228,6 +266,8 @@ export default {
       sortDirection: '升序',
       filter: null,
       filterOn: [],
+      response,
+      dismissibleAlert,
     }
   }
   //
