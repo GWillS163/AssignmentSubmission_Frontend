@@ -3,6 +3,13 @@
 - 公共页面(单页面)： src/publicPage/
 - 后台管理系统(多页面跳转): src/managePage/
 
+# Assign 的状态
+# 未开始
+没有指定结束时间，或没有开放提交按钮
+
+# 进行中 / 即将截止 / 截止
+根据截止时间判断
+
 
 This template should help get you started developing with Vue 3 in Vite.
 

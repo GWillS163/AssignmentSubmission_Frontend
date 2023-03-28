@@ -4,37 +4,56 @@ export default {
         if (classId === 1909) {
             classAssigns = [
 
-                {
+                { // 未开始
                     id: 4,
-                    name: '第五次数据结构 3',
-                    ddl: '2023-02-12 18:00',
+                    name: '未开始',
+                    ddl: '',
                     releaseTime: '2022-11-13 18:00',
                     releaseTeacher: 'KissesJun',
                     progress: 90,
+                    uploadEnable: false,
+                    avatar: '../../../../public/favicon.ico',
                 },
                 {
+                    // 进行中
                     id: 3,
                     name: '第五次数据结构 3',
-                    ddl: '2023-02-14 18:00',
+                    ddl: '2023-06-14 18:00',
                     releaseTime: '2022-11-13 18:00',
                     releaseTeacher: 'KissesJun',
                     progress: 30,
+                    uploadEnable: true,
+                    avatar: '../../../../public/favicon.ico',
                 },
                 {
+                    // 进行中
+                    id: 33,
+                    name: '第五次数据结构 3',
+                    ddl: '2023-06-14 18:00',
+                    releaseTime: '2022-11-13 18:00',
+                    releaseTeacher: 'KissesJun',
+                    progress: 30,
+                    uploadEnable: true,
+                    avatar: '../../../../public/favicon.ico',
+                },
+                {
+                    // 即将截止
                     id: 2,
                     name: '第五次数据结构 6',
-                    ddl: '2023-02-19 18:00',
+                    ddl: '2023-03-26 18:00',
                     releaseTime: '2022-11-13 18:00',
                     releaseTeacher: 'KissesJun',
                     progress: 20,
+                    uploadEnable: true,
                 },
                 {
                     id: 1,
                     name: '第五次数据结构 forever',
-                    ddl: ' ',
+                    ddl: '2023-02-12 18:00',
                     releaseTime: '2022-11-13 18:00',
                     releaseTeacher: 'KissesJun',
                     progress: 10,
+                    uploadEnable: true,
                 }
             ]
         } else if (classId === 0) {
