@@ -122,16 +122,20 @@ export default {
   data() {
     const {proxy} = getCurrentInstance();
     const classAssign = [];
+    const showedClassAssign = [];
     const publicAssign = [];
+    const showedPublicAssign = [];
     const files = [];
     const viewMode = true;
     const getClassAssign = async () => {
       this.classAssign = await proxy.$api.getAssignsByClass(1909);
       // console.log("classAssign", this.classAssign);
+      this.showedClassAssign = this.classAssign;
     }
     const getPublicAssign = async () => {
       this.publicAssign = await proxy.$api.getAssignsByClass(0);
       // console.log("publicAssign", this.publicAssign);
+      this.showedPublicAssign = this.publicAssign;
     }
     onMounted(() => {
       getClassAssign();

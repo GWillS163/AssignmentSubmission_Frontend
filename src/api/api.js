@@ -142,6 +142,21 @@ export default {
             mock:true
         })
     },
+    // Student Center
+    getAssignsMapByClassesId(classesId) {
+        return request({
+            url: '/assign/map/class/' + classesId,
+            method: 'get',
+            mock: false
+        })
+    },
+    getUsersMapByClassesId(classesId) {
+        return request({
+            url: '/student/map/class/' + classesId,
+            method: 'get',
+            mock: false
+        })
+    },
 
     // Assign
     getAssignsMapping() {
@@ -293,7 +308,7 @@ export default {
     getClassesByAdmin(userInfo) {
         return request({
             // url: '/class/teacher/' + teacherId,
-            url: '/class/allInfo',
+            url: '/class',
             method: 'get',
             // put teacherId to post request
             params: userInfo,

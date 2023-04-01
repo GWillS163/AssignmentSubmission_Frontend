@@ -264,20 +264,7 @@ export default {
     }
     const getClasses = async () => {
       let res = await proxy.$api.getClassesMap(userInfo);
-      // let res;
-      // if (userInfo.type === 'admin') {
-      //   // console.log("获取admin classes")
-      //   res = await proxy.$api.getClassesMap(userInfo);
-      // } else if (userInfo.type === 'teacher') {
-      //   // console.log("获取teacher classes")
-      //   res = await proxy.$api.getClassesMap(userInfo.id);
-      // }
-      // for (let each of res.data) {
-      //   this.classes.push({
-      //     text: each.clazzName,
-      //     value: each.clazzId
-      //   })
-      // }
+
       console.log(" classesMap", res.data);
       this.classes = res.data;
     };

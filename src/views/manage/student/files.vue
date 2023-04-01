@@ -1,5 +1,7 @@
 <template>
 
+  {{ formData.assignId }}
+  {{ formData.userId }}
   <b-modal
       v-model="modal"
       :title="editMethod ==='edit' ? '编辑作业' : '新增作业'"
@@ -32,7 +34,7 @@
         </b-col>
         <b-col md="6">
           <b-form-group id="input-group-5" label="所属用户" label-for="input-5">
-              <b-form-select v-model="formData.userId"  type="number" :options="users"></b-form-select>
+              <b-form-select v-model="formData.userId"  type="text" :options="users"></b-form-select>
           </b-form-group>
         </b-col>
         <b-col md="8" v-show="editMethod ==='edit'">
@@ -264,22 +266,39 @@ export default {
       this.totalRows = filteredItems.length
       this.currentPage = 1
     },
+    copyHash() {
+      // TODO: copy hash to clipboard
+      console.log("copyHash")
+    }
   },
   data() {
     const assigns = [];
-    const classes = [];
+    const users = [];
     const teachers = [];
     const totalRows = 0;
     const userInfo = {
       type: 'student',
-      id: 127
+      id: 10070,
+      classId: 1909,
+      name: '李四',
     }
     const files = [];
     const {proxy} = getCurrentInstance();
     const getFilesByStudentId = async () => {
       const res = await proxy.$api.getFilesByStudentId(userInfo.id);
-      console.log(res)
-      this.files = res.files;
+      // console.log(res)
+      this.files = res.data;
+    }
+    const getAssignsMapByClassesId = async () => {
+      const res = await proxy.$api.getAssignsMapByClassesId(userInfo.classId);
+      console.log("可选作业", res.data)
+      this.assigns = res.data;
+      // this.assigns = res.data.filter(assign => assign);
+    }
+    const getUsersMapByClassesId = async () => {
+      const res = await proxy.$api.getUsersMapByClassesId(userInfo.classId);
+      console.log("可选学生", res.data)
+      this.users = res.data;
     }
     const postFile = async (file) => {
       file.userId = userInfo.id;
@@ -297,9 +316,19 @@ export default {
     }
     onMounted(() => {
       getFilesByStudentId();
+      getAssignsMapByClassesId();
+      getUsersMapByClassesId();
     })
     return {
+      getAssignsMapByClassesId,
+      getFilesByStudentId,
+      postFile,
+      putFile,
+      deleteFile,
+
       files,
+      assigns,
+      users,
 
       editMethod: "edit",
       modal: false,
@@ -334,10 +363,17 @@ export default {
       },
 
       fields: [
-        {key: 'file_id', label: '数据ID', sortable: true},
-        {key: 'fileName', label: '文件名', sortable: true},
-        {key: 'assignName', label: '作业名', sortable: true},
-        {key: 'submitTime', label: '提交日期', sortable: true},
+        {key: 'fileId', label: '数据ID', sortable: true},
+        {key: 'assignName', label: '作业名', sortable: true,
+          formatter: (value) => {
+          if (!value) {
+            return "-"
+          }
+          return value;
+        }
+        },
+        {key: 'rawName', label: '原文件名', sortable: true},
+        {key: 'uploadTime', label: '提交日期', sortable: true},
         // {
         //   key: 'clazzId', label: '班级', sortable: true,
         //   formatter: (value) => {
@@ -347,7 +383,22 @@ export default {
         //     return this.classes[value];
         //   }
         // },
-        {key: 'ddl', label: 'DDL', sortable: true},
+        {key: 'fileSize', label: '文件大小', sortable: true,
+          formatter: (value) => {
+            if (!value) {
+              return "-"
+            }
+            if (value < 1024) {
+              return value + "B"
+            } else if (value < 1024 * 1024) {
+              return (value / 1024).toFixed(2) + "KB"
+            } else if (value < 1024 * 1024 * 1024) {
+              return (value / 1024 / 1024).toFixed(2) + "MB"
+            } else {
+              return (value / 1024 / 1024 / 1024).toFixed(2) + "GB"
+            }
+          }
+        },
         // {key: 'description', label: '描述', sortable: true},
         // {key: 'fileNameRule', label: '文件名规则', sortable: true},
         // {key: 'teacherId', label: '创建的教师', sortable: true,

@@ -321,11 +321,11 @@ export default {
     const getClasses = async () => {
       let res;
       if (userInfo.type === 'admin') {
-        console.log("获取admin classes")
         res = await proxy.$api.getClassesByAdmin(userInfo);
+        console.log("获取admin classes", res)
       } else if (userInfo.type === 'teacher') {
-        console.log("获取teacher classes")
         res = await proxy.$api.getClassesByTeacherId(userInfo.id);
+        console.log("获取teacher classes", res)
       }
       for (let each of res.data) {
         this.classes.push({
