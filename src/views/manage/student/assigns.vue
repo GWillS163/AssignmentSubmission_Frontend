@@ -26,7 +26,7 @@
           <b-button
               class="btn btn-primary"
               variant="primary"
-              @click="this.viewMode = !this.viewMode"
+              @click="switchViewMode"
           >
             <i class="fa fa-exchange"></i>
             {{ viewMode ? '仅看可交' : '查看所有'}}
@@ -50,10 +50,10 @@
         <div id="TableSorterCard-1" class="card">
           <b-tabs content-class="mt-3" fill>
             <b-tab active title="班级作业">
-              <assign-list :assigns="classAssign" :view-mode="viewMode"/>
+              <assign-list :assigns="showedClassAssign" :view-mode="viewMode"/>
             </b-tab>
             <b-tab title="公共作业">
-              <assign-list :assigns="publicAssign" :view-mode="viewMode"/>
+              <assign-list :assigns="showedPublicAssign" :view-mode="viewMode"/>
 
             </b-tab>
           </b-tabs>
@@ -81,8 +81,42 @@ export default {
       console.log("uploadAssign");
       console.log(this.$refs);
     },
-
-    formatTime(remainedTime) {
+    switchViewMode() {
+      if (this.viewMode) {
+        // q: I want to filter list by 2 factors at the same time, What should I do?
+        // a:
+        this.showedClassAssign = this.classAssign.filter(assign => this.getStatusType(assign.ddl, assign.uploadEnable) !==  4);
+        this.showedPublicAssign = this.publicAssign.filter(assign => this.getStatusType(assign.ddl, assign.uploadEnable) !==  4);
+      } else {
+        this.showedClassAssign = this.classAssign;
+        this.showedPublicAssign = this.publicAssign;
+      }
+      this.viewMode = !this.viewMode;
+    },
+    getTimeStamp(ddl) {
+      const now = new Date();
+      const ddlTime = new Date(ddl);
+      return ddlTime - now;
+    },
+    getStatusType(ddl, isUploadEnable) {
+      console.log("getStatusType: " + ddl + " " + isUploadEnable)
+      if (ddl.trim() === '' || !ddl) {
+        return 4 // 本来是0， 但是为了不显示也改成4了
+      }
+      const remainedTime = this.getTimeStamp(ddl);
+      // console.log("remainedTime: " + remainedTime + " " + ddl + " " + this.getRemainedTime(ddl));
+      if (!isUploadEnable) {
+        return remainedTime > 0 ? 0 : 4 // 未开始 or 已结束
+      }
+      if (remainedTime < 0) { // 已结束
+        return 4
+      } else if (remainedTime < 8640000) {
+        return 2  // 即将截止
+      } else if (remainedTime < 259200) { // between 1 and 3 days
+        return 5
+      } else {
+        return 1 // 进行中
+      }
     }
   },
   data() {
@@ -104,8 +138,12 @@ export default {
       getPublicAssign();
     })
     return {
+      getClassAssign,
+      getPublicAssign,
       classAssign,
       publicAssign,
+      showedClassAssign: [],
+      showedPublicAssign: [],
       files,
        viewMode,
 

@@ -38,58 +38,65 @@
 <!--    </b-col>-->
 <!--  </b-row>-->
 
+
   <b-alert  v-model="dismissibleAlert"
             @click="dismissibleAlert = false"
             :variant="response.style" dismissible>{{ response.message }}</b-alert>
 
-  <b-card
-      v-for="assign in addStyle"
-      v-show="isShow(assign)"
-      :border-variant="assign.style"
-      :header="getTitle(assign.ddl, assign.uploadEnable)"
-      :header-bg-variant="assign.style"
-      header-text-variant="white"
-      style="margin-bottom: 20px;"
-  >
-    <b-card-text align="left">
-      <b-card-body class="pb-xxl-0">
-        <b-row>
-          <b-col>
-            <h4> {{ assign.name }} </h4>
-            <h6 v-show="assign.ddl"
-                class="text-muted mb-2">
-              DDL: {{ assign.ddl }} (剩余 {{ getRemainedTime(assign.ddl) }})
-            </h6>
-          </b-col>
+  <b-row>
+    <b-col
+        v-for="assign in addStyle"
+        cols="4" md="6" sm="12"
+    >
+      <b-card
+        :border-variant="assign.style"
+        :header="getTitle(assign.ddl, assign.uploadEnable)"
+        :header-bg-variant="assign.style"
+        header-text-variant="white"
+        style="margin-bottom: 20px;"
+    >
+      <b-card-text align="left">
+        <b-card-body class="pb-xxl-0">
+          <b-row>
+            <b-col>
+              <h4> {{ assign.name }} </h4>
+              <h6 v-show="assign.ddl"
+                  class="text-muted mb-2">
+                DDL: {{ assign.ddl }} (剩余 {{ getRemainedTime(assign.ddl) }})
+              </h6>
+            </b-col>
 
-          <b-col class="justify-content-end" style="display: flex">
-            <b-row class="justify-content-end">
-              <b-col cols="8">
-                <p class="fw-bold text-primary mb-0 text-end">{{ assign.releaseTeacher }}</p>
-                <p class="text-muted mb-0 text-end"> {{ assign.releaseTime }}</p>
-              </b-col>
-              <b-col cols="4">
-                <img :src="assign.avatar" alt="avatar"
-                     class="rounded-circle flex-shrink-0 me-3 fit-cover"
-                     height="50" width="50">
-              </b-col>
-            </b-row>
-          </b-col>
-        </b-row>
-        <b-row v-if="isShowProgress(assign)">
-          <b-col cols="9">
-            <label class="form-label align-self-center my-auto text-wrap">收集进度：</label>
-            <b-progress :value="10" :variant="getBarColor(assign.ddl, assign.uploadEnable)"></b-progress>
+            <b-col class="justify-content-end" style="display: flex">
+              <b-row class="justify-content-end">
+                <b-col cols="8">
+                  <p class="fw-bold text-primary mb-0 text-end">{{ assign.releaseTeacher }}</p>
+                  <p class="text-muted mb-0 text-end"> {{ assign.releaseTime }}</p>
+                </b-col>
+                <b-col cols="4">
+                  <img :src="assign.avatar" alt="avatar"
+                       class="rounded-circle flex-shrink-0 me-3 fit-cover"
+                       height="50" width="50">
+                </b-col>
+              </b-row>
+            </b-col>
+          </b-row>
+          <b-row v-if="isShowProgress(assign)">
+            <b-col cols="9">
+              <label class="form-label align-self-center my-auto text-wrap">收集进度：</label>
+              <b-progress :value="10" :variant="getBarColor(assign.ddl, assign.uploadEnable)"></b-progress>
 
-          </b-col>
-          <b-col class="text-end" cols="3">
-            <input ref="file" class="form-control" type="file" @change="onFileChange($event, assign)">
-          </b-col>
-        </b-row>
-      </b-card-body>
+            </b-col>
+            <b-col class="text-end" cols="3">
+              <input ref="file" class="form-control" type="file" @change="onFileChange($event, assign)">
+            </b-col>
+          </b-row>
+        </b-card-body>
 
-    </b-card-text>
-  </b-card>
+      </b-card-text>
+    </b-card>
+
+    </b-col>
+  </b-row>
 </template>
 
 <script>

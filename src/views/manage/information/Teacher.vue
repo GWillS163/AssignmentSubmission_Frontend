@@ -1,5 +1,4 @@
 <template>
-
   <b-modal
       v-model="modal"
       :title="editMethod ==='edit' ? '编辑教师' : '新增教师'"
