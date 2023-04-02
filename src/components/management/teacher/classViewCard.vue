@@ -1,17 +1,26 @@
 <template>
-  <b-col>
     <b-card
          :header="assigns.length ? '进行中: '+assigns.length : '暂无数据'"
          header-tag="header"
-         :header-class=" assigns.length ? 'text-white bg-primary' : 'text-white bg-secondary'"
+         :header-class=" assigns.name ? 'text-white bg-primary' : 'text-white bg-secondary'"
         img-top
         no-body
         style="max-width: 20rem;"
     >
       <b-card-body>
-        <b-card-title ><a href="http://www.baidu.com">{{ clazz.name }}</a></b-card-title>
-        <b-card-subtitle class="mb-2">{{ clazz.teacher }}</b-card-subtitle>
-        <b-card-text> {{ clazz.description }} </b-card-text>
+        <b-row>
+          <b-col>
+            <b-card-title ><a href="http://www.baidu.com">{{ clazz.name }}</a></b-card-title>
+            <b-card-subtitle class="mb-2">{{ clazz.teacher }}</b-card-subtitle>
+            <b-card-text> {{ clazz.description }} </b-card-text>
+          </b-col>
+          <b-col>
+              <button class="btn btn-primary d-flex ms-auto" type="button"
+              @click="viewClassAssignDetail(classView.detailUrl)"
+              >详情</button>
+          </b-col>
+        </b-row>
+
       </b-card-body>
       <b-list-group flush v-if="assigns">
         <b-list-group-item v-for="assign in assigns" >
@@ -30,7 +39,6 @@
       </b-list-group>
       <b-card-footer :class=" assigns.length ? 'text-white bg-primary' : 'text-white bg-secondary'">共 {{ assigns.length }} 个作业</b-card-footer>
     </b-card>
-  </b-col>
   <!--  <div class="col">-->
   <!--    <div>-->
   <!--      <div class="card">-->

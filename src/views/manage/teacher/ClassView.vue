@@ -14,7 +14,9 @@
     <b-row class="row gy-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 text-center ms-xl-0 me-xl-0 mb-md-5 mt-xl-0 pt-xl-0"
            style="padding-bottom: 0;margin-top: -25px;padding-top: 0;"
     >
-        <class-view-card :clazz="clazz" v-for="clazz in classes"/>
+      <b-col cols="12" sm="6" md="4" class="mb-4" v-for="clazz in classes" >
+        <class-view-card :clazz="clazz" />
+      </b-col>
     </b-row>
 
   </b-container>
