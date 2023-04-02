@@ -50,10 +50,10 @@
         <div id="TableSorterCard-1" class="card">
           <b-tabs content-class="mt-3" fill>
             <b-tab active title="班级作业">
-              <assign-list :assigns="showedClassAssign" :view-mode="viewMode"/>
+              <assign-list-prompt :assigns="showedClassAssign" :view-mode="viewMode"/>
             </b-tab>
             <b-tab title="公共作业">
-              <assign-list :assigns="showedPublicAssign" :view-mode="viewMode"/>
+              <assign-list-prompt :assigns="showedPublicAssign" :view-mode="viewMode"/>
 
             </b-tab>
           </b-tabs>
@@ -67,11 +67,11 @@
 import StudentUploadCard from "@/components/management/studentUploadCard.vue";
 import {getCurrentInstance, onMounted} from "vue";
 import ProgressBar from "@/components/management/progressBar.vue";
-import AssignList from "@/components/others/assignList.vue";
+import assignListPrompt from "@/components/others/assignListPrompt.vue";
 
 export default {
   name: "assigns",
-  components: {AssignList, ProgressBar, StudentUploadCard},
+  components: {assignListPrompt, ProgressBar, StudentUploadCard},
   methods: {
     viewHistory() {
       console.log("viewHistory");

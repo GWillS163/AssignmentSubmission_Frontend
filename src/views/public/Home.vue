@@ -29,7 +29,7 @@
         </div>
         <div id="tab-2" class="tab-pane " role="tabpanel"
              style="margin-bottom: 156px; padding: 0 0 2px;">
-          <tab2-content :assign-views="tab2AssignView_content" :title-banner="tab2AssignView_Banner"/>
+          <tab2-content :assigns="tab2Assigns" :title-banner="tab2AssignView_Banner"/>
         </div>
         <div id="tab-3" class="tab-pane " role="tabpanel"
              style="margin-bottom: 156px;margin-right: 0;margin-left: 0;padding: 0 0 2px;">
@@ -72,6 +72,7 @@ export default {
   setup() {
     const {proxy} = getCurrentInstance();
     let tab1Assigns = ref([]);
+    let tab2Assigns = ref([]);
     let tab2AssignView_Banner = ref([]);
     let tab2AssignView_content = ref([]);
     let tab3AssignView_Banner = ref([]);
@@ -85,6 +86,7 @@ export default {
       const res = await proxy.$api.getTab1PublicAssigns();
       // console.log("tab1Assigns:", res);
       tab1Assigns.value = res.assigns;
+      tab2Assigns.value = res.assigns;
     };
     const getTab2Data = async () => {
       const res = await proxy.$api.getTab2PublicAssigns();
@@ -119,8 +121,8 @@ export default {
     return {
       // tab1Content: getTab1Content,
       tab1Assigns,
+      tab2Assigns,
       tab2AssignView_Banner,
-      tab2AssignView_content,
       tab3AssignView_Banner,
       tab3AssignView_content,
       tab4submitRecord

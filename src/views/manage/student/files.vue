@@ -245,7 +245,6 @@ export default {
       this.editMethod = "edit";
       this.modal = !this.modal
       this.formData = assign
-
     },
     submit() {
       console.log("submit");

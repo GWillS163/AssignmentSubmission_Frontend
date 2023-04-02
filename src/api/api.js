@@ -42,6 +42,8 @@ export default {
             mock: true
         })
     },
+
+
     getTab1PublicAssigns() {
         return request({
             url: '/public/getTab1PublicAssigns',

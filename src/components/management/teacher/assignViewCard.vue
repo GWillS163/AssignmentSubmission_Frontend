@@ -7,16 +7,17 @@
   <b-card
       no-body
       :border-variant="addStyle.style"
-      :header="addStyle.title"
+      :header="addStyle.status"
       header-bg-variant="success"
       header-text-variant="white"
       style="margin-bottom: 20px;"
+
   >
     <b-card-text align="left">
       <b-card-body class="pb-xxl-0">
         <b-row>
           <b-col>
-            <h4> {{ assign.name }} </h4>
+            <h4> {{ assign.title }} </h4>
             <h6 v-show="assign.ddl"
                 class="text-muted mb-2">
               DDL: {{ assign.ddl }}

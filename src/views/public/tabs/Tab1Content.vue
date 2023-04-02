@@ -1,5 +1,4 @@
 <template>
-
   <div class="row mb-5" style="margin-bottom: -4px;">
     <div class="col-md-8 col-xl-6 text-center mx-auto">
       <h2>公共作业提交页面</h2>
