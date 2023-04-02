@@ -1,31 +1,38 @@
 <template>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-6">
-        <h3 class="text-dark mb-4">作业视图</h3>
-      </div>
-      <div class="col-12 col-sm-6 col-md-6 text-end" style="margin-bottom: 30px;">
-        <a class="btn btn-primary" role="button" @click="handleAddNewAssign">
-          <i class="fa fa-plus"></i> 新增作业</a></div>
-    </div>
-    <div class="row d-grid">
-      <div
-          v-for="assignment in assignments" :key="assignment.id"
-          class="col mb-xxl-0 " style="padding-bottom: 26px;padding-top: 19px;">
-        <assign-view-card :assignment="assignment"/>
-      </div>
-    </div>
-  </div>
+  <b-container fluid>
+    <b-row>
+      <b-col cols="12" sm="6" md="6">
+        <b-card title="作业视图" class="mb-4">
+        </b-card>
+      </b-col>
+      <b-col cols="12" sm="6" md="6" class="text-end" style="margin-bottom: 30px;">
+        <b-button variant="primary" @click="handleAddNewAssign">
+          <i class="fa fa-plus"></i> 新增作业</b-button>
+      </b-col>
+    </b-row>
+    <b-row class="d-grid">
+
+<!--      <assign-list :assigns="assignments"/>-->
+    <assign-view-card :assigns="assignments">
+      222
+    </assign-view-card>
+<!--      <div v-for="assignment in assignments" :key="assignment.id"-->
+<!--           class="col mb-xxl-0 " style="padding-bottom: 26px;padding-top: 19px;">-->
+<!--        <assign-view-card :assign="assignment"/> -->
+<!--      </div>-->
+    </b-row>
+  </b-container>
 </template>
 
 <script>
 // export default {
 import AssignViewCard from "@/components/management/teacher/assignViewCard.vue";
 import {getCurrentInstance, onMounted, ref} from "vue";
+import assignListPrompt from "@/components/others/assignListPrompt.vue";
 
 export default {
   name: 'Home',
-  components: {AssignViewCard},
+  components: {assignListPrompt, AssignViewCard},
   methods: {
     handleAddNewAssign() {
       console.log("处理提交作业")

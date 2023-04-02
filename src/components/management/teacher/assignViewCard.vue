@@ -1,84 +1,67 @@
 <template>
-  <div :style="cardStyle"
-       class="card"
-       type="button">
-    <h5 :class="cardClass"
-        class="text-light-50 card-header"
-    >
-      {{ cardStatus }}
-    </h5>
-    <div class="card-body" style="padding-top: 0;">
-      <div class="row" style="padding-top: 13px;">
-        <div class="col">
-          <h4>{{ assignment.assignName }}<br></h4>
-          <h6 class="text-muted mb-2">DDL: {{ assignment.ddl }} (now:{{ timeStr }})<br></h6>
-        </div>
-        <div class="col d-xxl-flex justify-content-end justify-content-xxl-end" style="display: flex;">
-          <div class="d-flex">
-            <img alt="avatar" class="rounded-circle flex-shrink-0 me-3 fit-cover"
-                 height="50"
-                 src="../../../../public/favicon.ico" width="50">
-            <div>
-              <p class="fw-bold text-primary mb-0">{{ assignment.releaseTeacher }}</p>
-              <p class="text-muted mb-0">{{ assignment.releaseTime }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-          <tr>
-            <th colspan="2" class="text-center">班级</th>
-            <th colspan="4" class="text-center">进度</th>
-            <!--            show th label if submits[0].detail is not empty-->
-
-            <th colspan="6" v-if="isShowDetailColumn(submits)" class="text-center">提交详情</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="clazz in submits">
-            <td colspan="1" class="text-center" >{{ clazz.clazz }}</td>
-            <td colspan="4">
-              <div class="progress">
-                <div :aria-valuenow="clazz.progress" :class="clazz.progress === 100 ? 'bg-success' : 'bg-primary'" :style="'width: ' + clazz.progress +'%;'" aria-valuemax="100"
-                     aria-valuemin="0"
-                     class="progress-bar">{{ clazz.progress }}%
-                </div>
-              </div>
-            </td>
-            <td colspan="6" v-if="isShowDetailColumn(submits)"  >
-              <div><a aria-expanded="false"
-                      class="btn btn-primary btn-sm" data-bs-toggle="collapse"
-                      role="button"
-                      :href="'#collapse-1-' + clazz.clazz + '-' + assignment.id"
-                      :aria-controls="'#collapse-1-' + clazz.clazz + '-' + assignment.id"
-              >展示</a>
-                <div :id="'collapse-1-' + clazz.clazz + '-' + assignment.id" class="collapse">
-                  <div >
-                    <p v-if="clazz.detail.notSubmit">未提交： {{ ' '.concat(clazz.detail.notSubmit) }}</p>
-                    <p v-else> 无未提交 </p>
-                    <p v-if="clazz.detail.submit">已提交： {{ ' '.concat(clazz.detail.submit) }}</p>
-                    <p v-else> 无已提交 </p>
-                  </div>
-                </div>
-              </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+  <div>
+    <table>
+      <tr v-for="(key, index) in addStyle">{{index }} - {{key}}</tr>
+    </table>
   </div>
+  <b-card
+      no-body
+      :border-variant="addStyle.style"
+      :header="addStyle.title"
+      header-bg-variant="success"
+      header-text-variant="white"
+      style="margin-bottom: 20px;"
+  >
+    <b-card-text align="left">
+      <b-card-body class="pb-xxl-0">
+        <b-row>
+          <b-col>
+            <h4> {{ assign.name }} </h4>
+            <h6 v-show="assign.ddl"
+                class="text-muted mb-2">
+              DDL: {{ assign.ddl }}
+            </h6>
+            <p> (剩余 {{ getRemainedTime(assign.ddl) }})</p>
+          </b-col>
+
+          <b-col class="justify-content-end" style="display: flex">
+            <b-row class="justify-content-end">
+              <b-col cols="8">
+                <p class="fw-bold text-primary mb-0 text-end">{{ assign.releaseTeacher }}</p>
+                <p class="text-muted mb-0 text-end"> {{ assign.releaseTime }}</p>
+              </b-col>
+              <b-col cols="4">
+                <img :src="assign.avatar" alt="avatar"
+                     class="rounded-circle flex-shrink-0 me-3 fit-cover"
+                     height="50" width="50">
+              </b-col>
+            </b-row>
+          </b-col>
+        </b-row>
+        <slot>
+          <!--            可能会有Table 和详情 -->
+        </slot>
+
+<!--&lt;!&ndash;        原始的Html 上传代码&ndash;&gt;-->
+<!--&lt;!&ndash;    <input type="file" />233&ndash;&gt;-->
+<!--&lt;!&ndash;    <button class="primary" @click="uploadFile(assign.id)">上传文件</button>&ndash;&gt;-->
+<!--&lt;!&ndash;    <a class="btn btn-primary d-block w-100" @click="handleUploadFile" role="button" >点击上传</a>&ndash;&gt;-->
+      </b-card-body>
+
+    </b-card-text>
+  </b-card>
+
 </template>
 
 <script>
 import {getCurrentInstance, onMounted, ref} from "vue";
+import handleAssignCard from "@/assets/customed/handleAssignCard.js";
 
 export default {
   name: "assignViewCard",
+  handleAssignCard: [handleAssignCard],
   props: {
-    assignment: {
+    assign: {
       type: Object,
       default: function () {
         return {
@@ -91,65 +74,68 @@ export default {
       }
     }
   },
-  methods: {
-    getCurrentTime() {
-      const now = new Date();
-      return now.getTime();
-    },
-    getCardStyles() {
-      let defaultStyles = ["border-color: var(--bs-grey);", 'text-bg-secondary border-secondary', "无截止期"]
-      let current = this.getCurrentTime();
-      if (!this.assignment.ddl){ return defaultStyles }
-      let dueTime = new Date(this.assignment.ddl).getTime();
-      let lastTime = dueTime - current;
-      // console.log("current: " + current + "ms" + ",namely: " + new Date(current).toLocaleString())
-      // console.log("dueTime: " + dueTime + "ms" + ",namely: " + new Date(dueTime).toLocaleString())
-      // turn lastTime to days, and then to hours, minutes, show them in console
-      // console.log("lastTime: " + lastTime, "remained:" + lastTime / 86400000 + "days")
-      if (lastTime < 0) {
-        // console.log("overdue")
-        return ["border-color: var(--bs-red);", 'text-bg-danger border-danger', "已过期"]
-      } else if (lastTime < 86400000 * 3) {
-        // console.log("less than 1 day")
-        return ["border-color: var(--bs-yellow);", 'text-bg-warning border-warning', "即将过期"]
-      } else if (lastTime > 86400000 * 3) {
-        // console.log("less than 3 days")
-        return ["border-color: var(--bs-green);", 'text-bg-success border-success', "正在进行"]
-      } else {
-        // console.log("more than 3 days")
-        return defaultStyles
-      }
-    },
-    isShowDetailColumn(submits) {
-      if (!this.submits) {
-        return false;
-      }
-      for (let i = 0; i < submits.length; i++) {
-        if (this.submits[i].detail) {
-          return true;
-        }
-      }
-      return false;
+  computed: {
+    addStyle() {
+      return handleAssignCard.addStyle(this.assign)
     }
   },
+  methods: {
+    // getTitle(assign.ddl, assign.uploadEnable) 需要实现这个方法 TODO
+    onFileChange(e, assign) {
+      const file = e.target.files[0];
+      // console.log("文件", file);
+      // console.log(assign);
+      //   TODO: post的时候信息没有填写完整，需要补充
+      const formData = {
+        fileData: file,
+        assignId: assign.id,
+        userId: this.userInfo.id
+      }
+      console.log(formData)
+      this.dismissibleAlert = true;
+      this.response = {
+        message: "正在上传" + assign.name,
+        style: "info"
+      }
+      this.$api.postFile(formData).then(res => {
+        // console.log(res);
+        if (res.status === 200) {
+          this.response = {
+            message: assign.name + "上传成功",
+            style: "success"
+          }
+        } else {
+          this.response = {
+            message: assign.name + "上传失败" + res.statusText,
+            style: "danger"
+          }
+        }
+      })
+
+    },
+    getRemainedTime() {
+      return handleAssignCard.getRemainedTime(this.assign.ddl);
+    },
+  },
   data() {
-    const timeStr = this.getCurrentTime();
+    const timeStr = handleAssignCard.getCurrentTime();
     const {proxy} = getCurrentInstance();
+    let cardHeaderStatus;
     const cardStyle = ref();
     const cardClass = ref();
     const cardStatus = ref();
     const submits = ref();
     const getSubmits = async () => {
-      const res = await proxy.$api.getSubmitsByAssignId(this.assignment.id);
+      const res = await proxy.$api.getSubmitsByAssignId(this.assign.id);
       submits.value = res;
     }
     onMounted(() => {
-      [cardStyle.value, cardClass.value, cardStatus.value] = this.getCardStyles();
+      // [cardStyle.value, cardClass.value, cardStatus.value] = handleAssignCard.getCardStyles(this.assign);
       getSubmits();
 
     })
     return {
-      timeStr, cardStyle, cardClass, cardStatus, submits
+      // timeStr, cardStyle, cardClass, cardHeaderStatus
     }
   }
 }

@@ -48,11 +48,11 @@
 
 <script>
 import Header from "@/components/public/PublicHeader.vue";
-import Tab1Content from "@/components/public/Tab1Content.vue";
-import Tab2Content from "@/components/public/Tab2Content.vue";
-import Tab3Content from "@/components/public/Tab3Content.vue";
-import Tab4Content from "@/components/public/Tab4Content.vue";
-import Tab5Content from "@/components/public/Tab5Content.vue";
+import Tab1Content from "@/views/public/tabs/Tab1Content.vue";
+import Tab2Content from "@/views/public/tabs/Tab2Content.vue";
+import Tab3Content from "@/views/public/tabs/Tab3Content.vue";
+import Tab4Content from "@/views/public/tabs/Tab4Content.vue";
+import Tab5Content from "@/views/public/tabs/Tab5Content.vue";
 import PublicFooter from "@/components/public/PublicFooter.vue";
 import {getCurrentInstance, onMounted, ref} from "vue";
 
@@ -81,6 +81,7 @@ export default {
       // const res = await axios.get("/public/getTab1PublicAssigns");
       // console.log("tab1Content:",res.data);
       // tab1Assigns.value = res.data.data.assigns;
+      // TODO: 这里改成真实数据，没有 style数据.
       const res = await proxy.$api.getTab1PublicAssigns();
       // console.log("tab1Assigns:", res);
       tab1Assigns.value = res.assigns;
