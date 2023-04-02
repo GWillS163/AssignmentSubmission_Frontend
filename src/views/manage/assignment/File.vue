@@ -238,8 +238,8 @@ export default {
     edit(file) {
       this.editMethod = "edit";
       this.modal = !this.modal
-      this.formData = file
-      this.formData.fileData = file.rawName
+      this.formData = File
+      this.formData.fileData = File.rawName
 
     },
     submit() {
@@ -276,12 +276,12 @@ export default {
      },
     onFileChange(e) {
       const file = e.target.files[0];
-      console.log("文件", file);
-      this.formData.fileData = file;
-      this.formData.rawName = file.name;
-      this.formData.fileSize = file.size;
-      this.formData.type = file.type;
-      const lastDateTime = this.turnTimeStampToString(file.lastModified);
+      console.log("文件", File);
+      this.formData.fileData = File;
+      this.formData.rawName = File.name;
+      this.formData.fileSize = File.size;
+      this.formData.type = File.type;
+      const lastDateTime = this.turnTimeStampToString(File.lastModified);
       console.log(lastDateTime)
       this.formData.lastEditedDate = lastDateTime[0];
       this.formData.lastEditedTime = lastDateTime[1];
@@ -365,18 +365,18 @@ export default {
     }
     const postFile = async (file) => {
       decorateBeforeSubmit();
-      const res = await proxy.$api.postFile(file);
+      const res = await proxy.$api.postFile(File);
       console.log("添加文件", res.data);
       await getAllFiles();
     }
     const putFile = async (file) => {
       decorateBeforeSubmit();
-      const res = await proxy.$api.putFile(file);
+      const res = await proxy.$api.putFile(File);
       console.log("修改文件", res.data);
       await getAllFiles();
     }
     const deleteFile = async (file) => {
-      const res = await proxy.$api.deleteFile(file);
+      const res = await proxy.$api.deleteFile(File);
       console.log("删除文件", res.data);
       await getAllFiles();
     }

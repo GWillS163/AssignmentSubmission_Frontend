@@ -1,7 +1,4 @@
 <template>
-  <h1>长度：{{assigns.length}}</h1>
-<!--  <p>{{assigns}}</p>-->
-
   <!--  TODO  Pagination-->
   <b-row>
 <!--    <b-col class="my-1" md="3" sm="5">-->
@@ -39,8 +36,6 @@
 <!--      ></b-pagination>-->
 <!--    </b-col>-->
   </b-row>
-
-
   <b-alert  v-model="dismissibleAlert"
             @click="dismissibleAlert = false"
             :variant="response.style" dismissible>{{ response.message }}</b-alert>

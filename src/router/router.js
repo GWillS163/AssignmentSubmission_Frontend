@@ -78,22 +78,22 @@ const routes = [
             },{
                 path: '/manage/student/assigns',
                 name: 'manageStudentCanUploads',
-                component: () => import ('../views/manage/student/assigns.vue'),
+                component: () => import ('../views/manage/student/Assigns.vue'),
                 children: []
             },{
                 path: '/manage/student/files',
                 name: 'manageStudentFiles',
-                component: () => import ('../views/manage/student/files.vue'),
+                component: () => import ('../views/manage/student/Files.vue'),
                 children: []
             },{
                 path: '/manage/assignment/assign',
                 name: 'manageAssignmentAssign',
-                component: () => import ('../views/manage/assignment/assign.vue'),
+                component: () => import ('../views/manage/assignment/Assign.vue'),
                 children: []
             },{
                 path: '/manage/assignment/file',
                 name: 'manageAssignmentFile',
-                component: () => import ('../views/manage/assignment/file.vue'),
+                component: () => import ('../views/manage/assignment/File.vue'),
                 children: []
             },
             {

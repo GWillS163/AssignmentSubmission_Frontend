@@ -10,14 +10,14 @@
       :border-variant="addStyle.style"
       style="margin-bottom: 20px;"
       :header="addStyle.style"
-      header-class="text-white bg-success"
+      :header-class="'text-white bg-' + addStyle.style"
 
   >
     <b-card-text align="left">
       <b-card-body class="pb-xxl-0">
         <b-row>
           <b-col>
-            <h4> {{ assign.assignName }} </h4>
+            <h4> {{ assign.briefName }} </h4>
             <h6 v-show="assign.ddl"
                 class="text-muted mb-2">
               DDL: {{ assign.ddl }}
@@ -28,7 +28,7 @@
           <b-col class="justify-content-end" style="display: flex">
             <b-row class="justify-content-end">
               <b-col cols="8">
-                <p class="fw-bold text-primary mb-0 text-end">{{ assign.releaseTeacher }}</p>
+                <p class="fw-bold text-primary text-start">{{ assign.releaseTeacher }}</p>
                 <p class="text-muted mb-0 text-end"> {{ assign.releaseTime }}</p>
               </b-col>
               <b-col cols="4">

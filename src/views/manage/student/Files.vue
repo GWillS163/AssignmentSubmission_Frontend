@@ -285,6 +285,7 @@ export default {
       const res = await proxy.$api.getFilesByStudentId(userInfo.id);
       // console.log(res)
       this.files = res.data;
+      this.totalRows = res.data.length;
     }
     const getAssignsMapByClassesId = async () => {
       const res = await proxy.$api.getAssignsMapByClassesId(userInfo.classId);

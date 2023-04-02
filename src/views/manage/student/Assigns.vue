@@ -3,7 +3,7 @@
 
     <b-row>
       <b-col col="12" md="6" sm="6">
-        <h3 class="text-dark mb-4"> 文件提交 ({{ showedClassAssign.length }})</h3>
+        <h3 class="text-dark mb-4"> 文件提交 </h3>
       </b-col>
       <b-col class="text-end" col="12" md="6" sm="6"
              style="margin-bottom: 30px; margin-right: 0;">
@@ -46,13 +46,14 @@
       </b-col>
     </b-row>
     <b-row>
+
       <b-col>
         <div id="TableSorterCard-1" class="card">
           <b-tabs content-class="mt-3" fill>
-            <b-tab active title="班级作业">
+            <b-tab active :title="'班级作业(' + classAssign.length + ')' ">
               <assign-list-prompt :assigns="showedClassAssign" :view-mode="viewMode"/>
             </b-tab>
-            <b-tab title="公共作业">
+            <b-tab :title="'公共作业(' + publicAssign.length + ')'">
               <assign-list-prompt :assigns="showedPublicAssign" :view-mode="viewMode"/>
 
             </b-tab>
@@ -102,12 +103,17 @@ export default {
     const publicAssign = [];
     const showedPublicAssign = [];
     const files = [];
+    const userInfo = {
+      classId: 1,
+    }
     const viewMode = true;
     const getClassAssign = async () => {
-      // this.classAssign = await proxy.$api.getStudentAssignsByClass(1909);
-      this.classAssign = await proxy.$api.getAssignsByClass(1909).then( res => {return res.data});
+      // TODO： 这里总是报错，但是不影响使用
+      this.classAssign = await proxy.$api.getAssignsByClass(userInfo.classId).then(res => {
+        console.log("打印classAssign", res.data)
+        return res.data});
       console.log("classAssign", this.classAssign);
-      this.showedClassAssign = this.classAssign.data;
+      this.showedClassAssign = this.classAssign;
 
       // this.showedClassAssign = [];
     }
@@ -123,8 +129,10 @@ export default {
       getPublicAssign();
     })
     return {
-      showedClassAssign: [],
-      showedPublicAssign: [],
+      classAssign,
+      publicAssign,
+      showedClassAssign,
+      showedPublicAssign,
       files,
       viewMode,
 
