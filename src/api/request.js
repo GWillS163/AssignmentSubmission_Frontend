@@ -38,16 +38,18 @@ const getResp = (options) => {
         return service(options)
     }
     else if (options.method === 'get') {
-
     // 是否是下载文件的请求
     // 如果是下载文件的请求，则使用window.open进行下载
         const requestUrl = service.defaults.baseURL + options.url;
         if (options.isDownload) {
             return downloadFile(requestUrl, options.method, options.fileName)
           }
-        return axios.get(requestUrl, {
+        console.log("打印requestUrl:", requestUrl)
+        const data = axios.get(requestUrl, {
                           headers: { 'Cache-Control': 'no-cache' }
                         })
+        console.log("打印data:", data)
+        return data
     } else if (options.method === 'post') {
         const formData = new FormData()
         for (const key in options.params) {

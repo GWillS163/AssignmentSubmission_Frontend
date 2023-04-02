@@ -3,7 +3,7 @@
 
     <b-row>
       <b-col col="12" md="6" sm="6">
-        <h3 class="text-dark mb-4"> 文件提交 ({{ classAssign.length }})</h3>
+        <h3 class="text-dark mb-4"> 文件提交 ({{ showedClassAssign.length }})</h3>
       </b-col>
       <b-col class="text-end" col="12" md="6" sm="6"
              style="margin-bottom: 30px; margin-right: 0;">
@@ -68,6 +68,7 @@ import StudentUploadCard from "@/components/management/studentUploadCard.vue";
 import {getCurrentInstance, onMounted} from "vue";
 import ProgressBar from "@/components/management/progressBar.vue";
 import assignListPrompt from "@/components/others/assignListPrompt.vue";
+import handleAssignCard from "@/assets/customed/handleAssignCard.js";
 
 export default {
   name: "assigns",
@@ -85,39 +86,14 @@ export default {
       if (this.viewMode) {
         // q: I want to filter list by 2 factors at the same time, What should I do?
         // a:
-        this.showedClassAssign = this.classAssign.filter(assign => this.getStatusType(assign.ddl, assign.uploadEnable) !==  4);
-        this.showedPublicAssign = this.publicAssign.filter(assign => this.getStatusType(assign.ddl, assign.uploadEnable) !==  4);
+        this.showedClassAssign = this.classAssign.filter(assign => handleAssignCard.getStatusType(assign.ddl, assign.uploadEnable) !==  4);
+        this.showedPublicAssign = this.publicAssign.filter(assign => handleAssignCard.getStatusType(assign.ddl, assign.uploadEnable) !==  4);
       } else {
         this.showedClassAssign = this.classAssign;
         this.showedPublicAssign = this.publicAssign;
       }
       this.viewMode = !this.viewMode;
     },
-    getTimeStamp(ddl) {
-      const now = new Date();
-      const ddlTime = new Date(ddl);
-      return ddlTime - now;
-    },
-    getStatusType(ddl, isUploadEnable) {
-      console.log("getStatusType: " + ddl + " " + isUploadEnable)
-      if (ddl.trim() === '' || !ddl) {
-        return 4 // 本来是0， 但是为了不显示也改成4了
-      }
-      const remainedTime = this.getTimeStamp(ddl);
-      // console.log("remainedTime: " + remainedTime + " " + ddl + " " + this.getRemainedTime(ddl));
-      if (!isUploadEnable) {
-        return remainedTime > 0 ? 0 : 4 // 未开始 or 已结束
-      }
-      if (remainedTime < 0) { // 已结束
-        return 4
-      } else if (remainedTime < 8640000) {
-        return 2  // 即将截止
-      } else if (remainedTime < 259200) { // between 1 and 3 days
-        return 5
-      } else {
-        return 1 // 进行中
-      }
-    }
   },
   data() {
     const {proxy} = getCurrentInstance();
@@ -128,12 +104,17 @@ export default {
     const files = [];
     const viewMode = true;
     const getClassAssign = async () => {
-      this.classAssign = await proxy.$api.getAssignsByClass(1909);
-      // console.log("classAssign", this.classAssign);
-      this.showedClassAssign = this.classAssign;
+      // this.classAssign = await proxy.$api.getStudentAssignsByClass(1909);
+      this.classAssign = await proxy.$api.getAssignsByClass(1909).then( res => {return res.data});
+      console.log("classAssign", this.classAssign);
+      this.showedClassAssign = this.classAssign.data;
+
+      // this.showedClassAssign = [];
     }
     const getPublicAssign = async () => {
-      this.publicAssign = await proxy.$api.getAssignsByClass(0);
+      this.publicAssign = await proxy.$api.getPublicAssign().then (res => {
+        return res.data;
+      })
       // console.log("publicAssign", this.publicAssign);
       this.showedPublicAssign = this.publicAssign;
     }
@@ -142,14 +123,10 @@ export default {
       getPublicAssign();
     })
     return {
-      getClassAssign,
-      getPublicAssign,
-      classAssign,
-      publicAssign,
       showedClassAssign: [],
       showedPublicAssign: [],
       files,
-       viewMode,
+      viewMode,
 
     }
 

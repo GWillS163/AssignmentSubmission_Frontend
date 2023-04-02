@@ -119,25 +119,18 @@ export default {
     },
   },
   data() {
-    const timeStr = handleAssignCard.getCurrentTime();
-    const {proxy} = getCurrentInstance();
-    let cardHeaderStatus;
-    const cardStyle = ref();
-    const cardClass = ref();
-    const cardStatus = ref();
-    const submits = ref();
-    const getSubmits = async () => {
-      const res = await proxy.$api.getSubmitsByAssignId(this.assign.id);
-      submits.value = res;
-    }
-    onMounted(() => {
-      // [cardStyle.value, cardClass.value, cardStatus.value] = handleAssignCard.getCardStyles(this.assign);
-      getSubmits();
-
-    })
-    return {
-      // timeStr, cardStyle, cardClass, cardHeaderStatus
-    }
+    // const timeStr = handleAssignCard.getCurrentTime();
+    // const {proxy} = getCurrentInstance();
+    // let cardHeaderStatus;
+    // const cardStyle = ref();
+    // const cardClass = ref();
+    // const cardStatus = ref();
+    // const submits = ref();
+    // onMounted(() => {
+    //
+    // })
+    // return {
+    // }
   }
 }
 </script>

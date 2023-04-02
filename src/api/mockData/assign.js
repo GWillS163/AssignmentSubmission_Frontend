@@ -1,12 +1,14 @@
 export default {
     getAssignsByClass(classId) {
-        let classAssigns = [];
         if (classId === 1909) {
-            classAssigns = [
+
+            return {
+                code: 200,
+                data: [
 
                 { // 未开始
                     id: 4,
-                    name: '未开始',
+                    name: '未开始mock作业1',
                     ddl: '',
                     releaseTime: '2022-11-13 18:00',
                     releaseTeacher: 'KissesJun',
@@ -54,24 +56,22 @@ export default {
                     releaseTeacher: 'KissesJun',
                     progress: 10,
                     uploadEnable: true,
-                }
-            ]
-        } else if (classId === 0) {
-            classAssigns = [
-                {
-                    id: 10,
-                    name: "期末大数据结课作业",
-                    ddl: "2022-12-15 18:00",
-                    releaseTeacher: "KissesJun",
-                    releaseTime: "2022-12-15",
-                    progress: 30
-
-                }
-            ]
+                } ]
         }
-        return {
-            code: 200,
-            data: classAssigns
+        } else if (classId === 0) {
+
+            return {
+                code: 200,
+                data: {
+                        id: 10,
+                        name: "期末大数据结课作业",
+                        ddl: "2022-12-15 18:00",
+                        releaseTeacher: "KissesJun",
+                        releaseTime: "2022-12-15",
+                        progress: 30
+
+                    }
+            }
         }
     },
     getAssignsByAdmin() {

@@ -1,7 +1,5 @@
 <template>
 
-  {{ formData.assignId }}
-  {{ formData.userId }}
   <b-modal
       v-model="modal"
       :title="editMethod ==='edit' ? '编辑作业' : '新增作业'"

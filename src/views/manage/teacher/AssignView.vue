@@ -45,6 +45,11 @@ export default {
       assignments.value = await proxy.$api.getAssignsByTeacher(127);
       console.log(assignments.value);
     };
+    // 获得作业的提交情况
+    // const getSubmits = async () => {
+    //   const res = await proxy.$api.getSubmitsByAssignId(this.assign.id);
+    //   submits.value = res;
+    // }
     onMounted(() => {
       getAssignments();
     })

@@ -144,13 +144,9 @@ export default {
             mock: true
         })
     },
-    getAssignsByClass(classId) {
-        return request({
-            url: '/assign/class/' + classId,
-            method: 'get',
-            mock:true
-        })
-    },
+
+
+
     // Student Center
     getAssignsMapByClassesId(classesId) {
         return request({
@@ -159,6 +155,23 @@ export default {
             mock: false
         })
     },
+    getAssignsByClass(classId){
+
+        return request({
+            url: '/assign/class/' + classId,
+            method: 'get',
+            mock: false
+        })
+    },
+
+    getPublicAssign() {
+        return request({
+            url: '/assign/public',
+            method: 'get',
+            mock: false
+        })
+    },
+
     getUsersMapByClassesId(classesId) {
         return request({
             url: '/student/map/class/' + classesId,
@@ -166,6 +179,7 @@ export default {
             mock: false
         })
     },
+
 
     // Assign
     getAssignsMapping() {
@@ -270,7 +284,7 @@ export default {
     },
     getAllTeachers() {
         return request({
-            url: '/teacher/allInfo',
+            url: '/teacher',
             method: 'get',
             mock: false
         })
@@ -359,7 +373,7 @@ export default {
         })
     },
 
-    // Student
+    // Student MG
     getUsersMapping() {
         return request({
             url: '/student/map',

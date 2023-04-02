@@ -132,6 +132,8 @@ const handleAssignCard = {
       //   showProgress: this.isShowProgress(assign),
       //   show: this.isShow(assign)
     },
+
+
 }
 
 export { handleAssignCard as default}

@@ -1,7 +1,9 @@
 <template>
+  <h1>长度：{{assigns.length}}</h1>
+<!--  <p>{{assigns}}</p>-->
 
   <!--  TODO  Pagination-->
-<!--  <b-row>-->
+  <b-row>
 <!--    <b-col class="my-1" md="3" sm="5">-->
 <!--      <b-form-group-->
 <!--          class="mb-0"-->
@@ -36,14 +38,14 @@
 <!--          size="sm"-->
 <!--      ></b-pagination>-->
 <!--    </b-col>-->
-<!--  </b-row>-->
+  </b-row>
 
 
   <b-alert  v-model="dismissibleAlert"
             @click="dismissibleAlert = false"
             :variant="response.style" dismissible>{{ response.message }}</b-alert>
 
-  <b-row>
+  <b-row v-if="assigns">
     <b-col
         v-for="assign in assigns"
         cols="12" lg="4" md="6" sm="12"
@@ -52,6 +54,11 @@
         提交按钮
       </assign-view-card>
 
+    </b-col>
+  </b-row>
+  <b-row v-else>
+    <b-col>
+      <b-alert variant="info" show>暂无作业</b-alert>
     </b-col>
   </b-row>
 </template>
