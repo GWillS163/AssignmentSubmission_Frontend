@@ -48,7 +48,9 @@
         v-for="assign in assigns"
         cols="12" lg="4" md="6" sm="12"
     >
-      <assign-view-card :assign="assign"/>
+      <assign-view-card :assign="assign">
+        提交按钮
+      </assign-view-card>
 
     </b-col>
   </b-row>

@@ -76,7 +76,8 @@ export default {
     let tab2AssignView_Banner = ref([]);
     let tab2AssignView_content = ref([]);
     let tab3AssignView_Banner = ref([]);
-    let tab3AssignView_content = ref([]);
+    let tab3Records = ref([]);
+    let tab4Records = ref([]);
     let tab4submitRecord = ref([]);
     const getTab1Data = async () => {
       // const res = await axios.get("/public/getTab1PublicAssigns");
@@ -98,17 +99,14 @@ export default {
     };
     const getTab3Data = async () => {
       const res = await proxy.$api.getTab3PublicAssigns();
-      // console.log("tab3Assigns:", res);
-      // console.log("titleBanner:", res.titleBanner);
-      // console.log("assignViews:", res.assignViews);
       tab3AssignView_Banner.value = res.titleBanner;
-      tab3AssignView_content.value = res.classViews;
     };
     const getTab4Data = async () => {
-      const res = await proxy.$api.getTab4PublicAssigns();
-      // console.log("tab4Assigns:", res);
+      // const res = await proxy.$api.getTab4PublicAssigns();
       // console.log("titleBanner:", res.titleBanner);
       // console.log("assignViews:", res.assignViews);
+      const res = await proxy.$api.getTab4PublicAssigns();
+      console.log("tab4Assigns:", res);
       tab4submitRecord.value = res.tableData;
     };
     onMounted(() => {
@@ -124,7 +122,7 @@ export default {
       tab2Assigns,
       tab2AssignView_Banner,
       tab3AssignView_Banner,
-      tab3AssignView_content,
+      tab3Records,
       tab4submitRecord
     };
   },

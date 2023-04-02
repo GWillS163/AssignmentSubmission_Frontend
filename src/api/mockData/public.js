@@ -131,7 +131,48 @@ export default {
             }
         }
     },
-    getTab4PublicAssigns: () => {
+  getTab3PublicAssignsRecords() {
+    return {
+      code: 200,
+      data: [
+                {
+                  className: "1910班",
+                  teacher: "KissesJun",
+                  detailUrl: "https://www.baidu.com",
+                  progressData: [
+                    {
+                      name: "Java基础",
+                      value: "100%",
+                      colorClass: "bg-success"
+                    },
+                    {
+                      name: "Java基础2",
+                      value: "40%",
+                      colorClass: "bg-danger"
+                    }
+                  ],
+                },
+                {
+                  className: "1909班",
+                  teacher: "",
+                  detailUrl: "https://www.baidu.com",
+                  progressData: [
+                    {
+                      name: "Java基础",
+                      value: "90%",
+                      colorClass: "bg-info"
+                    },
+                    {
+                      name: "Java基础2",
+                      value: "70%",
+                      colorClass: "bg-warn"
+                    }
+                  ],
+                }
+              ]
+    };
+  },
+  getTab4PublicAssigns: () => {
         return {
             code: 200,
             data: {

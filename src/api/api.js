@@ -65,6 +65,13 @@ export default {
             mock: true
         })
     },
+    getTab3PublicAssignsRecords() {
+        return request({
+            url: '/public/getTab3PublicAssignsRecords',
+            method: 'get',
+            mock: true
+        })
+    },
     getTab4PublicAssigns() {
         return request({
             url: '/public/getTab4PublicAssigns',
