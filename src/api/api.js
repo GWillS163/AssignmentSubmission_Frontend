@@ -115,9 +115,9 @@ export default {
             mock: true
         })
     },
-    getOwnClazz() {
+    getOwnClazz(teacherId) {
         return request({
-            url: '/manage/teacher/center',
+            url: '/class/teacher/' + teacherId,
             method: 'get',
             mock: false
         })

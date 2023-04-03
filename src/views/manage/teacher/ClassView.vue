@@ -14,7 +14,7 @@
     <b-row class="row gy-4 row-cols-1 row-cols-sm-2 row-cols-lg-3 text-center ms-xl-0 me-xl-0 mb-md-5 mt-xl-0 pt-xl-0"
            style="padding-bottom: 0;margin-top: -25px;padding-top: 0;"
     >
-      <b-col cols="12" sm="6" md="4" class="mb-4" v-for="clazz in classes" >
+      <b-col cols="12" sm="6" md="4" v-for="clazz in classes" >
         <class-view-card :clazz="clazz" />
       </b-col>
     </b-row>
@@ -36,11 +36,20 @@ export default {
     }
   },
   data() {
+    const userInfo = {
+      id: 1,
+      name: "张三",
+      role: "teacher"
+    }
     const classes = ref([]);
     const {proxy } = getCurrentInstance();
     const getClazzData = async() => {
       // console.log(res)
-      classes.value = await proxy.$api.getOwnClazz()
+      classes.value = await proxy.$api.getOwnClazz(userInfo.id).then(
+        res => {
+          return res.data
+        }
+      )
       console.log("我的班级",classes.value)
     }
     onMounted(() => {
