@@ -1,22 +1,11 @@
 <template>
-  <div class="row mb-5 mb-lg-4" style="margin-bottom: 90px;">
-    <div class="col-md-8 col-xl-6 text-center mx-auto">
-      <h2>以班级视图查看收集进度</h2>
-    </div>
-  </div>
-  <div class="text-center text-white-50 bg-primary border rounded border-0 p-3" style="margin-bottom: 40px;">
-    <div class="row justify-content-center">
-      <div class="col" v-for="title in titleBanner">
-        <div class="p-3">
-          <h4 class="display-5 fw-bold text-white mb-0">{{ title.value }}</h4>
-          <p class="mb-0">{{ title.name }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <public-view-page title="以班级视图查看" :banner="titleBanner"/>
+
 <!--  <assign-list-prompt :assigns="assignments"/>-->
   <b-row v-if="classes.length !== 0">
-    <b-col v-for="clazz in classes">
+    <b-col v-for="clazz in classes"
+    cols="4"
+    >
       <class-view-card  :clazz="clazz" />
     </b-col>
   </b-row>
@@ -38,10 +27,11 @@
 import assignListPrompt from "@/components/others/AssignListPrompt.vue";
 import {getCurrentInstance, onMounted, ref} from "vue";
 import ClassViewCard from "@/components/management/teacher/classViewCard.vue";
+import PublicViewPage from "@/components/public/PublicViewPage.vue";
 
 export default {
   name: "tab3Content",
-  components: {ClassViewCard, assignListPrompt},
+  components: {PublicViewPage, ClassViewCard, assignListPrompt},
   // define a function
   methods: {
     viewClassAssignDetail(url) {

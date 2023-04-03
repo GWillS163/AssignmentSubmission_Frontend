@@ -44,12 +44,12 @@ const getResp = (options) => {
         if (options.isDownload) {
             return downloadFile(requestUrl, options.method, options.fileName)
           }
-        console.log("打印requestUrl:", requestUrl)
-        const data = axios.get(requestUrl, {
+        // console.log("打印requestUrl:", requestUrl)
+        return axios.get(requestUrl, {
                           headers: { 'Cache-Control': 'no-cache' }
                         })
-        console.log("打印data:", data)
-        return data
+        // console.log("打印data:", data)
+
     } else if (options.method === 'post') {
         const formData = new FormData()
         for (const key in options.params) {

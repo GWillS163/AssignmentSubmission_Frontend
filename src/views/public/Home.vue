@@ -33,7 +33,7 @@
         </div>
         <div id="tab-3" class="tab-pane " role="tabpanel"
              style="margin-bottom: 156px;margin-right: 0;margin-left: 0;padding: 0 0 2px;">
-          <tab3-content :title-banner="tab3AssignView_Banner" :classes="tab3AssignView_content"/>
+          <tab3-content :classes="tab3Classes"  :title-banner="tab2AssignView_Banner"/>
         </div>
         <div id="tab-4" class="tab-pane " role="tabpanel">
           <tab4-content :table-data="tab4submitRecord"/>
@@ -43,6 +43,9 @@
         </div>
       </div>
     </div>
+<!--    <b-spinner></b-spinner>-->
+<!--    <b-button @click="click">Show OffCanvas</b-button>-->
+<!--<b-offcanvas v-model="show" right></b-offcanvas>-->
   </section>
 </template>
 
@@ -77,7 +80,7 @@ export default {
     let tab2AssignView_content = ref([]);
     let tab3AssignView_Banner = ref([]);
     let tab3Records = ref([]);
-    const tab3Classes = ref([]);
+    let tab3Classes = ref([]);
     let tab4Records = ref([]);
     let tab4submitRecord = ref([]);
     const getTab1Data = async () => {
@@ -92,35 +95,12 @@ export default {
     const getTab2Data = async () => {
       const res = await proxy.$api.getTab2PublicAssignsBanner();
       console.log("tab2AssignsBanner:", res);
-      // console.log("titleBanner:", res.titleBanner);
-      // console.log("assignViews:", res.assignViews);
-      // tab2AssignView_Banner.value = res.titleBanner;
-      // tab2AssignView_Banner.value = [
-      //           {
-      //             name: "已交作业",
-      //             num: "123+"
-      //           },
-      //           {
-      //             name: "未交作业",
-      //             num: "123+"
-      //           },
-      //           {
-      //             name: "提交率",
-      //             num: "45%"
-      //           },
-      //           {
-      //             name: "最近DDL",
-      //             num: "3"
-      //           }
-      //         ]
       tab2AssignView_Banner.value = res.data
-      // tab2AssignView_content.value = res.assignViews;
     };
     const getTab3Data = async () => {
-      tab3Classes.value = await proxy.$api.getOwnClazz()
-      console.log("我的班级",tab3Classes.value)
-      // const res = await proxy.$api.getTab3PublicAssigns();
-      tab3AssignView_Banner.value = res.titleBanner;
+      const res = await proxy.$api.getAllClazz()
+      tab3Classes.value = res.data
+      console.log("我的班级",res )
     };
     const getTab4Data = async () => {
       // const res = await proxy.$api.getTab4PublicAssigns();
@@ -135,14 +115,23 @@ export default {
       getTab2Data();
       getTab3Data();
       getTab4Data();
+
     });
 
-    return {
+        const show = ref(false)
+
+    const click = () => {
+        show.value = !show.value
+      }
+      return {
+    show,
+      click,
       // tab1Content: getTab1Content,
       tab1Assigns,
       tab2Assigns,
       tab2AssignView_Banner,
       tab3AssignView_Banner,
+      tab3Classes,
       tab3Records,
       tab4submitRecord
     };
