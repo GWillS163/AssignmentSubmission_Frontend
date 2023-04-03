@@ -46,16 +46,16 @@ export default {
 
     getTab1PublicAssigns() {
         return request({
-            url: '/public/getTab1PublicAssigns',
+            url: '/assign/public',
             method: 'get',
-            mock: true
+            mock: false
         })
     },
-    getTab2PublicAssigns() {
+    getTab2PublicAssignsBanner() {
         return request({
-            url: '/public/getTab2PublicAssigns',
+            url: '/assign/public/banner',
             method: 'get',
-            mock: true
+            mock: false
         })
     },
     getTab3PublicAssigns() {

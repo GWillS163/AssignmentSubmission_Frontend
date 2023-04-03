@@ -1,6 +1,6 @@
 <template>
     <b-card
-         :header="assigns.length ? '进行中: '+assigns.length : '暂无数据'"
+         :header="  (assigns.length ? '进行中: ' + assigns.length : '暂无正在收集')"
          header-tag="header"
          :header-class=" assigns.name ? 'text-white bg-primary' : 'text-white bg-secondary'"
         img-top
@@ -20,13 +20,15 @@
               >详情</button>
           </b-col>
         </b-row>
-
       </b-card-body>
+
+
       <b-list-group flush v-if="assigns">
         <b-list-group-item v-for="assign in assigns" >
           <b-row>
+        {{assign}}
             <b-col cols="6">
-              {{ assign.name }}
+              {{ assign.assignName }}
             </b-col>
             <b-col cols="6">
               <b-progress :value="assign.progress" :variant="assign.progress === 100 ? 'success': 'primary'"></b-progress>
@@ -97,7 +99,7 @@ export default {
     }
   },
   methods: {
-    viewDetail(clazzId) {
+    viewClassAssignDetail(clazzId) {
       // TODO: 实现查看详情的窗口跳转
       console.log("查看班级作业收集详情" + clazzId)
     }
@@ -106,8 +108,11 @@ export default {
     const assigns = ref([]);
     const {proxy} = getCurrentInstance();
     const getAssignByClass = async () => {
-      assigns.value = await proxy.$api.getAssignsByClass(this.clazz.id);
-      console.log(assigns.value)
+      assigns.value = await proxy.$api.getAssignsByClass(this.clazz.id).then( res => {
+          return res.data;
+        }
+      );
+      // console.log(assigns.value)
     }
     onMounted(() => {
       getAssignByClass();

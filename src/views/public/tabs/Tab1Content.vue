@@ -1,6 +1,7 @@
 <template>
   <div class="row mb-5" style="margin-bottom: -4px;">
     <div class="col-md-8 col-xl-6 text-center mx-auto">
+
       <h2>公共作业提交页面</h2>
       <p class="w-lg-50">在这里，不登录也可以进行作业提交，但每次需手动指定作业所属的身份信息。<br>⚠️注意此处提交后无法撤回！
       </p>
@@ -22,7 +23,7 @@
 
 <script>
 import {ref} from "vue";
-import assignListPrompt from "@/components/others/assignListPrompt.vue";
+import assignListPrompt from "@/components/others/AssignListPrompt.vue";
 // import {props} from "portal-vue/src/components/__mocks__/portal-target";
 
 export default {

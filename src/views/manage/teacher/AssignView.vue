@@ -40,7 +40,7 @@
 // export default {
 import AssignViewCard from "@/components/management/teacher/assignViewCard.vue";
 import {getCurrentInstance, onMounted, ref} from "vue";
-import assignListPrompt from "@/components/others/assignListPrompt.vue";
+import assignListPrompt from "@/components/others/AssignListPrompt.vue";
 
 export default {
   name: 'Home',

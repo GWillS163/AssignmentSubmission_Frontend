@@ -41,7 +41,7 @@ export default {
     const getClazzData = async() => {
       // console.log(res)
       classes.value = await proxy.$api.getOwnClazz()
-      // console.log("我的班级",classes.value)
+      console.log("我的班级",classes.value)
     }
     onMounted(() => {
       getClazzData();

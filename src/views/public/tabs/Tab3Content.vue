@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import assignListPrompt from "@/components/others/assignListPrompt.vue";
+import assignListPrompt from "@/components/others/AssignListPrompt.vue";
 import {getCurrentInstance, onMounted, ref} from "vue";
 import ClassViewCard from "@/components/management/teacher/classViewCard.vue";
 
@@ -54,30 +54,22 @@ export default {
       type: Array,
       default: () => []
     },
-    classViews: {
+    classes: {
       type: Array,
       default: () => []
     }
   },
   data() {
-    const classes = ref([]);
     const assignments = ref([]);
     const {proxy } = getCurrentInstance();
-    const getClazzData = async() => {
-      // console.log(res)
-      classes.value = await proxy.$api.getOwnClazz()
-      // console.log("我的班级",classes.value)
-    }
     const getAssignments = async () => {
       assignments.value = await proxy.$api.getAssignsByTeacher(127);
       console.log(assignments.value);
     };
     onMounted(() => {
-      getClazzData();
       getAssignments();
     })
     return {
-      classes,
       assignments
     }
   },

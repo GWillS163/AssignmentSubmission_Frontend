@@ -33,7 +33,7 @@
         </div>
         <div id="tab-3" class="tab-pane " role="tabpanel"
              style="margin-bottom: 156px;margin-right: 0;margin-left: 0;padding: 0 0 2px;">
-          <tab3-content :title-banner="tab3AssignView_Banner" :class-views="tab3AssignView_content"/>
+          <tab3-content :title-banner="tab3AssignView_Banner" :classes="tab3AssignView_content"/>
         </div>
         <div id="tab-4" class="tab-pane " role="tabpanel">
           <tab4-content :table-data="tab4submitRecord"/>
@@ -77,28 +77,48 @@ export default {
     let tab2AssignView_content = ref([]);
     let tab3AssignView_Banner = ref([]);
     let tab3Records = ref([]);
+    const tab3Classes = ref([]);
     let tab4Records = ref([]);
     let tab4submitRecord = ref([]);
     const getTab1Data = async () => {
       // const res = await axios.get("/public/getTab1PublicAssigns");
       // console.log("tab1Content:",res.data);
       // tab1Assigns.value = res.data.data.assigns;
-      // TODO: 这里改成真实数据，没有 style数据.
       const res = await proxy.$api.getTab1PublicAssigns();
-      // console.log("tab1Assigns:", res);
-      tab1Assigns.value = res.assigns;
-      tab2Assigns.value = res.assigns;
+      console.log("tab1Assigns:", res);
+      tab1Assigns.value = res.data;
+      tab2Assigns.value = res.data;
     };
     const getTab2Data = async () => {
-      const res = await proxy.$api.getTab2PublicAssigns();
+      // const res = await proxy.$api.getTab2PublicAssignsBanner();
       // console.log("tab2Assigns:", res);
       // console.log("titleBanner:", res.titleBanner);
       // console.log("assignViews:", res.assignViews);
-      tab2AssignView_Banner.value = res.titleBanner;
-      tab2AssignView_content.value = res.assignViews;
+      // tab2AssignView_Banner.value = res.titleBanner;
+      tab2AssignView_Banner.value = [
+                {
+                  name: "已交作业",
+                  num: "123+"
+                },
+                {
+                  name: "未交作业",
+                  num: "123+"
+                },
+                {
+                  name: "提交率",
+                  num: "45%"
+                },
+                {
+                  name: "最近DDL",
+                  num: "3"
+                }
+              ]
+      // tab2AssignView_content.value = res.assignViews;
     };
     const getTab3Data = async () => {
-      const res = await proxy.$api.getTab3PublicAssigns();
+      tab3Classes.value = await proxy.$api.getOwnClazz()
+      console.log("我的班级",tab3Classes.value)
+      // const res = await proxy.$api.getTab3PublicAssigns();
       tab3AssignView_Banner.value = res.titleBanner;
     };
     const getTab4Data = async () => {

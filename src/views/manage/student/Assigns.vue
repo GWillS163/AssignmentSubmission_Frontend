@@ -68,7 +68,7 @@
 import StudentUploadCard from "@/components/management/studentUploadCard.vue";
 import {getCurrentInstance, onMounted} from "vue";
 import ProgressBar from "@/components/management/progressBar.vue";
-import assignListPrompt from "@/components/others/assignListPrompt.vue";
+import assignListPrompt from "@/components/others/AssignListPrompt.vue";
 import handleAssignCard from "@/assets/customed/handleAssignCard.js";
 
 export default {
