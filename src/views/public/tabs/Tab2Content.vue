@@ -6,11 +6,11 @@
   </div>
   <div class="text-center text-white-50 bg-primary border rounded border-0 p-3" style="margin-bottom: 40px;">
     <div class="row justify-content-center ">
-      <div v-for=" titleArea in titleBanner" class="col">
-        <div class="p-3">
-          <h4 class="display-5 fw-bold text-white mb-0">{{ titleArea.num }}</h4>
-          <p class="mb-0">{{ titleArea.name }}</p>
-        </div>
+      <div v-for=" banner in titleBanner" class="col">
+<!--        <div class="p-3">-->
+          <h4 class="display-5 fw-bold text-white mb-0">{{ banner.value * 100 }}</h4>
+          <p class="mb-0">{{ banner.name }}</p>
+<!--        </div>-->
       </div>
     </div>
   </div>

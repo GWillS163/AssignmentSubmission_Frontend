@@ -90,29 +90,30 @@ export default {
       tab2Assigns.value = res.data;
     };
     const getTab2Data = async () => {
-      // const res = await proxy.$api.getTab2PublicAssignsBanner();
-      // console.log("tab2Assigns:", res);
+      const res = await proxy.$api.getTab2PublicAssignsBanner();
+      console.log("tab2AssignsBanner:", res);
       // console.log("titleBanner:", res.titleBanner);
       // console.log("assignViews:", res.assignViews);
       // tab2AssignView_Banner.value = res.titleBanner;
-      tab2AssignView_Banner.value = [
-                {
-                  name: "已交作业",
-                  num: "123+"
-                },
-                {
-                  name: "未交作业",
-                  num: "123+"
-                },
-                {
-                  name: "提交率",
-                  num: "45%"
-                },
-                {
-                  name: "最近DDL",
-                  num: "3"
-                }
-              ]
+      // tab2AssignView_Banner.value = [
+      //           {
+      //             name: "已交作业",
+      //             num: "123+"
+      //           },
+      //           {
+      //             name: "未交作业",
+      //             num: "123+"
+      //           },
+      //           {
+      //             name: "提交率",
+      //             num: "45%"
+      //           },
+      //           {
+      //             name: "最近DDL",
+      //             num: "3"
+      //           }
+      //         ]
+      tab2AssignView_Banner.value = res.data
       // tab2AssignView_content.value = res.assignViews;
     };
     const getTab3Data = async () => {

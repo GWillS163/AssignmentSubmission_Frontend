@@ -53,7 +53,7 @@ export default {
     },
     getTab2PublicAssignsBanner() {
         return request({
-            url: '/assign/public/banner',
+            url: '/assign/public/tab2AssignBanner',
             method: 'get',
             mock: false
         })
