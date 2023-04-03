@@ -124,10 +124,10 @@ const handleAssignCard = {
       // if (typeof assign === "undefined" || typeof assign === "string" && assign.length === 1) {
       //   return "secondary"
       // }
-      console.log("addStyle", assign)
+      // console.log("addStyle", assign)
       // assign.style = this.getBarColor(assign.ddl, assign.uploadEnable)
       assign.style = this.getBarColor(assign.ddl, assign.uploadEnable)
-      console.log("added style", assign)
+      // console.log("added style", assign)
       return assign
       //   showProgress: this.isShowProgress(assign),
       //   show: this.isShow(assign)

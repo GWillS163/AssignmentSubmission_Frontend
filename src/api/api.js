@@ -58,6 +58,14 @@ export default {
             mock: false
         })
     },
+    getTab3AssignsProgressByClassId(classId) {
+        return request({
+            url: '/assign/class/'+ classId +'/progress',
+            method: 'get',
+            mock: false
+        })
+    },
+
     getTab3PublicAssigns() {
         return request({
             url: '/public/getTab3PublicAssigns',
@@ -111,7 +119,14 @@ export default {
         return request({
             url: '/manage/teacher/center',
             method: 'get',
-            mock: true
+            mock: false
+        })
+    },
+    getAllClazz() {
+        return request({
+            url: '/class',
+            method: 'get',
+            mock: false
         })
     },
     getFlags() {
@@ -158,7 +173,9 @@ export default {
     getAssignsByClass(classId){
 
         return request({
-            url: '/assign/class/' + classId,
+            // url: '/assign/class/' + classId,
+            url: '/assign/class/1909',
+            // url: '/assign/public',
             method: 'get',
             mock: false
         })

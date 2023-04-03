@@ -1,6 +1,6 @@
 export default {
     getAssignsByClass(classId) {
-        if (classId === 1909) {
+        if (classId === 19099) {
 
             return {
                 code: 200,
