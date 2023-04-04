@@ -16,18 +16,22 @@
       <ul id="accordionSidebar" class="navbar-nav text-light">
         <navBarSideRow :menu-part="menuPart1"/>
 
-        <hr class="sidebar-divider">
-        <div class="sidebar-heading">
-          <p class="mb-0">数据管理</p>
+        <div v-if="menuDataManage.length">
+
+          <hr class="sidebar-divider">
+          <div class="sidebar-heading" >
+            <p class="mb-0">数据管理</p>
+          </div>
+          <navBarSideRow :menu-part="menuDataManage"/>
         </div>
 
-        <navBarSideRow :menu-part="menuDataManage"/>
-
-        <hr class="sidebar-divider">
-        <div class="sidebar-heading">
-          <p class="mb-0">Debug Pages</p>
+        <div v-if="menuDebugLink.length">
+          <hr class="sidebar-divider" v-show="menuDebugLink">
+          <div class="sidebar-heading">
+            <p class="mb-0">Debug Pages</p>
+          </div>
+          <nav-bar-side-row :menu-part="menuDebugLink"/>
         </div>
-        <nav-bar-side-row :menu-part="menuDebugLink"/>
       </ul>
 
       <div class="text-center d-none d-md-inline">
@@ -54,30 +58,256 @@ export default {
   data() {
     const {proxy} = getCurrentInstance();
     const isToggled = ref(false);
-    const menuPart1 = ref([]);
-    const menuDataManage = ref([]);
-    const menuDebugLink = ref([]);
-    const getMenuPart1 = async () => {
-      const res = await proxy.$api.getMenuPart1();
-      // console.log("menuPart1:", res);
-      this.menuPart1 = res
+    const menuPart1 = [];
+    const menuDataManage = [];
+    const menuDebugLink = [];
+    const getMenusByType = async (type) => {
+      if (type === "admin") {
+        this.menuPart1 = [
+                {
+                    name: 'Dashboard',
+                    link: '/manage/dashboard',
+                    icon: 'fa-tachometer-alt'
+                },
+                {
+                    name: '通知中心',
+                    link: '/manage/notice',
+                    icon: 'fa-bell'
+                },
+                {
+                    name: '提交历史',
+                    link: '/manage/history',
+                    icon: 'fa-history'
+                },
+                {
+                    name: '教师中心',
+                    icon: 'fa-chart-area',
+                    children: [
+                        {
+                            name: '收集总览',
+                            link: '/manage/teacher/center'
+                        },
+                        {
+                            name: '作业视图',
+                            link: '/manage/teacher/assignView'
+                        },
+                        {
+                            name: '班级视图',
+                            link: '/manage/teacher/classView'
+                        },
 
+                    ]
+                },
+                {
+                    name: '学生中心',
+                    icon: 'fa-chart-area',
+                    children: [
+                        {
+                            name: '可交作业',
+                            link: '/manage/student/assigns'
+                        },
+                        {
+                            name: '已交管理',
+                            link: '/manage/student/files'
+                        }
+                    ]
+                }
+
+            ]
+        this.menuDataManage = [
+                {
+                    name: '作业管理',
+                    icon: 'fa-cog',
+                    children: [
+                        {
+                            name: '作业管理',
+                            link: '/manage/assignment/assign',
+                        },
+                        {
+                            name: '文件管理',
+                            link: '/manage/assignment/file'
+                        },
+                    ],
+
+                },
+                {
+                    name: '信息管理',
+                    icon: 'fa-wrench',
+                    children: [
+                        {
+                            name: '学生管理',
+                            link: '/manage/information/student',
+                        },
+                        {
+                            name: '教师管理',
+                            link: '/manage/information/teacher',
+                        },
+                        {
+                            name: '班级管理',
+                            link: '/manage/information/class',
+                        }
+                    ]
+                },
+                {
+                    name: '个人信息',
+                    icon: 'fa-info-circle',
+                    link: '/manage/profile'
+                }
+
+            ]
+        this.menuDebugLink = [
+                {
+                    name: '测试页面',
+                    children: [
+                        {
+                            name: 'ForgotPassword',
+                            link: '/forgotPassword',
+                        },
+                        {
+                            name: 'Login Page',
+                            link: '/login',
+                        },
+                        {
+                            name: 'Register Page',
+                            link: '/register'
+                        },
+                        {
+                            name: '404 Page',
+                            link: '/404'
+                        },
+                        {
+                            name: 'Blank Page',
+                            link: '/blank'
+                        }
+                    ]
+                }
+            ]
+      } else if (type === "teacher") {
+        this.menuPart1 = [
+                {
+                    name: 'Dashboard',
+                    link: '/manage/dashboard',
+                    icon: 'fa-tachometer-alt'
+                },
+                {
+                    name: '通知中心',
+                    link: '/manage/notice',
+                    icon: 'fa-bell'
+                },
+                {
+                    name: '提交历史',
+                    link: '/manage/history',
+                    icon: 'fa-history'
+                },
+                {
+                    name: '教师中心',
+                    icon: 'fa-chart-area',
+                    children: [
+                        {
+                            name: '收集总览',
+                            link: '/manage/teacher/center'
+                        },
+                        {
+                            name: '作业视图',
+                            link: '/manage/teacher/assignView'
+                        },
+                        {
+                            name: '班级视图',
+                            link: '/manage/teacher/classView'
+                        },
+
+                    ]
+                },
+                {
+                    name: '学生中心',
+                    icon: 'fa-chart-area',
+                    children: [
+                        {
+                            name: '可交作业',
+                            link: '/manage/student/assigns'
+                        },
+                        {
+                            name: '已交管理',
+                            link: '/manage/student/files'
+                        }
+                    ]
+                }
+
+            ]
+        this.menuDataManage = [
+                {
+                    name: '作业管理',
+                    icon: 'fa-cog',
+                    children: [
+                        {
+                            name: '作业管理',
+                            link: '/manage/assignment/assign',
+                        },
+                        {
+                            name: '文件管理',
+                            link: '/manage/assignment/file'
+                        },
+                    ],
+
+                },
+                {
+                    name: '信息管理',
+                    icon: 'fa-wrench',
+                    children: [
+                        {
+                            name: '学生管理',
+                            link: '/manage/information/student',
+                        },
+                        {
+                            name: '班级管理',
+                            link: '/manage/information/class',
+                        }
+                    ]
+                },
+                {
+                    name: '个人信息',
+                    icon: 'fa-info-circle',
+                    link: '/manage/profile'
+                }
+
+            ]
+      } else if (type === "student") {
+        this.menuPart1 = [
+                {
+                    name: 'Dashboard',
+                    link: '/manage/dashboard',
+                    icon: 'fa-tachometer-alt'
+                },
+                {
+                    name: '通知中心',
+                    link: '/manage/notice',
+                    icon: 'fa-bell'
+                },
+                {
+                    name: '提交历史',
+                    link: '/manage/history',
+                    icon: 'fa-history'
+                },
+                {
+                    name: '学生中心',
+                    icon: 'fa-chart-area',
+                    children: [
+                        {
+                            name: '可交作业',
+                            link: '/manage/student/assigns'
+                        },
+                        {
+                            name: '已交管理',
+                            link: '/manage/student/files'
+                        }
+                    ]
+                }
+
+            ]
+      }
     };
-    const getMenuDataMange = async () => {
-      const res = await proxy.$api.getMenuDataManage();
-      // console.log("getMenuDataMange", res)
-      this.menuDataManage = res
-    }
-    const getMenuDebugLink = async () => {
-      const res = await proxy.$api.getMenuDebugLink();
-      // console.log("menuDebugLink", res)
-      this.menuDebugLink = res
-
-    }
     onMounted(()=> {
-        getMenuPart1();
-        getMenuDataMange();
-        getMenuDebugLink()
+      getMenusByType("student");
         }
     );
     return {

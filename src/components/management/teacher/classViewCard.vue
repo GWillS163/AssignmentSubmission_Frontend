@@ -14,25 +14,17 @@
     >
       <b-card-body>
         <b-row>
-          <b-col>
-            <b-card-title class="text-primary"> {{ clazz.clazzName  }} </b-card-title>
-            <b-card-subtitle class="mb-2">{{ clazz.teacher }}</b-card-subtitle>
-            <b-card-text> {{ clazz.description }} </b-card-text>
-          </b-col>
-          <b-col class="text-end">
-            <b-card-title></b-card-title>
-            <b-card-text>{{clazz.faculty}} {{clazz.major}}</b-card-text>
-<!--              <button class="btn btn-primary d-flex ms-auto" type="button"-->
-<!--              @click="viewClassAssignDetail(clazz.clazzId)"-->
+          <b-card-title class="text-primary"> {{ clazz.clazzName  }} </b-card-title>
+          <b-card-text >{{clazz.faculty}} -  {{clazz.major}}</b-card-text>
+          <b-card-subtitle class="mb-2">{{ clazz.teacher }}</b-card-subtitle>
+          <b-card-text> {{ clazz.description }} </b-card-text>
 
-<!--              >详情</button>-->
-          </b-col>
         </b-row>
       </b-card-body>
 
 
-      <b-list-group flush v-if="addProgress">
-        <b-list-group-item v-for="assign in addProgress" >
+      <b-list-group flush >
+        <b-list-group-item v-if="addProgress.length !== 0" v-for="assign in addProgress" >
           <b-row>
             <b-col cols="6">
               {{ assign.briefName }}
@@ -46,9 +38,7 @@
             </b-col>
           </b-row>
         </b-list-group-item>
-      </b-list-group>
-      <b-list-group flush v-else>
-        <b-list-group-item>
+        <b-list-group-item v-else>
           <b-card-text>暂无数据</b-card-text>
         </b-list-group-item>
       </b-list-group>
