@@ -3,15 +3,21 @@
   <public-view-page title="以作业视图查看" :banner="titleBanner"/>
 
   <b-row>
-    <b-col v-for="assign in assigns">
+    <b-col v-for="assign in assigns"
+        cols="12" lg="4" md="6" sm="12"
+
+    >
       <assign-view-card :assign="assign">
+        <b-list-group>
+          <b-list-group-item>222</b-list-group-item>
+          <b-list-group-item>222</b-list-group-item>
+        </b-list-group>
         <b-button>
           展示详情 PlaceHolder
         </b-button>
       </assign-view-card>
     </b-col>
   </b-row>
-  <!--  <assign-list-prompt :assigns="assignments"/>-->
 </template>
 
 <script>

@@ -38,3 +38,25 @@ npm run dev
 ```sh
 npm run build
 ```
+
+
+```json
+
+[
+    {
+        "fileId": 45,
+        "hash": "b4153485b4fe60163d17698ab417784ae53232acab13a0a170efa034ad384aeb",
+        "fileSize": 36,
+        "userId": null,
+        "userName": "孟骏清",
+        "assignId": null,
+        "assignName": "Php课下作业",
+        "rawName": "autorun.inf",
+        "formatName": "null",
+        "uploadTime": "2023-03-21 21:11:00",
+        "lastEditTime": null,
+        "rawPath": "源路径",
+        "savePath": "autorun_1679404260494.inf"
+    }
+]
+```

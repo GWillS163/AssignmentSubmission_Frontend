@@ -305,7 +305,7 @@ export default {
       }
     };
     onMounted(()=> {
-      getMenusByType("student");
+      getMenusByType("teacher");
         }
     );
     return {

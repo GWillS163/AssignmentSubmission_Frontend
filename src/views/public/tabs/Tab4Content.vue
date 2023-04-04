@@ -4,8 +4,11 @@
     <div
         class="card-header d-flex flex-wrap justify-content-center align-items-center justify-content-sm-between gap-3">
       <h6 class="display-6 text-nowrap text-capitalize mb-0" style="font-size: 20px;">
-<i class="fas fa-table me-2"></i>
-        最近提交列表
+      <i class="fas fa-table me-2"></i>
+              最近提交列表 ({{ totalRows }})
+        <b-button variant="outline-primary" size="sm" @click="getTab4Data">
+          <i class="fas fa-refresh"></i>
+        </b-button>
 <!--        ({{ tableData.length}}) {{ totalRows }}  {{dataLength}}-->
       </h6>
       <div class="input-group input-group-sm w-auto"><input class="form-control form-control-sm" type="text">
@@ -15,6 +18,13 @@
       </div>
     </div>
 
+    <div v-if="!tableData.length">
+      <b-container>
+<!-- make some empty area-->
+
+      <b-spinner></b-spinner>
+      </b-container>
+    </div>
     <b-table
         :current-page="currentPage"
         :fields="tableFields"
@@ -77,48 +87,37 @@
 </template>
 
 <script>
-import {onMounted, ref} from "vue";
+import {getCurrentInstance, onMounted, ref} from "vue";
 
 export default {
   name: "tab4Content",
-  methods: {
-    handleQuery(keyword) {
-      console.log(keyword);
-    },
-
-    getTotalRows() {
-      this.totalRows = this.tableData.length;
-    },
-  },
-
-  props: {
-    tableData: {
-      type: Array,
-      default: () => []
-    }
-  },
   computed: {
-    dataLength() {
-
-      this.totalRows = this.tableData.length;
-      return this.totalRows;
-    },
 
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
       this.currentPage = 1
     },
-    updateCurrentPage(newPage) {
-    this.currentPage = newPage;
-  }
   },
   data() {
     const totalRows = 0;
-    // onMounted(() => {
-    //   this.getTotalRows();
-    // });
+    const {proxy} = getCurrentInstance();
+    const tableData = [];
+    const getTab4Data = async () => {
+      this.tableData = [];
+      const res = await proxy.$api.getTab4SubmitsRecords();
+      // console.log("getTab4SubmitsRecords:", res.data);
+      // console.log("length", res.data.length)
+      this.tableData = res.data;
+      this.totalRows = this.tableData.length;
+
+    };
+    onMounted(() => {
+      getTab4Data();
+    });
     return {
+      tableData,
+      getTab4Data,
       tableFields: [
         {key: 'userName', label: '用户'},
         {key: 'assignName', label: '作业'},

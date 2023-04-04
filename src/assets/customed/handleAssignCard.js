@@ -15,6 +15,20 @@ const handleAssignCard = {
           return "dark"  // 自动结束
       }
     },
+    getStatus(ddl, isUploadEnable) {
+      switch (this.getStatusType(ddl, isUploadEnable)) {
+        case 0:
+          return "未开始"  // 未开始
+        case 1:
+          return "进行中"  // 进行中
+        case 2:
+          return "即将截止" // 即将截止
+        case 3:
+          return "手动结束" // 手动结束
+        case 4:
+          return "已结束"  // 自动结束
+      }
+    },
 
 
     getTimeStamp(ddl) {
@@ -127,6 +141,7 @@ const handleAssignCard = {
       // console.log("addStyle", assign)
       // assign.style = this.getBarColor(assign.ddl, assign.uploadEnable)
       assign.style = this.getBarColor(assign.ddl, assign.uploadEnable)
+      assign.status = this.getStatus(assign.ddl, assign.uploadEnable)
       // console.log("added style", assign)
       return assign
       //   showProgress: this.isShowProgress(assign),
