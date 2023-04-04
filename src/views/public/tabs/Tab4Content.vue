@@ -5,7 +5,8 @@
         class="card-header d-flex flex-wrap justify-content-center align-items-center justify-content-sm-between gap-3">
       <h6 class="display-6 text-nowrap text-capitalize mb-0" style="font-size: 20px;">
 <i class="fas fa-table me-2"></i>
-        最近提交列表 ({{ tableData.length}}) {{ totalRows}}
+        最近提交列表
+<!--        ({{ tableData.length}}) {{ totalRows }}  {{dataLength}}-->
       </h6>
       <div class="input-group input-group-sm w-auto"><input class="form-control form-control-sm" type="text">
         <button class="btn btn-outline-primary btn-sm" type="button">
@@ -20,7 +21,7 @@
         :filter="filter"
         :filter-included-fields="filterOn"
         :items="tableData"
-        :per-page="perPage"
+        :per-page="30"
         :sort-by.sync="sortBy"
         :sort-desc.sync="sortDesc"
         :sort-direction="sortDirection"
@@ -30,48 +31,47 @@
                 stacked="md"
         bordered
         striped
-        @filtered="onFiltered"
         class="text-center text-secondary"
     >
     </b-table>
 
-<!-- Pagination -->
-    <b-row>
-      <b-col class="my-1" md="2" sm="5">
-        <b-form-group
-            class="mb-0"
-            label="Per page"
-            label-align-sm="right"
-            label-cols-lg="3"
-            label-cols-md="4"
-            label-cols-sm="6"
-            label-for="per-page-select"
-            label-size="sm"
-        >
-          <b-form-select
-              id="per-page-select"
-              v-model="perPage"
-              :options="pageOptions"
-              size="sm"
-          ></b-form-select>
-        </b-form-group>
-      </b-col>
+<!--&lt;!&ndash; Pagination &ndash;&gt;-->
+<!--    <b-row>-->
+<!--      <b-col class="my-1" md="2" sm="5">-->
+<!--        <b-form-group-->
+<!--            class="mb-0"-->
+<!--            label="Per page"-->
+<!--            label-align-sm="right"-->
+<!--            label-cols-lg="3"-->
+<!--            label-cols-md="4"-->
+<!--            label-cols-sm="6"-->
+<!--            label-for="per-page-select"-->
+<!--            label-size="sm"-->
+<!--        >-->
+<!--          <b-form-select-->
+<!--              id="per-page-select"-->
+<!--              v-model="perPage"-->
+<!--              :options="pageOptions"-->
+<!--              size="sm"-->
+<!--          ></b-form-select>-->
+<!--        </b-form-group>-->
+<!--      </b-col>-->
 
-      <b-col class="my-1" md="9" sm="7">
-        <b-pagination
-            v-model="currentPage"
-            :per-page="perPage"
-            :total-rows="totalRows"
-            align="fill"
-            class="my-0"
-            first-text="⏮"
-            last-text="⏭"
-            next-text="⏩"
-            prev-text="⏪"
-            size="sm"
-        ></b-pagination>
-      </b-col>
-    </b-row>
+<!--      <b-col class="my-1" md="9" sm="7">-->
+<!--        <b-pagination-->
+<!--            v-model="currentPage"-->
+<!--            :per-page="perPage"-->
+<!--            :total-rows="tableData.length"-->
+<!--            align="fill"-->
+<!--            class="my-0"-->
+<!--            first-text="⏮"-->
+<!--            last-text="⏭"-->
+<!--            next-text="⏩"-->
+<!--            prev-text="⏪"-->
+<!--            size="sm"-->
+<!--        ></b-pagination>-->
+<!--      </b-col>-->
+<!--    </b-row>-->
   </div>
 
 </template>
@@ -87,7 +87,7 @@ export default {
     },
 
     getTotalRows() {
-      return this.tableData.length;
+      this.totalRows = this.tableData.length;
     },
   },
 
@@ -99,7 +99,9 @@ export default {
   },
   computed: {
     dataLength() {
-      return this.tableData.length;
+
+      this.totalRows = this.tableData.length;
+      return this.totalRows;
     },
 
     onFiltered(filteredItems) {
@@ -112,7 +114,10 @@ export default {
   }
   },
   data() {
-    const totalRows = ref();
+    const totalRows = 0;
+    // onMounted(() => {
+    //   this.getTotalRows();
+    // });
     return {
       tableFields: [
         {key: 'userName', label: '用户'},
