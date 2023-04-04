@@ -6,7 +6,6 @@
     <div class="container-fluid d-flex flex-column p-0">
       <router-link
         class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
-
         to="/public">
       <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
       <div class="sidebar-brand-text mx-3">
@@ -15,7 +14,6 @@
       <hr class="sidebar-divider my-0">
       <ul id="accordionSidebar" class="navbar-nav text-light">
         <navBarSideRow :menu-part="menuPart1"/>
-
         <div v-if="menuDataManage.length">
 
           <hr class="sidebar-divider">

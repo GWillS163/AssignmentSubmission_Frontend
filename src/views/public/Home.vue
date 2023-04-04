@@ -24,7 +24,7 @@
 
       <div class="tab-content">
 
-        <div id="tab-1" class="tab-pane active" role="tabpanel">
+        <div id="tab-1" class="tab-pane " role="tabpanel">
           <tab1-content :assigns="tab1Assigns"/>
         </div>
         <div id="tab-2" class="tab-pane " role="tabpanel"
@@ -35,7 +35,7 @@
              style="margin-bottom: 156px;margin-right: 0;margin-left: 0;padding: 0 0 2px;">
           <tab3-content :classes="tab3Classes"  :title-banner="tab2AssignView_Banner"/>
         </div>
-        <div id="tab-4" class="tab-pane " role="tabpanel">
+        <div id="tab-4" class="tab-pane active" role="tabpanel">
           <tab4-content :table-data="tab4submitRecord"/>
         </div>
         <div id="tab-5" class="tab-pane" role="tabpanel">
@@ -97,23 +97,21 @@ export default {
       console.log("tab2AssignsBanner:", res);
       tab2AssignView_Banner.value = res.data
     };
-    const getTab3Data = async () => {
+    const getTab3Classes = async () => {
       const res = await proxy.$api.getAllClazz()
       tab3Classes.value = res.data
       console.log("我的班级",res )
     };
     const getTab4Data = async () => {
-      // const res = await proxy.$api.getTab4PublicAssigns();
-      // console.log("titleBanner:", res.titleBanner);
-      // console.log("assignViews:", res.assignViews);
-      const res = await proxy.$api.getTab4PublicAssigns();
-      console.log("tab4Assigns:", res);
-      tab4submitRecord.value = res.tableData;
+      const res = await proxy.$api.getTab4SubmitsRecords();
+      console.log("getTab4SubmitsRecords:", res.data);
+      tab4submitRecord.value = res.data;
+      // tab4submitRecord.value = [];
     };
     onMounted(() => {
       getTab1Data();
       getTab2Data();
-      getTab3Data();
+      getTab3Classes();
       getTab4Data();
 
     });

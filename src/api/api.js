@@ -80,11 +80,11 @@ export default {
             mock: true
         })
     },
-    getTab4PublicAssigns() {
+    getTab4SubmitsRecords() {
         return request({
-            url: '/public/getTab4PublicAssigns',
+            url: '/myFile/public',
             method: 'get',
-            mock: true
+            mock: false
         })
     },
     getMenuPart1() {
