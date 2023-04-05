@@ -145,11 +145,25 @@ export default {
             mock: true
         })
     },
+    getAssignFiles(assignId) {
+        return request({
+            url: '/myFile/assign/' + assignId,
+            method: 'get',
+            mock: false
+        })
+    },
+    getAssignClazzCount(clazzId) {
+      return request({
+          url: '/student/map/class/' + clazzId,
+            method: 'get',
+            mock: false
+      })
+    },
     getAssignProgress(assignId) {
       return request({
           url: '/assign/' + assignId + '/progress',
             method: 'get',
-            mock: true
+            mock: false
       })
     },
     getSubmitsByAssignId(assignId) {
@@ -217,7 +231,7 @@ export default {
         return request({
             url: '/assign/teacher/' + teacherId ,
             method: 'get',
-            mock: true
+            mock: false
         });
     },
     postAssign(assign) {

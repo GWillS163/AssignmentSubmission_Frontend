@@ -10,14 +10,12 @@
           <i class="fa fa-plus"></i> 新增作业</b-button>
       </b-col>
     </b-row>
-    <b-row v-if="assignments">
+    <b-row v-if="assignments.length">
       <b-col
           v-for="assign in assignments"
           cols="12" lg="4" md="6" sm="12"
       >
-        <assign-view-card :assign="assign">
-          提交按钮
-        </assign-view-card>
+        <assign-view-card :assign="assign" footer-type="progress"/>
       </b-col>
     </b-row>
     <b-row v-else>
@@ -43,7 +41,7 @@ import {getCurrentInstance, onMounted, ref} from "vue";
 import assignListPrompt from "@/components/others/AssignListPrompt.vue";
 
 export default {
-  name: 'Home',
+  name: 'assignView',
   components: {assignListPrompt, AssignViewCard},
   methods: {
     handleAddNewAssign() {
@@ -54,8 +52,12 @@ export default {
     const assignments = ref([]);
     const {proxy} = getCurrentInstance();
     const getAssignments = async () => {
-      assignments.value = await proxy.$api.getAssignsByTeacher(127);
-      // console.log(assignments.value);
+      assignments.value = await proxy.$api.getAssignsByTeacher(1).then(
+          (res) => {
+            console.log("teacher's assign",assignments.value);
+            return res.data
+          }
+      );
     };
     // 获得作业的提交情况
     // const getSubmits = async () => {

@@ -33,11 +33,6 @@
             <b-row class="justify-content-end">
                 {{assign.teacherId }}
                 <p class="text-muted mb-0 text-end" size="sm"> {{ assign.createTime }}</p>
-
-<!--              <b-col cols="8">-->
-<!--              </b-col>-->
-<!--              <b-col cols="4">-->
-<!--                <h1></h1>-->
 <!--&lt;!&ndash;                <img :src="assign.avatar" alt="avatar"&ndash;&gt;-->
 <!--&lt;!&ndash;                     class="rounded-circle flex-shrink-0 me-3 fit-cover"&ndash;&gt;-->
 <!--&lt;!&ndash;                     height="50" width="50">&ndash;&gt;-->
@@ -69,7 +64,13 @@
           </b-row>
         </div>
         <div v-else-if="footerType === 'progress'">
-          展示进度
+          {{files.length}} - {{ clazzCount}}
+<!--          add a progress label-->
+
+<!--          <b-progress-bar :label-html="files.length + '/' + clazzCount" >-->
+<!--          <b-form-floating-label :label-html="files.length + '/' + clazzCount" class="mb-3"/>-->
+            <b-progress :variant="assign.style" :value="files.length" :max="clazzCount"></b-progress>
+<!--          </b-progress-bar>-->
         </div>
         <div v-else></div>
         <slot>
@@ -113,6 +114,9 @@ export default {
     }
   },
   methods: {
+    progress() {
+
+    },
     // getTitle(assign.ddl, assign.uploadEnable) 需要实现这个方法 TODO
     onFileChange(e, assign) {
       console.log("OnFileChange", e)
@@ -161,15 +165,39 @@ export default {
     // const cardClass = ref();
     // const cardStatus = ref();
     // const submits = ref();
-    // onMounted(() => {
-    //
-    // })
+    const files = [];
+    const clazzCount = ref(0);
+    const {proxy} = getCurrentInstance();
+    const getAssignProgress = () => {
+      // proxy.$api.getAssignProgress(this.assign.id).then(res => {
+      proxy.$api.getAssignFiles(this.assign.id).then(res => {
+        // console.log("getAssignFiles", res);
+        if (res.status === 200) {
+          this.files = res.data;
+        }
+      })
+    }
+    const getAssignClazzCount = () => {
+      proxy.$api.getAssignClazzCount(this.assign.clazzId).then(res => {
+        // console.log(res);
+        if (res.status === 200) {
+          for (let i in res.data) {this.clazzCount += 1}
+          if (this.clazzCount === 0 ) { this.clazzCount = 1}
+        }
+      })
+    }
+    onMounted(() => {
+      getAssignProgress();
+      getAssignClazzCount();
+    })
     const dismissibleAlert = ref(false);
     const response = {
       style: 'dark',
       message: '暂无数据'
     };
     return {
+      files,
+      clazzCount,
 
       response,
       dismissibleAlert,

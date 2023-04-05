@@ -7,14 +7,7 @@
         cols="12" lg="4" md="6" sm="12"
 
     >
-      <assign-view-card :assign="assign">
-        <b-list-group>
-          <b-list-group-item>222</b-list-group-item>
-          <b-list-group-item>222</b-list-group-item>
-        </b-list-group>
-        <b-button>
-          展示详情 PlaceHolder
-        </b-button>
+      <assign-view-card :assign="assign" footer-type="progress">
       </assign-view-card>
     </b-col>
   </b-row>
