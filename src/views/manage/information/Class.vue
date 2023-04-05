@@ -6,7 +6,6 @@
            @ok="submit"
            :title="editMethod ==='edit' ? '编辑班级' : '新增班级'"
   >
-
     <form class="row g-3">
       <div :class="editMethod==='edit' ? 'col-md-6' : 'col-md-8'">
         <label class="form-label" for="validationServer01">班级名</label>

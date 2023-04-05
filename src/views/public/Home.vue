@@ -36,16 +36,16 @@
           <tab3-content :classes="tab3Classes" :title-banner="tab2AssignView_Banner"/>
         </div>
         <div id="tab-4" class="tab-pane " role="tabpanel">
-          <tab4-content />
+          <tab4-content/>
         </div>
         <div id="tab-5" class="tab-pane" role="tabpanel">
           <tab5-content/>
         </div>
       </div>
     </div>
-<!--    <b-spinner></b-spinner>-->
-<!--    <b-button @click="click">Show OffCanvas</b-button>-->
-<!--<b-offcanvas v-model="show" right></b-offcanvas>-->
+    <!--    <b-spinner></b-spinner>-->
+    <!--    <b-button @click="click">Show OffCanvas</b-button>-->
+    <!--<b-offcanvas v-model="show" right></b-offcanvas>-->
   </section>
 </template>
 
@@ -100,7 +100,7 @@ export default {
     const getTab3Classes = async () => {
       const res = await proxy.$api.getAllClazz()
       tab3Classes.value = res.data
-      console.log("我的班级",res )
+      console.log("我的班级", res)
     };
     onMounted(() => {
       getTab1Data();
@@ -108,14 +108,12 @@ export default {
       getTab3Classes();
 
     });
-
-        const show = ref(false)
-
+    const show = ref(false)
     const click = () => {
-        show.value = !show.value
-      }
-      return {
-    show,
+      show.value = !show.value
+    }
+    return {
+      show,
       click,
       // tab1Content: getTab1Content,
       tab1Assigns,

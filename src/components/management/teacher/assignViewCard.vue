@@ -74,7 +74,7 @@
         </div>
         <div v-else></div>
         <slot>
-          <!--            可能会有Table 和详情 -->
+        <!--  可能会有Table 和详情 -->
         </slot>
       </b-card-footer>
 

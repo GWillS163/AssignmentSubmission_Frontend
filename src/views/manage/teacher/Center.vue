@@ -1,13 +1,13 @@
 <script setup>
 import AssignForm from "@/components/management/teacher/assignForm.vue";
 import SubmitTable from "@/components/management/filesTable.vue";
-import PageSpliter from "@/components/management/PageSpliter.vue";</script>
+import PublicViewPage from "@/components/public/PublicViewPage.vue";</script>
 <template>
 
   <div class="container-fluid">
     <div class="row">
       <div class="col-12 col-sm-6 col-md-6">
-        <h3 class="text-dark mb-4">作业管理</h3>
+        <h3 class="text-dark mb-4">教师中心</h3>
       </div>
       <div class="col-12 col-sm-6 col-md-6">
         <div class="btn-group float-end" role="group"  aria-label="Basic radio toggle button group">
@@ -25,16 +25,9 @@ import PageSpliter from "@/components/management/PageSpliter.vue";</script>
       </div>
     </div>
 
-    <div class="text-center text-white-50 bg-primary border rounded border-0 p-3" style="margin-bottom: 41px;">
-      <div class="row row-cols-2 row-cols-md-4">
-        <div class="col" v-for="flag in flags">
-          <div class="p-3">
-            <h4 class="display-5 fw-bold text-white mb-0">{{ flag.value }}</h4>
-            <p class="mb-0">{{flag.name}}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+
+  <public-view-page  v-if="titleBanner.length" title="" :banner="titleBanner"/>
+
     <!--    if viewMode is table, show table, if not, show card-->
     <!--    use the if syntax of vue-->
 
@@ -167,7 +160,6 @@ import PageSpliter from "@/components/management/PageSpliter.vue";</script>
                 </tbody>
               </table>
             </div>
-            <page-spliter/>
           </div>
         </div>
       </div>
@@ -187,6 +179,11 @@ export default {
 
   // export to the global scope
   data: function () {
+    const userInfo = {
+      name: "张三",
+      id: 127,
+      role: "teacher",
+    }
     const {proxy} = getCurrentInstance();
     const ownClazz = ref([]);
     const assigns = ref([]);
@@ -200,17 +197,18 @@ export default {
     };
     const getAssigns = async () => {
       // console.log(await proxy.$api.getAssigns())
-      assigns.value = await proxy.$api.getTeacherCenterAssigns(127);
+      assigns.value = await proxy.$api.getTeacherCenterAssigns(userInfo.id).then(res => res.data);
     };
-    // const initNewDataForm = async () => {
-    //   newDataForm.value.
-    // }
+    const getTitleBanner = async () => {
+      this.titleBanner = await proxy.$api.getTitleAssignBanner(userInfo.id).then(res => res.data);
+    };
     onMounted(() => {
       getOwnClazz();
       getAssigns();
+      getTitleBanner();
       getFlags();
     })
-
+    const titleBanner = [];
     const viewMode = "card";
     const newDataForm= {
         name: "",
@@ -227,6 +225,7 @@ export default {
         isPermitChange: true,
       }
     return {
+      titleBanner,
       ownClazz,
       viewMode,
       newDataForm,

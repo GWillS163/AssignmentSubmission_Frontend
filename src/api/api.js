@@ -137,7 +137,14 @@ export default {
         })
     },
 
-
+    // Teacher Center
+    getTitleAssignBanner(teacherId) {
+        return request({
+            url: '/assign/teacher/' + teacherId +'/assignBanner',
+            method: 'get',
+            mock: false
+        })
+    },
     getTeacherCenterAssigns(teacherId) {
         return request({
             url: '/manage/teacher/assign',
