@@ -1,8 +1,8 @@
 <template>
 
-  <public-view-page title="以作业视图查看" :banner="titleBanner"/>
+  <public-view-page  v-if="titleBanner.length" title="以作业视图查看" :banner="titleBanner"/>
 
-  <b-row>
+  <b-row v-if="assigns.length">
     <b-col v-for="assign in assigns"
         cols="12" lg="4" md="6" sm="12"
 
@@ -16,6 +16,17 @@
           展示详情 PlaceHolder
         </b-button>
       </assign-view-card>
+    </b-col>
+  </b-row>
+
+  <b-row v-else>
+    <b-col cols="12">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">暂无作业</h4>
+          <p class="card-text">暂无作业</p>
+        </div>
+      </div>
     </b-col>
   </b-row>
 </template>

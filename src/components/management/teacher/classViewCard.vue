@@ -10,7 +10,6 @@
          :header-class=" assigns.length ? 'text-white bg-primary' : 'text-white bg-secondary'"
         img-top
         no-body
-        style="max-width: 20rem;"
     >
       <b-card-body>
         <b-row>

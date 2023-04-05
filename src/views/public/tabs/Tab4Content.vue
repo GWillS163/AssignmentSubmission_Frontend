@@ -6,9 +6,13 @@
       <h6 class="display-6 text-nowrap text-capitalize mb-0" style="font-size: 20px;">
       <i class="fas fa-table me-2"></i>
               最近提交列表 ({{ totalRows }})
+
         <b-button variant="outline-primary" size="sm" @click="getTab4Data">
           <i class="fas fa-refresh"></i>
         </b-button>
+
+      <b-spinner v-if="!tableData.length" size="sm"></b-spinner>
+
 <!--        ({{ tableData.length}}) {{ totalRows }}  {{dataLength}}-->
       </h6>
       <div class="input-group input-group-sm w-auto"><input class="form-control form-control-sm" type="text">
@@ -18,13 +22,6 @@
       </div>
     </div>
 
-    <div v-if="!tableData.length">
-      <b-container>
-<!-- make some empty area-->
-
-      <b-spinner></b-spinner>
-      </b-container>
-    </div>
     <b-table
         :current-page="currentPage"
         :fields="tableFields"

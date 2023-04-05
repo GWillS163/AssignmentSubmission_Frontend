@@ -1,5 +1,5 @@
 <template>
-  <public-view-page title="以班级视图查看" :banner="titleBanner"/>
+  <public-view-page  v-if="titleBanner.length" title="以班级视图查看" :banner="titleBanner"/>
 
 <!--  <assign-list-prompt :assigns="assignments"/>-->
   <b-row v-if="classes.length !== 0">
