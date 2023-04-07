@@ -33,6 +33,9 @@ export default {
     addNewClass(){
       // TODO: 实现新增班级的POST 及窗口跳转
       console.log("新增班级")
+    },
+    addValue(){
+      this.valueTest += 10;
     }
   },
   data() {
@@ -42,6 +45,7 @@ export default {
       role: "teacher"
     }
     const classes = ref([]);
+    const valueTest = 0;
     const {proxy } = getCurrentInstance();
     const getClazzData = async() => {
       // console.log(res)
@@ -56,7 +60,7 @@ export default {
       getClazzData();
     })
     return {
-      classes
+      classes,
     }
   }
 }

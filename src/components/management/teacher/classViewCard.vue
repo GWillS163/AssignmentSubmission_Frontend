@@ -30,8 +30,8 @@
             </b-col>
             <b-col cols="6">
 
-            <b-progress :max="50">
-              <b-progress-bar :value="assign.progress" variant="primary" :label-html="assign.progress"/>
+            <b-progress  :max="50">
+              <b-progress-bar :value="assign.progress" variant="primary" :label-html="assign.progress" />
             </b-progress>
               <!--              {{ assign.fileCount }} - {{assign.studentCount}}  - {{ assign.progress}}-->
             </b-col>
@@ -56,7 +56,8 @@ export default {
       default: {
         id: 1909,
         name: "1909班",
-        releaseTeacher: "KissesJun"
+        releaseTeacher: "KissesJun",
+        progress:0,
       }
     }
   },

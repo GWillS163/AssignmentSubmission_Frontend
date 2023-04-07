@@ -87,6 +87,38 @@ export default {
             mock: false
         })
     },
+
+    // Tab5 umlRecord
+    getUmlRecords() {
+        return request({
+            url: '/uml/withoutHide',
+            method: 'get',
+            mock: false
+        })
+    },
+    refreshSingleUmlRecord(umlId) {
+        return request({
+            url: '/uml/' + umlId + '/refresh',
+            method: 'get',
+            mock: false
+        })
+    },
+    postUmlRecord(userInputForm) {
+        return request({
+            url: '/uml',
+            method: 'post',
+            mock: false,
+            params: userInputForm
+        })
+    },
+    deleteUmlId(umlId) {
+        return request({
+            url: '/uml/' + umlId,
+            method: 'put',
+            mock: false,
+        })
+    },
+
     getMenuPart1() {
         return request({
             url: '/menu/getMenuPart1',
@@ -140,16 +172,16 @@ export default {
     // Teacher Center
     getTitleAssignBanner(teacherId) {
         return request({
-            url: '/assign/teacher/' + teacherId +'/assignBanner',
+            url: '/assign/teacher/assignBanner/' + teacherId,
             method: 'get',
             mock: false
         })
     },
     getTeacherCenterAssigns(teacherId) {
         return request({
-            url: '/manage/teacher/assign',
+            url: '/assign/teacher/' + teacherId,
             method: 'get',
-            mock: true
+            mock: false
         })
     },
     getAssignFiles(assignId) {
