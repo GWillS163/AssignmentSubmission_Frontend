@@ -1,5 +1,8 @@
 <template>
   <div class="row">
+    <b-col cols="1">
+      <img alt="" src="public/openaiLogo.png" style="width: 80px;height: 80px;"/>
+    </b-col>
     <b-col>
       <h1>Software Engineering UML Diagrams Assistant</h1>
     </b-col>
@@ -20,22 +23,26 @@
   </b-row>
 
   <b-row>
-    <b-col cols="6" v-for="record in umlRecords">
+    <b-col v-for="record in umlRecords" lg="12" sm="12" md="12">
       <b-row>
-        <b-col cols="8">
+        <b-col cols="6">
           <b-row>
-            <b-col cols="10"><h3>{{ record.user_input }}</h3></b-col>
-            <b-col class="text-end" cols="2">
+            <h3>{{ record.user_input }}</h3>
+          </b-row>
+          <b-row>
               <b-button-group size="sm">
-
                 <b-button variant="outline-info" @click="editUml(record.user_input)">
                   <i class="fas fa-edit"></i>
                 </b-button>
                 <b-button variant="outline-danger" @click="deleteUml(record.id)">
                   <i class="fas fa-trash-alt"></i>
                 </b-button>
+<!--                 v-if="!record.uml_png_src"-->
+                <b-button variant="outline-secondary"
+                          @click="refreshSingle(record.id)">
+                  <i class="fas fa-sync-alt"></i>
+                </b-button>
               </b-button-group>
-            </b-col>
           </b-row>
           <b-row class="overflowText text-center" rows="4">
             <b-spinner v-if="record.uml_intro.length < 10"
@@ -44,19 +51,17 @@
               {{ record.uml_intro }}
             </p>
           </b-row>
-          <b-row>
-          </b-row>
-
         </b-col>
-        <!--    <b-col class="overflowText">{{ record.id }}</b-col>-->
+        <b-col class="overflowText text-center" cols="6">
+          <div class="">
+            <img v-if="record.uml_png_src" :src="getFullSrc(record.uml_png_src)" alt=""
+                 style="width: 100%;height: 100%;"/>
+            <div v-else>
 
-        <b-col class="overflowText" cols="4">
-
-          <b-button v-if="record.uml_intro.length < 4" variant="outline-info"
-                    @click="refreshSingle(record.id)">
-            <i class="fas fa-sync-alt"></i>
-          </b-button>
-          <img v-else :src="getFullSrc(record.uml_png_src)" alt="" style="width: 128px;height: 100%;"/>
+              <i  class="fas fa-picture-o"> 无图片</i>
+              <b-spinner  v-if="record.uml_intro.length < 10" variant="primary"></b-spinner>
+            </div>
+          </div>
         </b-col>
       </b-row>
     </b-col>
@@ -95,8 +100,11 @@ export default {
     }
     const postUmlRecord = async () => {
       console.log("正在发送，处理约2分钟:", this.userInput)
+      const value = this.userInput;
+
+      this.userInput = "";
       await proxy.$api.postUmlRecord({
-        user_input: this.userInput
+        user_input: value
       })
           .then(res => {
             console.log(res)
