@@ -1,13 +1,13 @@
 <template>
   <div class="row">
     <b-col cols="1">
-      <img alt="" src="public/openaiLogo.png" style="width: 80px;height: 80px;"/>
+      <img alt="" src="public/openaiLogo.png" style="width: 60px;height: 60px;"/>
     </b-col>
-    <b-col>
+    <b-col cols="10">
       <h1>Software Engineering UML Diagrams Assistant</h1>
     </b-col>
     <b-col class="align-content-end" cols="1">
-      <b-button variant="outline-primary" @click="getUmlRecords">
+      <b-button variant="outline-primary" @click="getUmlRecords" size="lg">
         <i class="fas fa-refresh"></i>
       </b-button>
     </b-col>
@@ -24,7 +24,7 @@
 
   <!--  add change line-->
 
-  <b-row style="margin: 6% 0 6% 0">
+  <b-row style="margin: 2% 0 6% 0">
     <b-col v-for="record in umlRecords" lg="4" md="6" sm="12">
       <b-card
           class="card text-center"
