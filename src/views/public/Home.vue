@@ -19,7 +19,7 @@
              role="tab">提交记录</a></li>
         <li class="nav-item" role="presentation">
           <a class="nav-link" data-bs-toggle="tab" href="#tab-5"
-             role="tab">健康码调色</a></li>
+             role="tab">GPT作业助手</a></li>
       </ul>
 
       <div class="tab-content">
