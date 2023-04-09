@@ -22,50 +22,94 @@
     </b-col>
   </b-row>
 
-  <b-row>
-    <b-col v-for="record in umlRecords" lg="12" sm="12" md="12">
-      <b-row>
-        <b-col cols="6">
-          <b-row>
-            <h3>{{ record.user_input }}</h3>
-          </b-row>
-          <b-row>
-              <b-button-group size="sm">
-                <b-button variant="outline-info" @click="editUml(record.user_input)">
-                  <i class="fas fa-edit"></i>
-                </b-button>
-                <b-button variant="outline-danger" @click="deleteUml(record.id)">
-                  <i class="fas fa-trash-alt"></i>
-                </b-button>
-<!--                 v-if="!record.uml_png_src"-->
-                <b-button variant="outline-secondary"
-                          @click="refreshSingle(record.id)">
-                  <i class="fas fa-sync-alt"></i>
-                </b-button>
-              </b-button-group>
-          </b-row>
-          <b-row class="overflowText text-center" rows="4">
-            <b-spinner v-if="record.uml_intro.length < 10"
-                       variant="primary"></b-spinner>
-            <p v-else class="overflowText">
-              {{ record.uml_intro }}
-            </p>
-          </b-row>
-        </b-col>
-        <b-col class="overflowText text-center" cols="6">
-          <div class="">
-            <img v-if="record.uml_png_src" :src="getFullSrc(record.uml_png_src)" alt=""
-                 style="width: 100%;height: 100%;"/>
-            <div v-else>
+<!--  add change line-->
 
-              <i  class="fas fa-picture-o"> 无图片</i>
-              <b-spinner  v-if="record.uml_intro.length < 10" variant="primary"></b-spinner>
-            </div>
-          </div>
-        </b-col>
-      </b-row>
-    </b-col>
+    <b-row style="margin: 6% 0 6% 0">
+      <b-col v-for="record in umlRecords" lg="4" md="6" sm="12">
+            <b-card
+                class="card text-center"
+                no-body>
+              <b-card-header
+                  header-class="bg-primary text-white"
+                  no-body>
+                <b-card-img
+                    v-if="record.uml_png_src"
+
+                    :src="record.uml_png_src ? getFullSrc(record.uml_png_src) : 'public/uml.png'"
+                    :alt="record.uml_intro"
+                    style="max-width:100%; width: auto;max-height: 120px;"/>
+                <b-form-text v-else>
+                    <i class="fas fa-picture-o"> 无图片</i>
+  <!--                  <b-spinner v-if="record.uml_intro.length < 10" variant="primary"></b-spinner>-->
+                </b-form-text>
+
+              </b-card-header>
+              <b-card-text class="overflowText">
+                <h2><i class="fas fa-pen"></i>
+                  {{ record.user_input }}</h2>
+              </b-card-text>
+                  <b-button-group size="sm" >
+                    <b-button variant="outline-primary" @click="editUmlInput(record.id)">
+                      <i class="fas fa-edit"></i>
+                    </b-button>
+                    <b-button variant="outline-info" @click="copyUmlInput(record.user_input)">
+                      <i class="fas fa-copy"></i>
+                    </b-button>
+                    <b-button variant="outline-danger" @click="deleteUml(record.id)">
+                      <i class="fas fa-trash-alt"></i>
+                    </b-button>
+                    <!--                 v-if="!record.uml_png_src"-->
+                    <b-button variant="outline-secondary"
+                              @click="refreshSingle(record.id)">
+                      <i class="fas fa-sync-alt"></i>
+                    </b-button>
+                  </b-button-group>
+              <b-tabs fill>
+                <b-tab title="输入">
+                  <i class="fas fa-pen"></i>
+                  <b-form-text>{{record.user_input}}</b-form-text>
+<!--                  <b-form-textarea disabled v-model="record.user_input"-->
+<!--                                    max-rows="6" placeholder="请描述你的UML图片，越详细，越精确" rows="3"></b-form-textarea>-->
+                </b-tab>
+                <b-tab active title="介绍">
+                  <i class="fa fa-quote-left"></i>
+                  <b-form-text>{{record.uml_intro}}</b-form-text>
+                </b-tab>
+                <b-tab  title="Code">
+                  <b-form-textarea id="textarea" v-model="record.uml_code"
+                                   max-rows="6" placeholder="请描述你的UML图片，越详细，越精确" rows="10"></b-form-textarea>
+
+                  <b-button-group filled>
+  <!--                  <b-button variant="outline-primary" @click="editUmlInput(record.id)">-->
+  <!--                    <i class="fas fa-edit"></i>-->
+  <!--                  </b-button>-->
+                    <b-button variant="outline-dark">Rerun</b-button>
+                  </b-button-group>
+                </b-tab>
+                <b-tab title="Uml图">
+                  <img v-if="record.uml_png_src" :src="getFullSrc(record.uml_png_src)" alt=""
+                       style="width: 100%;height: 100%;"/>
+                  <div v-else>
+                    <i class="fas fa-picture-o"> 无图片</i>
+                    <b-spinner v-if="record.uml_intro.length < 10" variant="primary"></b-spinner>
+                  </div>
+                </b-tab>
+              </b-tabs>
+            </b-card>
+      </b-col>
   </b-row>
+  <!--  <b-button @click="click">Show OffCanvas</b-button>-->
+  <b-offcanvas v-model="openSide" placement="end" style="width: 200rem;">
+    <template #header>
+      <h5>Offcanvas</h5>
+    </template>
+    <template #default>
+      <p>Some content</p>
+    </template>
+    <template #footer>
+      <b-button @click="openSide = false">Close</b-button>
+    </template>
+  </b-offcanvas>
 </template>
 
 <script>
@@ -76,7 +120,10 @@ export default {
   methods: {
     getFullSrc(src) {
       return "http://localhost/" + src
-    }
+    },
+    editUmlInput(id) {
+      console.log("editUmlInput", id)
+    },
   },
   data() {
     const userInput = ref("");
@@ -131,8 +178,9 @@ export default {
       getUmlRecords,
       postUmlRecord,
       refreshSingle,
-      editUml,
+      copyUmlInput: editUml,
       deleteUml,
+      openSide: true
     }
   }
 }
@@ -143,7 +191,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 12; /* 显示的行数 */
+  -webkit-line-clamp: 3; /* 显示的行数 */
   -webkit-box-orient: vertical;
 }
 </style>
