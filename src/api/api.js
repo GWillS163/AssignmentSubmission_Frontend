@@ -118,6 +118,14 @@ export default {
             mock: false,
         })
     },
+    rerunUmlCode(record) {
+        return request({
+            url: '/uml/' + record.id + '/runUmlCode',
+            method: 'post',
+            mock: false,
+            params: record,
+        })
+    },
 
     getMenuPart1() {
         return request({

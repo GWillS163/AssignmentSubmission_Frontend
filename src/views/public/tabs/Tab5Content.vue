@@ -83,7 +83,7 @@
   <!--                  <b-button variant="outline-primary" @click="editUmlInput(record.id)">-->
   <!--                    <i class="fas fa-edit"></i>-->
   <!--                  </b-button>-->
-                    <b-button variant="outline-dark">Rerun</b-button>
+                    <b-button variant="outline-dark" @click="rerunUmlCode(record)">生成UML图</b-button>
                   </b-button-group>
                 </b-tab>
                 <b-tab title="Uml图">
@@ -99,17 +99,17 @@
       </b-col>
   </b-row>
   <!--  <b-button @click="click">Show OffCanvas</b-button>-->
-  <b-offcanvas v-model="openSide" placement="end" style="width: 200rem;">
-    <template #header>
-      <h5>Offcanvas</h5>
-    </template>
-    <template #default>
-      <p>Some content</p>
-    </template>
-    <template #footer>
-      <b-button @click="openSide = false">Close</b-button>
-    </template>
-  </b-offcanvas>
+<!--  <b-offcanvas v-model="openSide" placement="end" style="width: 200rem;">-->
+<!--    <template #header>-->
+<!--      <h5>Offcanvas</h5>-->
+<!--    </template>-->
+<!--    <template #default>-->
+<!--      <p>Some content</p>-->
+<!--    </template>-->
+<!--    <template #footer>-->
+<!--      <b-button @click="openSide = false">Close</b-button>-->
+<!--    </template>-->
+<!--  </b-offcanvas>-->
 </template>
 
 <script>
@@ -161,6 +161,14 @@ export default {
     const editUml = (copyOrigin) => {
       this.userInput = copyOrigin
     }
+    const rerunUmlCode = async (record) => {
+      console.log("重新生成:", record)
+
+      await proxy.$api.rerunUmlCode(record)
+          .then(res => {
+            getUmlRecords();
+          })
+    }
     const deleteUml = async (umlId) => {
       console.log("删除", umlId)
 
@@ -180,6 +188,7 @@ export default {
       refreshSingle,
       copyUmlInput: editUml,
       deleteUml,
+      rerunUmlCode,
       openSide: true
     }
   }
