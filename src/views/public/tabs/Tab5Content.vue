@@ -6,25 +6,27 @@
     <b-col cols="10">
       <h1>Software Engineering UML Diagrams Assistant</h1>
     </b-col>
-    <b-col class="align-content-end" cols="1">
-      <b-button variant="outline-primary" @click="getUmlRecords" size="lg">
+    <b-col  cols="1">
+      <b-button  variant="primary" @click="getUmlRecords" size="lg">
         <i class="fas fa-refresh"></i>
       </b-button>
     </b-col>
   </div>
   <b-row>
     <b-col cols="11">
-      <b-form-textarea id="textarea" v-model="userInput"
+      <b-form-textarea id="textarea" v-model="userInput" style="font-size: 20px"
                        max-rows="6" placeholder="请描述你的UML图片，越详细，越精确" rows="3"></b-form-textarea>
     </b-col>
     <b-col cols="1">
-      <b-button style="height:100%" variant="primary" @click="postUmlRecord">提交</b-button>
+      <b-button variant="primary" style="height: 100%" @click="postUmlRecord" size="lg">
+        <i class="fas fa-paper-plane"></i>
+      </b-button>
     </b-col>
   </b-row>
 
   <!--  add change line-->
 
-  <b-row style="margin: 2% 0 6% 0">
+  <b-row style="margin-top: 3%">
     <b-col v-for="record in umlRecords" lg="4" md="6" sm="12">
       <b-card
           class="card text-center"
@@ -50,9 +52,9 @@
             {{ record.user_input }}</h2>
         </b-card-text>
         <b-button-group size="sm">
-          <b-button variant="outline-primary" @click="editUmlInput(record.id)">
-            <i class="fas fa-edit"></i>
-          </b-button>
+<!--          <b-button variant="outline-primary" @click="editUmlInput(record.id)">-->
+<!--            <i class="fas fa-edit"></i>-->
+<!--          </b-button>-->
           <b-button variant="outline-info" @click="copyUmlInput(record.user_input)">
             <i class="fas fa-copy"></i>
           </b-button>
@@ -60,7 +62,7 @@
             <i class="fas fa-trash-alt"></i>
           </b-button>
           <!--                 v-if="!record.uml_png_src"-->
-          <b-button variant="outline-secondary"
+          <b-button variant="outline-secondary" v-if="!record.uml_png_src"
                     @click="refreshSingle(record.id)">
             <i class="fas fa-sync-alt"></i>
           </b-button>
@@ -90,7 +92,7 @@
         <b-tab title="介绍">
           <b-form-text>{{ showingUmlGraph.uml_intro }}</b-form-text>
         </b-tab>
-        <b-tab active title="Uml图">
+        <b-tab :active="refreshUmlEnd" title="Uml图">
           <img v-if="showingUmlGraph.uml_png_src" :src="getFullSrc(showingUmlGraph.uml_png_src)" alt=""
                style="width: 100%;height: 100%;"/>
           <div v-else>
@@ -112,9 +114,9 @@
         </b-tab>
       </b-tabs>
     </template>
-    <template #footer>
-      <b-button @click="openSide = false">Close</b-button>
-    </template>
+<!--    <template #footer>-->
+<!--      <b-button @click="openSide = false">Close</b-button>-->
+<!--    </template>-->
   </b-offcanvas>
 </template>
 
@@ -141,6 +143,7 @@ export default {
     const {proxy} = getCurrentInstance();
     const umlRecords = ref([]);
     const openSide = false;
+    const refreshUmlEnd = true;
     const showingUmlGraph = ref({
       uml_png_src: "default",
       uml_intro: "default",
@@ -159,7 +162,7 @@ export default {
       console.log("正在发送，处理约2分钟:", id)
       await proxy.$api.refreshSingleUmlRecord(id)
           .then(res => {
-            console.log(res)
+            // console.log(res)
             getUmlRecords();
           })
     }
@@ -185,6 +188,9 @@ export default {
       await proxy.$api.rerunUmlCode(record)
           .then(res => {
             getUmlRecords();
+            // console.log("rerunUmlCode", res)
+            this.showingUmlGraph = res.data;
+            this.refreshUmlEnd = true;
           })
     }
     const deleteUml = async (umlId) => {
@@ -209,6 +215,7 @@ export default {
       rerunUmlCode,
       openSide,
       showingUmlGraph,
+      refreshUmlEnd,
     }
   }
 }
