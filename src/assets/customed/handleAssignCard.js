@@ -29,6 +29,18 @@ const handleAssignCard = {
           return "已结束"  // 自动结束
       }
     },
+  getDDLProgress(startTime,endTime) {
+    const now = new Date();
+    const startTimeStamp = new Date(startTime);
+    const endTimeStamp = new Date(endTime);
+    const total = endTimeStamp - startTimeStamp;
+    const remained = endTimeStamp - now;
+    // strip the decimals
+    const progress = (total - remained) / total * 100;
+    // q: why not use Math.round()?
+    return Math.round(progress);
+    // return (total - remained) / total * 100;
+  },
 
 
     getTimeStamp(ddl) {
@@ -38,6 +50,9 @@ const handleAssignCard = {
     },
     getRemainedTime(ddl) {
       const remainedTime = this.getTimeStamp(ddl);
+      if (remainedTime < 0) {
+        return "已结束"
+      }
       if (remainedTime < 86400000) {
         const seconds = Math.floor(remainedTime / 1000);
         const minutes = Math.floor(seconds / 60);

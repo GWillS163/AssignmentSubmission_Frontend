@@ -1,13 +1,13 @@
-
 <template>
+
   <div class="d-sm-flex justify-content-between align-items-center mb-4">
     <h3 class="text-dark mb-0">Dashboard</h3>
-    <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button"
-        @click="downloadSubmittedData">
-    <i class="fas fa-download fa-sm text-white-50"></i>下载提交数据</a>
+      <b-button variant="primary" size="sm" @click="downloadSubmittedData">
+        <i class="fas fa-download fa-sm text-white-50"></i>下载提交数据
+      </b-button>
   </div>
-  <div class="row">
-    <div class="col-md-6 col-xl-3 mb-4" v-for="titleCard in titleCards">
+  <b-row>
+    <b-col md="6" xl="3" mb="4" v-for="titleCard in titleCards">
       <div class="card shadow border-start-primary py-2">
         <div class="card-body">
           <div class="row align-items-center no-gutters">
@@ -23,54 +23,50 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-6 mb-4">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="text-primary fw-bold m-0">作业收集进度</h6>
-        </div>
-        <div class="card-body">
-          <div v-for="assign in assignProgress">
-            <h4 class="small fw-bold"> {{assign.name }}
-              <span class="float-end"> {{ assign.collectStatus }}</span>
-            </h4>
-            <div class="progress mb-4">
-              <div class="progress-bar" aria-valuemin="0" aria-valuemax="100"
-                   aria-valuenow="80"
-                   :class="assign.collectColor"
-                   :style="{width: assign.collectProgress + '%'}">
-                <span class="">{{ assign.collectProgress }}%</span></div>
-            </div>
-          </div>
+    </b-col>
+  </b-row>
+  <b-row style="margin-top:3%">
+    <b-col lg="6" mb="4" >
+      <b-card shadow no-body>
+        <b-card-header>
+          <h6 class="text-primary fw-bold m-0">作业提交进度</h6>
+        </b-card-header>
+          <b-list-group>
+            <b-list-group-item v-for="assign in assignProgress" :key="assign.id">
+              <h4 class="small fw-bold"> {{ assign.brief_name }}
+                <span class="float-end"> {{ assign.collected }}/{{assign.total}}</span>
+              </h4>
+              <b-progress :value=" (assign.collected / assign.total) * 100"
+                          variant="primary"
+                          height="1rem"></b-progress>
+            </b-list-group-item>
+          </b-list-group>
+      </b-card>
+    </b-col>
+    <b-col lg="6" mb="4" >
 
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-6 mb-4">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
+      <b-card shadow no-body>
+        <b-card-header>
           <h6 class="text-primary fw-bold m-0">DDL剩余日期</h6>
-        </div>
-        <div class="card-body">
-          <div v-for="assign in assignProgress">
-            <h4 class="small fw-bold"> {{assign.name }}
-              <span class="float-end"> {{ assign.ddlStatus }} </span>
-            </h4>
-            <div class="progress mb-4">
-              <div class="progress-bar" aria-valuemin="0" aria-valuemax="100"
-                   aria-valuenow="80"
-                   :class="assign.ddlColor"
-                   :style="{width: assign.ddlProgress + '%'}">
-                <span class="">{{ assign.ddlProgress }}%</span></div>
-            </div>
-          </div>
+        </b-card-header>
+          <b-list-group>
+            <b-list-group-item v-for="assign in assignProgress" :key="assign.id">
+              <h4 class="small fw-bold"> {{ assign.brief_name }}
+                <span class="float-end"> {{ getDDLLastDay(assign.ddlDate)}}</span>
+              </h4>
+              <b-progress >
 
-        </div>
-      </div>
-    </div>
-  </div>
+                <b-progress-bar :value="getDDLProgress(assign.releaseDate, assign.ddlDate)"
+                            variant="primary" :label="getDDLProgress(assign.releaseDate, assign.ddlDate) + '%'"
+                            height="1rem">
+                </b-progress-bar>
+              </b-progress>
+
+            </b-list-group-item>
+          </b-list-group>
+      </b-card>
+    </b-col>
+  </b-row>
   <div class="row">
     <div class="col-lg-7 col-xl-8">
       <div class="card shadow mb-4">
@@ -88,10 +84,10 @@
             </div>
           </div>
         </div>
+
         <div class="card-body">
           <div class="chart-area">
-            <canvas
-                data-bss-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Aug&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Earnings&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;0&quot;,&quot;10000&quot;,&quot;5000&quot;,&quot;15000&quot;,&quot;10000&quot;,&quot;20000&quot;,&quot;15000&quot;,&quot;25000&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;rgba(78, 115, 223, 1)&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}]}}}"></canvas>
+
           </div>
         </div>
       </div>
@@ -146,12 +142,22 @@ import NavBarSide from "@/components/management/navBar/navBarSide.vue";
 import NavBarTop from "@/components/management/navBar/navBarTop.vue";
 import {getCurrentInstance, onMounted, ref} from "vue";
 import {defineComponent} from "vue";
+import handleAssignCard from "@/assets/customed/handleAssignCard";
+
 
 export default defineComponent({
   name: "dashboard",
   components: {
     NavBarSide,
     NavBarTop
+  },
+  methods: {
+    getDDLProgress(start, ddl) {
+      return handleAssignCard.getDDLProgress(start, ddl);
+    },
+    getDDLLastDay(ddl) {
+      return handleAssignCard.getRemainedTime(ddl);
+    }
   },
   setup() {
     const { proxy } = getCurrentInstance();
@@ -171,12 +177,51 @@ export default defineComponent({
       // console.log(assignProgress.value);
       // console.log(titleCards.value);
     };
+
+
     onMounted(() => {
       getDashboardData();
     });
     return {
-      titleCards,
-      assignProgress,
+      titleCards: [
+                    {
+                        name: "在库作业",
+                        value: 10,
+                        icon: "fas fa-calendar"
+                    },
+                    {
+                        name: "在库文件",
+                        value: 10,
+                        icon: "fas fa-database"
+                    },
+                    {
+                        name: "收集进度",
+                        value: "50%",
+                        icon: "fas fa-comments"
+                    },
+                    {
+                        name: "在库作业",
+                        value: 18,
+                        icon: "fas fa-clipboard-list"
+                    }
+                ],
+      assignProgress: [
+                    {
+                      "brief_name": "高级操作系统",
+                      "collected": 10,
+                      "total": 100,
+                      "ddlDate": "2023-04-21 23:59:59",
+                      "releaseDate": "2021-01-21 23:59:59"
+                    },
+                    {
+                      "brief_name": "高级操作系统2",
+                      "collected": 30,
+                      "total": 100,
+                      "ddlDate": "2023-01-21 23:59:59",
+                      "releaseDate": "2022-01-21 23:59:59"
+                    }
+
+                ],
       downloadSubmittedData
     };
   },
@@ -184,5 +229,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
+/* import link */
+/*@import url("/src/assets/dashboard/dashboard.css");*/
+/*@import url("/src/assets/bootstrap_raw/css/bootstrap.min.css");*/
+/*@import url("https://getbootstrap.com/docs/5.3/examples/dashboard/");*/
 </style>

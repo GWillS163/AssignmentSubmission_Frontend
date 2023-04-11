@@ -3,7 +3,6 @@ export default {
         return {
             code: 200,
             data: {
-
                 titleCards: [
                     {
                         name: "在库作业",
@@ -32,12 +31,6 @@ export default {
                         "collectProgress": 10,
                         "collectStatus": "10/100",
                         "collectColor": "bg-danger",
-                        // "collectedFiles": 10,
-                        // "totalFiles": 100,
-                        // "collectColor": "bg-danger",
-                        //
-                        // "startDateTime": "2023-01-01 00:00:00",
-                        // "endDateTime": "2023-01-21 23:59:59",
                         "ddlProgress": 23,
                         "ddlStatus": "46/200",
                         "ddlColor": "bg-success",
