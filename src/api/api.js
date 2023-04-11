@@ -12,6 +12,22 @@ export default {
             fileName: 'test.csv'
         })
     },
+
+    getCardsData() {
+        return request({
+            url: '/dashboard/titleCards',
+            method: 'get',
+            mock: false
+        })
+    },
+    getAssignsData() {
+        return request({
+            url: '/dashboard/assignProgress',
+            method: 'get',
+            mock: false
+        })
+    },
+
     // NavBar Top
     getUserNavBarDrops() {
         return request({
@@ -150,9 +166,9 @@ export default {
     },
     getNoticeData() {
         return request({
-            url: '/manage/notice',
+            url: '/dashboard/notices',
             method: 'get' ,
-            mock: true
+            mock: false
         })
     },
     getOwnClazz(teacherId) {

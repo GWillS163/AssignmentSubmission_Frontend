@@ -33,7 +33,7 @@
         </b-card-header>
           <b-list-group>
             <b-list-group-item v-for="assign in assignProgress" :key="assign.id">
-              <h4 class="small fw-bold"> {{ assign.brief_name }}
+              <h4 class="small fw-bold"> {{ assign.briefName }}
                 <span class="float-end"> {{ assign.collected }}/{{assign.total}}</span>
               </h4>
               <b-progress :value=" (assign.collected / assign.total) * 100"
@@ -51,7 +51,7 @@
         </b-card-header>
           <b-list-group>
             <b-list-group-item v-for="assign in assignProgress" :key="assign.id">
-              <h4 class="small fw-bold"> {{ assign.brief_name }}
+              <h4 class="small fw-bold"> {{ assign.briefName }}
                 <span class="float-end"> {{ getDDLLastDay(assign.ddlDate)}}</span>
               </h4>
               <b-progress >
@@ -159,69 +159,35 @@ export default defineComponent({
       return handleAssignCard.getRemainedTime(ddl);
     }
   },
-  setup() {
+  data() {
     const { proxy } = getCurrentInstance();
-    // let cardsData = ref([]);
-    let titleCards = ref([]);
-    let assignProgress = ref([]);
+    const titleCards = ref([]);
+    const assignProgress = ref([]);
 
     const downloadSubmittedData = async () => {
-      console.log("downloadSumbittedData");
+      console.log("downloadSubmittedData");
     };
-    const getDashboardData = async () => {
-      const data = await proxy.$api.getDashBoardData();
-      // console.log("data", data);
-      titleCards.value = data["titleCards"];
-      assignProgress.value = data["assignProgress"];
 
-      // console.log(assignProgress.value);
-      // console.log(titleCards.value);
+    const getCardsData = async () => {
+      const res = await proxy.$api.getCardsData();
+      console.log("getCardsData", res.data);
+      this.titleCards = res.data;
+    };
+    // get assigns data
+    const getAssignsData = async () => {
+      const res = await proxy.$api.getAssignsData();
+      console.log("getAssignsData", res.data);
+      this.assignProgress = res.data;
     };
 
 
     onMounted(() => {
-      getDashboardData();
+      getCardsData();
+      getAssignsData();
     });
     return {
-      titleCards: [
-                    {
-                        name: "在库作业",
-                        value: 10,
-                        icon: "fas fa-calendar"
-                    },
-                    {
-                        name: "在库文件",
-                        value: 10,
-                        icon: "fas fa-database"
-                    },
-                    {
-                        name: "收集进度",
-                        value: "50%",
-                        icon: "fas fa-comments"
-                    },
-                    {
-                        name: "在库作业",
-                        value: 18,
-                        icon: "fas fa-clipboard-list"
-                    }
-                ],
-      assignProgress: [
-                    {
-                      "brief_name": "高级操作系统",
-                      "collected": 10,
-                      "total": 100,
-                      "ddlDate": "2023-04-21 23:59:59",
-                      "releaseDate": "2021-01-21 23:59:59"
-                    },
-                    {
-                      "brief_name": "高级操作系统2",
-                      "collected": 30,
-                      "total": 100,
-                      "ddlDate": "2023-01-21 23:59:59",
-                      "releaseDate": "2022-01-21 23:59:59"
-                    }
-
-                ],
+      titleCards,
+      assignProgress,
       downloadSubmittedData
     };
   },

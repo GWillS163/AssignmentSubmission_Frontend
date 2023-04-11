@@ -1,108 +1,186 @@
 <template>
+  <b-container>
+    <b-row>
+      <b-col col="12" md="6" sm="6">
+        <h3 class="text-dark mb-4">收件箱 ({{ noticeData.length}})</h3>
+      </b-col>
+      <b-col class="text-end" col="12" md="6" sm="6"
+             style="margin-bottom: 30px; margin-right: 0;">
+        <a class="btn btn-primary"
+           role="button"
+           @click="addNew">
+          <i class="fa fa-plus"></i> 广播消息
+        </a>
+      </b-col>
 
-  <div class="row">
-    <div class="col">
-      <h3 class="text-dark mb-1">消息中心</h3>
-    </div>
-    <div class="col-12 col-sm-6 col-md-6 text-end" style="margin-bottom: 30px;">
-      <a class="btn btn-primary"
-         role="button"><i
-          class="fa fa-plus"></i>&nbsp;广播消息</a></div>
-  </div>
-  <div class="card shadow">
-    <div
-        class="card-header d-flex flex-wrap justify-content-center align-items-center justify-content-sm-between gap-3">
-      <div class="row flex-fill">
-        <div class="col-md-6">
-          <h5 class="display-6 text-nowrap text-capitalize mb-0"> </h5>
-        </div>
-        <div class="col-md-6">
-          <div class="input-group input-group-sm w-auto"><input class="form-control form-control-sm"
-                                                                placeholder="请输入关键字"
-                                                                type="text">
-            <button class="btn btn-outline-primary btn-sm" type="button">
-              <i class="fa fa-search"></i>
-            </button>
+    </b-row>
+    <!--    Pagination-->
+    <b-row>
+      <b-col class="my-1" md="2" sm="5">
+        <b-form-group
+            class="mb-0"
+            label="Per page"
+            label-align-sm="right"
+            label-cols-lg="3"
+            label-cols-md="4"
+            label-cols-sm="6"
+            label-for="per-page-select"
+            label-size="sm"
+        >
+          <b-form-select
+              id="per-page-select"
+              v-model="perPage"
+              :options="pageOptions"
+              size="sm"
+          ></b-form-select>
+        </b-form-group>
+      </b-col>
+
+      <b-col class="my-1" md="9" sm="7">
+        <b-pagination
+            v-model="currentPage"
+            :per-page="perPage"
+            :total-rows="totalRows"
+            align="fill"
+            class="my-0"
+            first-text="⏮"
+            last-text="⏭"
+            next-text="⏩"
+            prev-text="⏪"
+            size="sm"
+        ></b-pagination>
+      </b-col>
+    </b-row>
+
+
+    <!--    List Card-->
+    <b-row>
+      <b-col>
+        <div id="TableSorterCard-1" class="card">
+          <b-card-header>
+            <b-row>
+              <b-col class="text-start" col="12" md="6" sm="5" style=" padding: 5px 15px;">
+                <p class="text-primary m-0 fw-bold">
+                  作业格式管理</p>
+              </b-col>
+              <b-col class="text-end" col="12" md="6" sm="7" style=" padding: 5px 15px;">
+                <b-button class="btn  btn-sm" style="margin: 2px;" type="button" variant="primary"
+                          @click="downAssigns">
+                  <i class="fa fa-download"></i>
+                  下载作业格式
+                </b-button>
+              </b-col>
+            </b-row>
+          </b-card-header>
+          <div class="table-responsive">
+            <b-table
+                :current-page="currentPage"
+                :fields="fields"
+                :filter="filter"
+                :filter-included-fields="filterOn"
+                :items="noticeData"
+                :per-page="perPage"
+                :sort-by.sync="sortBy"
+                :sort-desc.sync="sortDesc"
+                :sort-direction="sortDirection"
+                bordered="true"
+                empty-filtered-text="条件太多了，未查询到作业"
+                empty-text="还没有作业哦"
+                show-empty
+                stacked="md"
+                sticky-header="true"
+                striped="true"
+                @filtered="onFiltered"
+            >
+
+              <template #cell(actions)="row">
+                <b-button
+                    :disabled="row.item.checked"
+                    :variant="row.item.checked ? 'outline-secondary' :  'outline-primary'"
+                    class="mr-1 " size="sm"
+                    @click="alreadyRead(row.item)">
+                  已读
+                </b-button>
+              </template>
+
+<!--              <template #row-details="row">-->
+<!--                <b-card>-->
+<!--                  <table class="detailTable">-->
+<!--                    <tr>-->
+<!--                      <th v-for="(value, key) in row.item" v-if="!(key in detailBlockList)">-->
+<!--                        {{ key }}-->
+<!--                      </th>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                      <td v-for="(value, key) in row.item" v-if="!(key in detailBlockList)">-->
+<!--                        {{ value }}-->
+<!--                      </td>-->
+<!--                    </tr>-->
+<!--                  </table>-->
+<!--                </b-card>-->
+<!--              </template>-->
+            </b-table>
+
           </div>
         </div>
-      </div>
-    </div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-striped table-hover">
-          <thead>
-          <tr>
-            <th>已读</th>
-            <th>来自</th>
-            <th>备注</th>
-            <th>内容</th>
-            <th style="width: 152px;">时间</th>
-            <th class="text-center">详情</th>
-          </tr>
-          </thead>
-          <tbody>
-<!--          <tr v-for="notice in notices">-->
-<!--            <td><input type="checkbox" :checked="handleCheck()"></td>-->
-<!--            <td class="text-truncate" style="max-width: 200px;">{{ notice.from }}</td>-->
-<!--            <td>{{ notice.type }}</td>-->
-<!--            <td class="text-truncate" style="max-width: 200px;">{{ notice.content }}</td>-->
-<!--            <td>{{ notice.sendTime }}</td>-->
-<!--            <td class="text-center">-->
-<!--&lt;!&ndash;              add a eye icon &ndash;&gt;-->
-<!--&lt;!&ndash;              <a class="btn btn-primary btn-sm" role="button" @click="handleDetail(notice)"><i class="fa fa-eye"></i></a>&ndash;&gt;-->
-<!--&lt;!&ndash;              <svg class="bi bi-eye-fill fs-5 text-primary" fill="currentColor" height="1em" viewBox="0 0 16 16"&ndash;&gt;-->
-<!--&lt;!&ndash;                   width="1em"&ndash;&gt;-->
-<!--&lt;!&ndash;                   xmlns="http://www.w3.org/2000/svg">&ndash;&gt;-->
-<!--&lt;!&ndash;                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"></path>&ndash;&gt;-->
-<!--&lt;!&ndash;                <path&ndash;&gt;-->
-<!--&lt;!&ndash;                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>&ndash;&gt;-->
-<!--&lt;!&ndash;              </svg>&ndash;&gt;-->
-<!--            </td>-->
-<!--          </tr>-->
-          <tr v-for="notice in noticeData">
-            <td><input type="checkbox" :checked="notice.isChecked"></td>
-            <td class="text-truncate" style="max-width: 200px;">{{ notice.from }}</td>
-            <td>{{ notice.type }}</td>
-            <td class="text-truncate" style="max-width: 200px;">{{  notice.content }}</td>
-            <td>{{ notice.sendTime }}</td>
-            <td class="text-center">
-              <b-button-group size="sm">
-                <b-button variant="primary" @click="handleDetail(notice)">查看</b-button>
-                <b-button variant="danger" @click="handleDelete(notice)">删除</b-button>
-              </b-button-group>
-
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <page-spliter/>
-  </div>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
 import {getCurrentInstance, onMounted, ref} from "vue";
-import PageSpliter from "@/components/management/PageSpliter.vue";
 
 export default {
   name: "notice",
-  components: {PageSpliter},
+  methods: {
+    handleDelete(notice) {
+      console.log("handleDelete:", notice);
+    },
+    alreadyRead(notice) {
+      console.log("alreadyRead:", notice);
+    },
+  },
   data() {
 
     const {proxy} = getCurrentInstance();
     const noticeData = ref([]);
+
+    const totalRows = 0;
     const getNoticeData = async() => {
-      // console.log("getNoticeData:", res);
-      this.noticeData = await proxy.$api.getNoticeData()
+      const res = await proxy.$api.getNoticeData()
+      console.log("getNoticeData:", res);
+      noticeData.value = res.data;
+      this.totalRows = res.data.length;
     };
     onMounted(() => {
           getNoticeData()
         }
     );
     return {
-      noticeData
+      noticeData,
+
+      totalRows,
+      currentPage: 1,
+      perPage: 5,
+      pageOptions: [5, 10, 15, {value: 100, text: "展示更多"}],
+      sortBy: '',
+      sortDesc: false,
+      sortDirection: '升序',
+      filter: null,
+      filterOn: [],
+      detailBlockList: ["_showDetails"],
+
+      fields: [
+        {key: 'from', label: '来自', sortable: true},
+          {key: 'type', label: '类型', sortable: true},
+          // content
+          {key: 'content', label: '内容', sortable: true},
+          {key: 'sendTime', label: '时间', sortable: true},
+          {key: 'actions', label: '操作', sortable: false},
+
+          ]
+
     }
   }
 }

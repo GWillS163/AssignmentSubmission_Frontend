@@ -85,6 +85,7 @@
 
 <script>
 import {getCurrentInstance, onMounted, ref} from "vue";
+import handleAssignCard from "@/assets/customed/handleAssignCard";
 
 export default {
   name: "tab4Content",
@@ -121,15 +122,7 @@ export default {
         {key: 'rawName', label: '文件名'},
         {key: 'fileSize', label: '大小',
         formatter: (value) => {
-          if (value < 1024) {
-            return value + 'B';
-          } else if (value < 1024 * 1024) {
-            return (value / 1024).toFixed(2) + 'KB';
-          } else if (value < 1024 * 1024 * 1024) {
-            return (value / 1024 / 1024).toFixed(2) + 'MB';
-          } else {
-            return (value / 1024 / 1024 / 1024).toFixed(2) + 'GB';
-          }
+          return handleAssignCard.formatFileSize(value);
         }
         },
         {key: 'uploadTime', label: '时间'},

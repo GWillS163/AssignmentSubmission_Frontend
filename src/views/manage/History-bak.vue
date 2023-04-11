@@ -54,27 +54,26 @@
                 <p class="text-primary m-0 fw-bold">
                   作业格式管理</p>
               </b-col>
+<!--              <b-col class="text-end" col="12" md="6" sm="7" style=" padding: 5px 15px;">-->
+<!--                <b-button class="btn  btn-sm" style="margin: 2px;" type="button" variant="primary"-->
+<!--                          @click="downAssigns">-->
+<!--                  <i class="fa fa-download"></i>-->
+<!--                  下载作业格式-->
+<!--                </b-button>-->
+<!--              </b-col>-->
             </b-row>
           </b-card-header>
           <div class="table-responsive">
             <b-table
                 :current-page="currentPage"
-                :fields="fields"
-                :filter="filter"
-                :filter-included-fields="filterOn"
                 :items="records"
                 :per-page="perPage"
-                :sort-by.sync="sortBy"
-                :sort-desc.sync="sortDesc"
-                :sort-direction="sortDirection"
-                bordered="true"
                 empty-filtered-text="条件太多了，未查询到作业"
                 empty-text="还没有作业哦"
                 show-empty
                 stacked="md"
                 sticky-header="true"
                 striped="true"
-                @filtered="onFiltered"
             >
 
 
@@ -109,16 +108,10 @@ import {getCurrentInstance, onMounted, ref} from "vue";
 
 export default {
   name: "History",
-  data() {
+  data () {
+    const records = [];
     const {proxy} = getCurrentInstance();
     const totalRows = 0;
-    const records = [];
-    const userInfo = {
-      type: 'admin',
-      id: 1
-    }
-
-
     const getRecords = async () => {
       const res = await proxy.$api.getTab4SubmitsRecords();
       this.records = res.data;
@@ -130,19 +123,11 @@ export default {
     })
     return {
       currentPage: 1,
-      perPage: 5,
-      records,
+      pageSize: 10,
+      perPage: 10,
 
       totalRows,
       pageOptions: [5, 10, 15, {value: 100, text: "展示更多"}],
-      sortBy: '',
-      sortDesc: false,
-      sortDirection: '升序',
-      filter: null,
-      filterOn: [],
-      detailBlockList: ["_showDetails"],
-      // classes,
-
       fields: [
         {key: 'userName', label: '用户'},
         {key: 'assignName', label: '作业'},
@@ -152,11 +137,9 @@ export default {
           return handleAssignCard.formatFileSize(value);
         }
         },
-        {key: 'formatName', label: '格式化后名称', sortable: true},
-        {key: 'uploadTime', label: '上传时间', sortable: true},
-        {key: 'userId', label: '来自用户', sortable: true},
-        {key: 'actions', label: '操作', sortable: false}
+        {key: 'uploadTime', label: '时间'},
       ],
+      records
     }
   }
 }
