@@ -175,7 +175,28 @@ const handleAssignCard = {
           } else {
             return (value / 1024 / 1024 / 1024).toFixed(2) + 'GB';
           }
+    },
+
+    combineTime (date, time) {
+      if (date && time) {
+        return date + " " + time;
+      } else if (date) {
+        return date;
+      } else if (time) {
+        return time;
+      } else {
+        return "";
+      }
+    },
+    divideTime (time) {
+      // console.log("time", time)
+      if (time) {
+        return time.split(" ");
+      } else {
+        return ["", ""];
+      }
     }
+
 }
 
 export { handleAssignCard as default}
