@@ -1,73 +1,209 @@
 <template>
-<!-- set background is aqua-->
-  <div class="bg-aqua" style="background-color: #54c4d4; height: 60em; margin-top: -100px; padding-top: 100px; border:0; ">
-    <div class="container" >
-      <div class="card shadow-lg o-hidden border-0 my-5">
-        <div class="card-body p-0">
-          <div class="row">
-            <div class="col-lg-6 d-none d-lg-flex">
-              <div class="flex-grow-1 bg-login-image" style="background-color: #9bc6fe">
-                <img src="../../../../src/assets/img/spring_bin.png"  style="width: 100%;margin-top: 10%; align-content: center" alt="bin"/>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="p-5 mb-lg-0 pb-lg-1 pt-lg-3">
-                <div class="text-center">
-                  <h4 class="text-dark mb-4">请登录</h4>
-                </div>
-                <form class="user">
-                  <div class="mb-3"><input id="exampleInputEmail" aria-describedby="emailHelp" class="form-control form-control-user"
-                                           name="email" placeholder="输入您的用户名" type="email"></div>
-                  <div class="mb-3"><input id="exampleInputPassword" class="form-control form-control-user"
-                                           name="password" placeholder="请输入密码" type="password"></div>
-                  <div class="mb-3">
-                    <div class="custom-control custom-checkbox small">
-                      <div class="form-check">
-                        <input id="formCheck-1" class="form-check-input custom-control-input"
-                                                     type="checkbox">
-                        <label class="form-check-label custom-control-label"
-                               for="formCheck-1">请记住我</label></div>
-                    </div>
-                  </div>
-                  <a class="btn btn-primary d-block btn-user w-100" @click="handleLogin()"
-                     role="button">登录</a>
-                  <hr>
-                  <a class="btn btn-primary btn-sm d-block btn-google btn-user w-100 mb-2" role="button"><i
-                      class="fab fa-google"></i>&nbsp; &nbsp;Google 登录</a><a
-                    class="btn btn-primary btn-sm d-block btn-google btn-user w-100 mb-2" role="button"
-                    style="background: rgb(25,190,101);"><i class="fa fa-wechat"></i>&nbsp; &nbsp;微信 登录</a><a
-                    class="btn btn-primary d-block btn-facebook btn-user w-100" role="button"><i class="fab fa-qq"></i>&nbsp;
-                  QQ 登录</a>
-                  <div class="justify-content-between mt-lg-3" style="display: flex;">
-                    <a class="small" href="/register">创建账户</a>
-                    <a class="small" href="/forgotPassword">忘记密码?</a></div>
-                  <hr>
-                </form>
-                <div class="text-center"></div>
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
+  <!--<div>-->
+  <!--    <span v-if="isLogin">{{ token }}</span>-->
+  <!--    <button v-if="isLogin" @click="handleLogout">退出</button>-->
+  <!--    <button v-else @click="$router.push('/login')">登录</button>-->
+  <!--  </div>-->
+
+
+  <b-container fluid  style="background-color: #e0eff4; height: 53.8em; margin: -100px 0 -0px 0;
+        padding-top: 100px; border:0; ">
+    <b-row >
+      <b-col cols="3" >
+        <b-card
+          title="登录"
+          class="my-3 mx-3 shadow"
+          bg-variant="light"
+          border-variant="primary"
+          text-variant="dark"
+        >
+          <b-form @submit.prevent="login">
+            <b-form-group
+              id="input-group-1"
+              label="用户名："
+              label-for="input-1"
+            >
+              <b-form-input
+                id="input-1"
+                type="text"
+                v-model="loginForm.username"
+                required
+                placeholder="请输入用户名"
+              ></b-form-input>
+            </b-form-group>
+
+            <b-form-group
+              id="input-group-2"
+              label="密码："
+              label-for="input-2"
+            >
+              <b-form-input
+                id="input-2"
+                type="password"
+                v-model="loginForm.password"
+                required
+                placeholder="请输入密码"
+              ></b-form-input>
+            </b-form-group>
+
+          </b-form>
+          <b-row ><b-col >
+            <b-button-group style="width: 100%;"  >
+
+            <b-button type="submit" variant="primary" @click="studentLogin">学生登录</b-button>
+            <b-button type="submit" variant="outline-secondary" @click="teacherLogin">教师登录</b-button>
+            <b-button type="submit" variant="outline-info" @click="adminLogin">管理登录</b-button>
+            </b-button-group>
+          </b-col></b-row>
+
+        </b-card>
+      </b-col>
+      <b-col>
+
+      </b-col>
+    </b-row>
+  </b-container>
+
 
 </template>
 
 <script>
 
 
+import {getCurrentInstance, ref} from "vue";
+
 export default {
   name: "Login",
+  data() {
+
+    const loginForm = ref({
+      username: "admin",
+      password: "admin"
+    })
+    const proxy = getCurrentInstance().proxy;
+    // const store = useStore();
+    // q: 这里怎么使用全局的store
+    // const store = useStore();
+    // q: 这样是全局的吗？
+    const varifyStudent = async () => {
+      console.log("front-end", loginForm.value)
+      // 发送请求，验证用户名和密码
+      return true
+    }
+
+    const login = async () => {
+          console.log("front-end", loginForm.value)
+          localStorage.setItem("username", loginForm.value.username)
+          localStorage.setItem("password", loginForm.value.password)
+          alert("测试存储后，username" + localStorage.getItem("username"))
+          console.log("测试存储后，username", localStorage.getItem("username"))
+          console.log("测试存储后，password", localStorage.getItem("password"))
+          const res = await proxy.$api.getMenu(loginForm.value);
+          console.log("res", res)
+          this.$store.commit("setMenu", res.menu)
+          console.log("menu", this.$store.getters.menu)
+          this.$store.commit("setMenu", res.menu)
+          // store.commit("addMenu", router)
+          this.$store.commit("setToken", res.token)
+          // await this.$router.push("/manage/dashboard")
+        },
+        anotherLogin = async () => {
+          console.log("front-end", loginForm.value)
+          const adminData = {
+            username: "admin",
+            password: "admin",
+            token: 'your_token',
+            menu: [
+              {name: 'dashboard', path: '/manage/dashboard', icon: 'el-icon-s-home'},
+            ]
+          }
+          const teacherData = {
+            username: "teacher",
+            password: "teacher",
+            token: "teacher_token",
+            menu: [
+              {name: 'dashboard', path: '/manage/dashboard', icon: 'el-icon-s-home'},
+              {name: 'course', path: '/manage/course', icon: 'el-icon-s-home'},
+            ]
+          }
+          const studentData = {
+            username: "student",
+            password: "student",
+            token: "student_token",
+            menu: [
+              {name: 'dashboard', path: '/manage/dashboard', icon: 'el-icon-s-home'},
+              {name: 'course', path: '/manage/course', icon: 'el-icon-s-home'},
+            ]
+          }
+          localStorage.setItem("adminData", JSON.stringify(adminData))
+          localStorage.setItem("teacherData", JSON.stringify(teacherData))
+          localStorage.setItem("studentData", JSON.stringify(studentData))
+        }
+    return {
+      loginForm,
+      login,
+      varifyStudent,
+    }
+  },
+  computed: {
+    isLogin() {
+      return this.$store.state.isLogin
+    },
+    token() {
+      return this.$store.state.token
+    }
+  },
   methods: {
+    studentLogin() {
+      const res = this.varifyStudent();
+      if (res) {
+        this.$router.push('/manage/dashboard')
+      } else {
+        alert("failed")
+      }
+    },
+    teacherLogin() {
+
+    },
+    adminLogin() {
+
+    },
+
     handleLogin() {
-      console.log("登录~")
-      this.$router.push({ path: "/manage/dashboard" });
+      this.store.dispatch('login')
+
+      this.$store.dispatch('login', {
+        username: this.username,
+        password: this.password
+      }).then(() => {
+        // 发送登录请求，获取 token
+        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+        if (this.username === userInfo.username && this.password === userInfo.password) {
+          const token = 'your_token';
+          // 认为登录成功
+          // 登录成功，跳转到首页
+          this.$router.push('/manage/dashboard')
+        } else {
+          // 认为登录失败
+          console.log("failed")
+          this.$router.push('/login')
+
+        }
+      }).catch((error) => {
+        // 处理登录失败的情况
+        console.log(error)
+      })
     }
   }
 }
 </script>
 
 <style scoped>
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 
 </style>

@@ -1,4 +1,10 @@
 <template>
+<div>
+    <span v-if="isLogin">{{ token }}</span>
+    <button v-if="isLogin" @click="handleLogout">退出</button>
+    <button v-else @click="$router.push('/login')">登录</button>
+
+  </div>
 
   <div class="d-sm-flex justify-content-between align-items-center mb-4">
     <h3 class="text-dark mb-0">Dashboard</h3>
@@ -143,6 +149,7 @@ import NavBarTop from "@/components/management/navBar/navBarTop.vue";
 import {getCurrentInstance, onMounted, ref} from "vue";
 import {defineComponent} from "vue";
 import handleAssignCard from "@/assets/customed/handleAssignCard";
+import {useStore} from "vuex";
 
 
 export default defineComponent({
@@ -151,13 +158,30 @@ export default defineComponent({
     NavBarSide,
     NavBarTop
   },
+  computed: {
+    isLogin() {
+      return this.$store.state.isLogin
+    },
+    token() {
+      const token = this.$store.state.token
+      console.log("token", token)
+      return token
+    }
+  },
   methods: {
+    handleLogout() {
+      this.$store.dispatch('logout').then(() => {
+        // 退出登录成功，跳转到登录页面
+        this.$router.push('/login')
+      })
+    },
     getDDLProgress(start, ddl) {
       return handleAssignCard.getDDLProgress(start, ddl);
     },
     getDDLLastDay(ddl) {
       return handleAssignCard.getRemainedTime(ddl);
-    }
+    },
+
   },
   data() {
     const { proxy } = getCurrentInstance();
@@ -184,6 +208,13 @@ export default defineComponent({
     onMounted(() => {
       getCardsData();
       getAssignsData();
+
+      // q: 这里为什么取不出 menu
+      // a: 因为这里的 store 是一个新的 store，不是全局的 store
+      //    解决方法：在 main.js 中，将 store 挂载到全局
+      console.log("menu",this.$store.getters.menu(this))
+
+
     });
     return {
       titleCards,

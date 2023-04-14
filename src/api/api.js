@@ -229,6 +229,29 @@ export default {
             mock: false
       })
     },
+    getMenu(loginForm) {
+        console.log("loginForm", loginForm)
+        return {
+            code: 200,
+            data:
+                {
+                    role: 'admin',
+                    menu: [
+                        {
+                            name: 'Dashboard',
+                            icon: 'dashboard',
+                            path: '/dashboard',
+                        }
+                        ],
+                    token: 'admin-token',
+                },
+        }
+      return request({
+            url: '/menu',
+            method: 'get',
+            mock: false
+      })
+    },
     getSubmitsByAssignId(assignId) {
         return request({
             url: '/assign/' + assignId + '/submit',

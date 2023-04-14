@@ -1,8 +1,10 @@
 
 import { createApp } from 'vue'
 import App from './App.vue'
+import store from './store';
 // import './api/mock.js'
 import UseCSVButton from "@usecsv/vuejs3";
+
 
 // import './assets/main.css'
 // FrontEnd - Part
@@ -33,10 +35,10 @@ import router from './router/router'
 import BootstrapVueNext from 'bootstrap-vue-next'
 // app.use(vueRouter)
 app.use(router)
+app.use(store)
 app.use(BootstrapVueNext)
 app.use(UseCSVButton)
 app.mount('#app')
-
 
 export default {
   compatConfig: {
