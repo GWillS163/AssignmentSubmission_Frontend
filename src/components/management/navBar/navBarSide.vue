@@ -303,9 +303,20 @@ export default {
 
             ]
       }
+
     };
     onMounted(()=> {
-      getMenusByType("teacher");
+      // getMenusByType("teacher");
+
+      const res =  localStorage.getItem("menus")
+      // console.log("menusRes",res)
+      const menus = JSON.parse(res)
+      // console.log("menus obj",menus)
+      this.menuPart1 = menus.menuPart1
+      this.menuDataManage = menus.menuDataManage
+          //q: 为什么这里的res是字符串，而不是对象？
+          //a: 因为localStorage只能存储字符串，所以需要JSON.parse()转换一下
+
         }
     );
     return {

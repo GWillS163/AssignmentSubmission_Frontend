@@ -157,6 +157,7 @@ export default {
   methods: {
     studentLogin() {
       const res = this.varifyStudent();
+      this.setLocalStorage("student", "sss", "student")
       if (res) {
         this.$router.push('/manage/dashboard')
       } else {
@@ -167,6 +168,134 @@ export default {
 
     },
     adminLogin() {
+      this.setLocalStorage("admin", "sss", "admin")
+      this.$router.push('/manage/dashboard')
+
+    },
+    setLocalStorage(username, password, role ) {
+      let menus = [];
+      if (role === "admin" || role === "teacher") {
+        menus = {
+          menuPart1: [
+                {
+                    name: 'Dashboard',
+                    link: '/manage/dashboard',
+                    icon: 'fa-tachometer-alt'
+                },
+                {
+                    name: '通知中心',
+                    link: '/manage/notice',
+                    icon: 'fa-bell'
+                },
+                {
+                    name: '提交历史',
+                    link: '/manage/history',
+                    icon: 'fa-history'
+                },
+                {
+                    name: '教师中心',
+                    icon: 'fa-chart-area',
+                    children: [
+                        {
+                            name: '收集总览',
+                            link: '/manage/teacher/center'
+                        },
+                        {
+                            name: '作业视图',
+                            link: '/manage/teacher/assignView'
+                        },
+                        {
+                            name: '班级视图',
+                            link: '/manage/teacher/classView'
+                        },
+
+                    ]
+                },
+                {
+                    name: '学生中心',
+                    icon: 'fa-chart-area',
+                    children: [
+                        {
+                            name: '可交作业',
+                            link: '/manage/student/assigns'
+                        },
+                        {
+                            name: '已交管理',
+                            link: '/manage/student/files'
+                        }
+                    ]
+                }
+
+            ],
+          menuDataManage: [
+                {
+                    name: '作业管理',
+                    icon: 'fa-cog',
+                    children: [
+                        {
+                            name: '作业管理',
+                            link: '/manage/assignment/assign',
+                        },
+                        {
+                            name: '文件管理',
+                            link: '/manage/assignment/file'
+                        },
+                    ],
+
+                },
+                {
+                    name: '信息管理',
+                    icon: 'fa-wrench',
+                    children: [
+                        {
+                            name: '学生管理',
+                            link: '/manage/information/student',
+                        },
+                        {
+                            name: '班级管理',
+                            link: '/manage/information/class',
+                        }
+                    ]
+                },
+                {
+                    name: '个人信息',
+                    icon: 'fa-info-circle',
+                    link: '/manage/profile'
+                }
+
+            ]
+        }
+      } else if (role === "teacher") {
+        menus = [ ]
+      } else if (role === "student") {
+        console.log("student login ")
+        menus = {
+          menuPart1: [
+                {
+                    name: '学生中心',
+                    icon: 'fa-chart-area',
+                    children: [
+                        {
+                            name: '可交作业',
+                            link: '/manage/student/assigns'
+                        },
+                        {
+                            name: '已交管理',
+                            link: '/manage/student/files'
+                        }
+                    ]
+                }
+
+            ],
+          menuDataManage: []
+        }
+      } else {
+        alert("role error")
+      }
+      localStorage.setItem("username", username)
+      localStorage.setItem("password", password)
+      localStorage.setItem("role", role)
+      localStorage.setItem("menus", JSON.stringify(menus))
 
     },
 

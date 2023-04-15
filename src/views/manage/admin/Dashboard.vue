@@ -212,7 +212,7 @@ export default defineComponent({
       // q: 这里为什么取不出 menu
       // a: 因为这里的 store 是一个新的 store，不是全局的 store
       //    解决方法：在 main.js 中，将 store 挂载到全局
-      console.log("menu",this.$store.getters.menu(this))
+      // console.log("menu",this.$store.getters.menu(this))
 
 
     });
