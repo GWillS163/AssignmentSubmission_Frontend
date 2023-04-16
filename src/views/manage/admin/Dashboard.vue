@@ -1,10 +1,10 @@
 <template>
-<div>
-    <span v-if="isLogin">{{ token }}</span>
-    <button v-if="isLogin" @click="handleLogout">退出</button>
-    <button v-else @click="$router.push('/login')">登录</button>
+<!--<div>-->
+<!--    <span v-if="isLogin">{{ token }}</span>-->
+<!--    <button v-if="isLogin" @click="handleLogout">退出</button>-->
+<!--    <button v-else @click="$router.push('/login')">登录</button>-->
 
-  </div>
+<!--  </div>-->
 
   <div class="d-sm-flex justify-content-between align-items-center mb-4">
     <h3 class="text-dark mb-0">Dashboard</h3>

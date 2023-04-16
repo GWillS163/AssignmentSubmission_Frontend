@@ -286,12 +286,25 @@ export default {
       let res = await proxy.$api.getMessage();
       this.message = res.message;
     }
+    const getProfile = () => {
+      let res = localStorage.getItem("userInfo")
+      let userInfo = JSON.parse(res)
+    console.log("userInfo", userInfo)
+      this.basicInfo.id = userInfo.stuId;
+      this.basicInfo.name = userInfo.username;
+      this.basicInfo.email = userInfo.mail;
+      this.basicInfo.password = userInfo.password;
+      this.optionalInfo.class = userInfo.clazz;
+      this.optionalInfo.phone = userInfo.phone;
+      // this.profile = res.profile;
+    }
     onMounted(() => {
       getInfoCard()
       getBasicInfo();
       getOptionalInfo();
       getSettingFromData();
       getMessage();
+      getProfile();
     })
     return {
       infoCard,

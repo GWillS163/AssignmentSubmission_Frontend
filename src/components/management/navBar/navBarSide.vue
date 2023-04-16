@@ -259,6 +259,10 @@ export default {
                         {
                             name: '班级管理',
                             link: '/manage/information/class',
+                        },
+                        {
+                            name: '教师管理',
+                            link: '/manage/information/teacher',
                         }
                     ]
                 },
@@ -303,7 +307,6 @@ export default {
 
             ]
       }
-
     };
     onMounted(()=> {
       // getMenusByType("teacher");

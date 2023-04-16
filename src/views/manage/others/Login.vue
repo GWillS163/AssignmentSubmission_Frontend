@@ -9,8 +9,9 @@
 
   <b-container fluid  style="background-color: #e0eff4; height: 53.8em; margin: -100px 0 -0px 0;
         padding-top: 100px; border:0; ">
-    <b-row >
-      <b-col cols="3" >
+    <b-row class="align-items-center">
+      <b-col lg="4" md="0"></b-col>
+      <b-col lg="4" md="12">
         <b-card
           title="登录"
           class="my-3 mx-3 shadow"
@@ -59,9 +60,7 @@
 
         </b-card>
       </b-col>
-      <b-col>
-
-      </b-col>
+      <b-col lg="4" md="0"></b-col>
     </b-row>
   </b-container>
 
@@ -254,6 +253,10 @@ export default {
                         {
                             name: '班级管理',
                             link: '/manage/information/class',
+                        },
+                        {
+                            name: '教师管理',
+                            link: '/manage/information/teacher',
                         }
                     ]
                 },
@@ -292,8 +295,19 @@ export default {
       } else {
         alert("role error")
       }
+      const userInfo = {
+        username: username,
+        password: password,
+        role: role,
+        menus: menus,
+        mail: "19852331@czjtu.edu.cn",
+        stuId: "19852331",
+        clazz: "软件工程1909班",
+        phone: "18888888888"
+      }
       localStorage.setItem("username", username)
       localStorage.setItem("password", password)
+      localStorage.setItem("userInfo", JSON.stringify(userInfo))
       localStorage.setItem("role", role)
       localStorage.setItem("menus", JSON.stringify(menus))
 
