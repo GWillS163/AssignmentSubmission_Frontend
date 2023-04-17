@@ -37,12 +37,12 @@
           <b-card-img
               v-if="record.uml_png_src"
               :alt="record.uml_intro"
+              class="coverImg"
 
               :src="record.uml_png_src ? getFullSrc(record.uml_png_src) : 'public/uml.png'"
-              style="max-width:100%; width: auto;max-height: 120px;"
               @click="showUmlGraph(record)"/>
           <b-form-text v-else>
-            <i class="fas fa-picture-o"> 无图片</i>
+            <i class="fas fa-picture-o" @click="showUmlGraph(record)"> 无图片</i>
             <!--                  <b-spinner v-if="record.uml_intro.length < 10" variant="primary"></b-spinner>-->
           </b-form-text>
 
@@ -228,5 +228,10 @@ export default {
   display: -webkit-box;
   -webkit-line-clamp: 3; /* 显示的行数 */
   -webkit-box-orient: vertical;
+}
+.coverImg {
+  max-width:100%;
+  height: 200px;
+  object-fit: cover;
 }
 </style>
