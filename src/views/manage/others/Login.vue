@@ -1,12 +1,5 @@
 <template>
 
-  <!--<div>-->
-  <!--    <span v-if="isLogin">{{ token }}</span>-->
-  <!--    <button v-if="isLogin" @click="handleLogout">退出</button>-->
-  <!--    <button v-else @click="$router.push('/login')">登录</button>-->
-  <!--  </div>-->
-
-
   <b-container fluid  style="background-color: #e0eff4; height: 53.8em; margin: -100px 0 -0px 0;
         padding-top: 100px; border:0; ">
     <b-row class="align-items-center">
@@ -164,16 +157,19 @@ export default {
       }
     },
     teacherLogin() {
-
+      this.setLocalStorage("teacher", "sss", "teacher")
+      this.$router.push('/manage/dashboard')
+      this.$store.setUser({
+        userName: "teacher1",
+      })
     },
     adminLogin() {
       this.setLocalStorage("admin", "sss", "admin")
       this.$router.push('/manage/dashboard')
-
     },
     setLocalStorage(username, password, role ) {
       let menus = [];
-      if (role === "admin" || role === "teacher") {
+      if (role === "admin" ) {
         menus = {
           menuPart1: [
                 {
@@ -259,6 +255,78 @@ export default {
                             link: '/manage/information/teacher',
                         }
                     ]
+                }
+
+            ]
+        }
+      } else if (role === "teacher") {
+        menus = {
+          menuPart1: [
+                {
+                    name: 'Dashboard',
+                    link: '/manage/dashboard',
+                    icon: 'fa-tachometer-alt'
+                },
+                {
+                    name: '通知中心',
+                    link: '/manage/notice',
+                    icon: 'fa-bell'
+                },
+                {
+                    name: '提交历史',
+                    link: '/manage/history',
+                    icon: 'fa-history'
+                },
+                {
+                    name: '教师中心',
+                    icon: 'fa-chart-area',
+                    children: [
+                        {
+                            name: '收集总览',
+                            link: '/manage/teacher/center'
+                        },
+                        {
+                            name: '作业视图',
+                            link: '/manage/teacher/assignView'
+                        },
+                        {
+                            name: '班级视图',
+                            link: '/manage/teacher/classView'
+                        },
+
+                    ]
+                },
+
+            ],
+          menuDataManage: [
+                {
+                    name: '作业管理',
+                    icon: 'fa-cog',
+                    children: [
+                        {
+                            name: '作业管理',
+                            link: '/manage/assignment/assign',
+                        },
+                        {
+                            name: '文件管理',
+                            link: '/manage/assignment/file'
+                        },
+                    ],
+
+                },
+                {
+                    name: '信息管理',
+                    icon: 'fa-wrench',
+                    children: [
+                        {
+                            name: '学生管理',
+                            link: '/manage/information/student',
+                        },
+                        {
+                            name: '班级管理',
+                            link: '/manage/information/class',
+                        },
+                    ]
                 },
                 {
                     name: '个人信息',
@@ -268,12 +336,15 @@ export default {
 
             ]
         }
-      } else if (role === "teacher") {
-        menus = [ ]
       } else if (role === "student") {
         console.log("student login ")
         menus = {
           menuPart1: [
+                {
+                    name: '通知中心',
+                    link: '/manage/notice',
+                    icon: 'fa-bell'
+                },
                 {
                     name: '学生中心',
                     icon: 'fa-chart-area',

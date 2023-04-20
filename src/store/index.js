@@ -2,32 +2,31 @@ import { createStore } from 'vuex';
 import Cookie from 'js-cookie'
 
 const store = createStore({
-  state() {
-      const menus = 1;
-    return {
-        menus,
-      user: null,
-      token: localStorage.getItem('token'),
+  state: {
+      userInfo: {name:"test"},
+      token: "", //localStorage.getItem('token'),
         state: {
           menus: [
             {name: "Home", url: "Home", icon: "fa fa-home"},
         ]
-        },
-
-    }
+    },
   },
   mutations: {
-    setUser(state, user) {
-      state.user = user;
+    setUser(user) {
+      this.state.userInfo = user;
     },
     setToken(state, token) {
       state.token = token;
       localStorage.setItem('token', token);
     },
-    removeToken(state) {
-      state.token = null;
+    cleanMenu() {
+      // state.token = null;
       localStorage.removeItem('token');
+      localStorage.removeItem('menu');
     },
+      getUserInfo() {
+            return this.state.userInfo
+      },
 
     setMenu(state, payload) {
         state.menu = payload
@@ -77,7 +76,10 @@ const store = createStore({
             return this.state.menu
           // q: 这里的state是什么？
             // a: state是store中的state
-      }
+      },
+      userInfo() {
+            return this.state.userInfo
+      },
 
   },
   actions: {

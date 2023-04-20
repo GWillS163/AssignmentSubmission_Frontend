@@ -17,11 +17,11 @@
       <div id="navcol-2" class="collapse navbar-collapse">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><router-link class="nav-link active" to="/about">项目介绍</router-link></li>
-          <li class="nav-item"><router-link class="nav-link" to="#">历史版本</router-link></li>
-          <li class="nav-item"><router-link class="nav-link" to="#">关于</router-link></li>
-          <li class="nav-item"><router-link class="nav-link" to="#"></router-link></li>
+<!--          <li class="nav-item"><router-link class="nav-link" to="#">历史版本</router-link></li>-->
+<!--          <li class="nav-item"><router-link class="nav-link" to="#">关于</router-link></li>-->
+<!--          <li class="nav-item"><router-link class="nav-link" to="#"></router-link></li>-->
         </ul>
-        <span class="navbar-text" style="margin-left: 11px;"><a href="/#/admin">管理入口（临时）</a></span>
+<!--        <span class="navbar-text" style="margin-left: 11px;"><a href="/#/admin">管理入口（临时）</a></span>-->
         <a class="btn btn-primary ms-md-2" href="/login" role="button">登录</a>
       </div>
     </div>

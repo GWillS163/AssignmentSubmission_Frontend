@@ -1,5 +1,5 @@
 
-console.log("imported handleAssignCard.js")
+// console.log("imported handleAssignCard.js")
 const handleAssignCard = {
     getBarColor(ddl, isUploadEnable) {
       switch (this.getStatusType(ddl, isUploadEnable)) {

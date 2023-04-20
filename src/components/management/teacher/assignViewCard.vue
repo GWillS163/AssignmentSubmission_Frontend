@@ -55,12 +55,12 @@
       <b-card-footer>
         <div v-if="footerType === 'upload'">
           <b-row  v-if="assign.uploadEnable">
-            <b-col cols="8">
+            <b-col cols="12">
               <input type="file" @change="onFileChange($event, assign)" ref="file"  class="form-control" placeholder="请上传文件">
             </b-col>
-            <b-col cols="4">
-              <b-button :variant="assign.style">提交</b-button>
-            </b-col>
+<!--            <b-col cols="4">-->
+<!--              <b-button :variant="assign.style">提交</b-button>-->
+<!--            </b-col>-->
           </b-row>
         </div>
         <div v-else-if="footerType === 'progress'">

@@ -5,7 +5,7 @@ import AssignEditForm from "@/components/management/information/AssignEditForm.v
   <b-container fluid>
     <b-row>
       <b-col cols="12" md="6" sm="6">
-        <h3 class="text-dark mb-4">教师中心</h3>
+        <h3 class="text-dark mb-4">教师中心 （{{teacherName}}）</h3>
       </b-col>
       <b-col cols="12" md="6" sm="6">
         <div aria-label="Basic radio toggle button group" class="btn-group float-end" role="group">
@@ -218,7 +218,6 @@ export default {
       this.editMethod = "edit";
       this.modal = !this.modal
       this.formData = assign
-
     },
     submit() {
       console.log("submit");
@@ -249,11 +248,16 @@ export default {
     const teachers = [];
     const {proxy} = getCurrentInstance();
     const totalRows = 0;
+    const store = proxy.$store;
     const isShowAssignDetail = true;
 
     const userInfo = {
       type: 'admin',
       id: 1
+    }
+    const getUserInfo = () => {
+      this.userInfo = store.getters.userInfo;
+      console.log("userInfo", this.userInfo)
     }
     const getClasses = async () => {
       let res = await proxy.$api.getClassesMap(userInfo);
@@ -347,23 +351,10 @@ export default {
       getAssigns();
       getClasses();
       getTeacherData();
+      getUserInfo();
     })
     const titleBanner = [];
-    const viewMode = "card";
-    const newDataForm = {
-      name: "",
-      id: "",
-      clazz: "",
-      desc: "",
-      formatStr: " ",
-      ddl: "",
-      forClazz: [],
-      isPermitAny: true,
-      isPermitLate: true,
-      isPermitMulti: true,
-      isVarifyName: true,
-      isPermitChange: true,
-    }
+    const viewMode = "card"; // card or table
     return {
       activeTab: 0,
       postAssign,
@@ -405,7 +396,6 @@ export default {
         timeoutSubmit: true,
       },
       fileFields: [
-
         {
           key: 'userName', label: '用户',
           formatter: (value) => {
@@ -422,7 +412,6 @@ export default {
         {key: 'uploadTime', label: '上传时间', sortable: true},
       ],
       fields: [
-
         {key: 'actions', label: '操作', sortable: false},
         // {key: 'user_id', label: '数据ID', sortable: true},
         {key: 'briefName', label: '简述', sortable: true},

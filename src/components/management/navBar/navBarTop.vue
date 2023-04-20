@@ -106,6 +106,10 @@
                 登出</a>
             </div>
           </div>
+
+        </li>
+        <li>
+          <b-button @click="logout">登出</b-button>
         </li>
       </ul>
     </div>
@@ -115,6 +119,7 @@
 
 <script>
 import {getCurrentInstance, onMounted} from "vue";
+import {useRouter} from "vue-router";
 
 export default {
   name: "navBarHeader",
@@ -122,6 +127,7 @@ export default {
     const { proxy } = getCurrentInstance();
     const userDrops = [];
     const notices = [];
+    const router = useRouter();
     const assignStatuses = [];
     const getUserDrops = async () => {
       this.userDrops = await proxy.$api.getUserNavBarDrops();
@@ -132,6 +138,10 @@ export default {
     const getAssignStatuses = async () => {
       this.assignStatuses = await proxy.$api.getAssignStatuses();
     };
+    const logout = () => {
+      router.push({path: '/login'})
+
+    }
     onMounted(() => {
       getUserDrops();
       getNotices();
@@ -140,7 +150,8 @@ export default {
     return {
       userDrops,
       notices,
-      assignStatuses
+      assignStatuses,
+      logout,
     }
   }
 }
