@@ -45,7 +45,7 @@
 import Header from "@/components/public/PublicHeader.vue";
 import PublicFooter from "@/components/public/PublicFooter.vue";
 import {useStore} from "vuex";
-import {onMounted} from "vue";
+import {computed, onMounted} from "vue";
 export default {
   name: "about",
   components: {
@@ -53,11 +53,13 @@ export default {
     PublicFooter
   },
   data () {
-    const store = useStore();
+    // const store = useStore();
     const userInfo = {};
     const getUserInfo = () => {
       // this.userInfo = store.getters.userInfo;
-      this.userInfo = store.commit("getUserInfo");
+      this.$store.comm
+      this.userInfo = computed(() => this.$store.getters.userInfo);
+      console.log("userInfo", this.userInfo)
     };
     onMounted(() => {
       getUserInfo();

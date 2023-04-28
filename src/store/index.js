@@ -25,7 +25,8 @@ const store = createStore({
       localStorage.removeItem('menu');
     },
       getUserInfo() {
-            return this.state.userInfo
+            this.state.userInfo = {name:"test"}
+            return {name:"test"}
       },
 
     setMenu(state, payload) {
